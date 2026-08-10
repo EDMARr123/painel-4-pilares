@@ -1,0 +1,751 @@
+<title>Painel 4 Pilares — RICARDO</title>
+<style>
+:root {
+  --bg: #EEF1F4;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7FA;
+  --border: #E1E6EB;
+  --ink: #10151C;
+  --ink-soft: #5B6472;
+  --ink-faint: #6B7684;
+  --accent: #0E7C86;
+  --accent-soft: #E4F4F3;
+  --accent-ink: #063A3F;
+  --accent-deep: #0B5158;
+  --accent-deep-2: #128A93;
+  --good: #1D9A5D;
+  --good-soft: #E4F5EC;
+  --warn: #B4740A;
+  --warn-soft: #FBF0DC;
+  --bad: #D33B3B;
+  --bad-soft: #FBE7E7;
+  --track: #E4E7EC;
+  --shadow: 0 1px 2px rgba(16, 21, 28, 0.04), 0 8px 24px -12px rgba(16, 21, 28, 0.18);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1116;
+    --surface: #131B22;
+    --surface-2: #1A232B;
+    --border: #253039;
+    --ink: #EAF0F4;
+    --ink-soft: #93A1AC;
+    --ink-faint: #64707B;
+    --accent: #4FD1C8;
+    --accent-soft: #12302E;
+    --accent-ink: #B6F1EB;
+    --accent-deep: #0A3F44;
+    --accent-deep-2: #1B6E74;
+    --good: #3FC17F;
+    --good-soft: #123625;
+    --warn: #E0A63C;
+    --warn-soft: #3A2C10;
+    --bad: #F0645E;
+    --bad-soft: #3A1616;
+    --track: #253039;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1116;
+  --surface: #131B22;
+  --surface-2: #1A232B;
+  --border: #253039;
+  --ink: #EAF0F4;
+  --ink-soft: #93A1AC;
+  --ink-faint: #64707B;
+  --accent: #4FD1C8;
+  --accent-soft: #12302E;
+  --accent-ink: #B6F1EB;
+  --accent-deep: #0A3F44;
+  --accent-deep-2: #1B6E74;
+  --good: #3FC17F;
+  --good-soft: #123625;
+  --warn: #E0A63C;
+  --warn-soft: #3A2C10;
+  --bad: #F0645E;
+  --bad-soft: #3A1616;
+  --track: #253039;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+/* ---------- Header / summary ---------- */
+
+header.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.title-block h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.title-block p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.summary-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  min-width: 108px;
+  box-shadow: var(--shadow);
+}
+
+.stat-pill .n {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.stat-pill .l {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+/* ---------- Filter tabs ---------- */
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+
+.tab {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tab:hover { border-color: var(--accent); color: var(--accent); }
+
+.tab.active {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+
+.tab .count {
+  opacity: 0.7;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+/* ---------- Resumo do time (mesmo card do vendedor, com totais somados) ---------- */
+
+.resumo-time {
+  max-width: 420px;
+  margin-bottom: 22px;
+}
+
+.resumo-time .card {
+  border-width: 2px;
+  border-color: var(--accent);
+}
+
+/* ---------- Card grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.card-head .who { flex: 1; min-width: 0; }
+
+.card-head h2 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-head .meta {
+  margin: 1px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.head-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.badge-pilares {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn svg { width: 14px; height: 14px; }
+
+/* ---------- Pilar rows ---------- */
+
+.pilar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  align-items: baseline;
+}
+
+.pilar .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.pilar .pct {
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.pilar .track {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.pilar .fill { height: 100%; border-radius: 999px; }
+
+.pilar .sub {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pilares-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- Tendência ---------- */
+
+.box-tendencia {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.box-tendencia .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.box-tendencia .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.box-tendencia .pct {
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.box-tendencia .valor {
+  font-size: 19px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+
+.box-tendencia .foot-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Industrializado / Thermo ---------- */
+
+.mini-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mini-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 8px;
+  border-top: 3px solid var(--cor-categoria);
+  min-width: 0;
+}
+
+.mini-card .label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-card .pct-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.mini-card .pct {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini-card .sub-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+}
+
+.mini-card .sub {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+/* ---------- Focus / a11y ---------- */
+
+button:focus-visible, .tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-faint);
+  padding: 60px 0;
+  font-size: 14px;
+}
+
+footer.foot {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title-block">
+      <h1>Painel 4 Pilares</h1>
+      <p>Positivação · Margem · Mix · Financeiro — atualizado em 10/08/2026 11:00</p>
+    </div>
+    <div class="summary-strip" id="summary"></div>
+  </header>
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <section class="resumo-time" id="resumoTime"></section>
+
+  <main class="grid" id="grid"></main>
+  <div class="empty-state" id="empty" style="display:none;">Nenhum RCA encontrado pra esse filtro.</div>
+
+  <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
+</div>
+
+<script>
+const DADOS = [{"codigo": "16", "nome": "BERALDO", "rota": "GYN R", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 84, "real": 50, "pct": 0.5952380952380952}, "margem": {"meta": 13.3, "real": 12.090837065330287, "pct": 0.9090854936338562}, "mix": {"meta": 2.4, "real": 2.36, "pct": 0.9833333333333333}, "financeiro": {"meta": 265000, "real": 51560.21536, "pct": 0.19456685041509433}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.9728342520754717, "projetado": 257801.0768, "meta": 265000, "meta_dia": 10671.989232}, "industrializado": {"meta": 66250, "real": 12512.18, "participacao_pct": 0.24267121292334337, "margem_pct": 0.251417250327281}, "thermo": {"meta": 7950, "real": 652.4, "participacao_pct": 0.05214119362093576, "margem_pct": 0.1597433759166155}, "recompra_pct": 0.76}, {"codigo": "398", "nome": "UCLEIBSON", "rota": "GY", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 72, "real": 31, "pct": 0.4305555555555556}, "margem": {"meta": 13.5, "real": 14.617548260879197, "pct": 1.0827813526577184}, "mix": {"meta": 2.4, "real": 2.63, "pct": 1.0958333333333334}, "financeiro": {"meta": 265000, "real": 52366.92, "pct": 0.1976110188679245}}, "pilares_atingidos": 2, "tendencia": {"pct": 0.9880550943396227, "projetado": 261834.6, "meta": 265000, "meta_dia": 10631.654}, "industrializado": {"meta": 66250, "real": 4902.04, "participacao_pct": 0.09360947712792733, "margem_pct": 0.2484001254987719}, "thermo": {"meta": 7950, "real": 184.5, "participacao_pct": 0.03763739177974884, "margem_pct": 0.16037929131707312}, "recompra_pct": 0.4838709677419355}, {"codigo": "723", "nome": "JEAN PIERRE -", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 67, "real": 37, "pct": 0.5522388059701493}, "margem": {"meta": 12.85, "real": 13.923048535336111, "pct": 1.08350572259425}, "mix": {"meta": 2.4, "real": 2.23, "pct": 0.9291666666666667}, "financeiro": {"meta": 225000, "real": 42114.85, "pct": 0.1871771111111111}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9358855555555554, "projetado": 210574.24999999997, "meta": 225000, "meta_dia": 9144.2575}, "industrializado": {"meta": 56250, "real": 9452.74, "participacao_pct": 0.2244514702058775, "margem_pct": 0.24290626772766413}, "thermo": {"meta": 6750, "real": 1251.68, "participacao_pct": 0.13241451684908292, "margem_pct": 0.15896378652051654}, "recompra_pct": 0.7837837837837838}, {"codigo": "729", "nome": "MARCELO ALVES", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 74, "real": 43, "pct": 0.581081081081081}, "margem": {"meta": 12.85, "real": 11.499938525325621, "pct": 0.8949368502198928}, "mix": {"meta": 2.4, "real": 2.56, "pct": 1.0666666666666667}, "financeiro": {"meta": 245000, "real": 63475.64, "pct": 0.25908424489795917}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.295421224489796, "projetado": 317378.2, "meta": 245000, "meta_dia": 9076.217999999999}, "industrializado": {"meta": 61250, "real": 4943.4, "participacao_pct": 0.07787869488200512, "margem_pct": 0.20144725399522592}, "thermo": {"meta": 7350, "real": 863.36, "participacao_pct": 0.1746490269854756, "margem_pct": 0.17732637045959976}, "recompra_pct": 0.6046511627906976}, {"codigo": "467", "nome": "IGOR SA", "rota": "GYN", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 75, "real": 42, "pct": 0.56}, "margem": {"meta": 12.85, "real": 12.115586759947709, "pct": 0.9428472186729735}, "mix": {"meta": 2.45, "real": 2.27, "pct": 0.9265306122448979}, "financeiro": {"meta": 270000, "real": 58871.17293, "pct": 0.21804138122222222}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.090206906111111, "projetado": 294355.86465, "meta": 270000, "meta_dia": 10556.4413535}, "industrializado": {"meta": 67500, "real": 9793.65, "participacao_pct": 0.16635731059146744, "margem_pct": 0.27397455718756536}, "thermo": {"meta": 8100, "real": 1386.89, "participacao_pct": 0.14161114599766175, "margem_pct": 0.1592904176798449}, "recompra_pct": 0.5952380952380952}, {"codigo": "644", "nome": "ALBERTO SANTOS", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 82, "real": 55, "pct": 0.6707317073170732}, "margem": {"meta": 12.85, "real": 9.850720926890029, "pct": 0.7665930682404691}, "mix": {"meta": 2.4, "real": 2.81, "pct": 1.1708333333333334}, "financeiro": {"meta": 310000, "real": 129165.82484, "pct": 0.4166639510967742}}, "pilares_atingidos": 1, "tendencia": {"pct": 2.0833197554838714, "projetado": 645829.1242000001, "meta": 310000, "meta_dia": 9041.708757999999}, "industrializado": {"meta": 77500, "real": 21087.44, "participacao_pct": 0.16325866401675043, "margem_pct": 0.1995442595402761}, "thermo": {"meta": 9300, "real": 2862.17, "participacao_pct": 0.1357286612315198, "margem_pct": 0.10467457903059563}, "recompra_pct": 0.7090909090909091}, {"codigo": "698", "nome": "FERNANDO OLIVE", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 87, "real": 46, "pct": 0.5287356321839081}, "margem": {"meta": 12.85, "real": 10.578027599254762, "pct": 0.8231928092805263}, "mix": {"meta": 2.4, "real": 2.49, "pct": 1.0375}, "financeiro": {"meta": 215000, "real": 47525.805, "pct": 0.2210502558139535}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.1052512790697675, "projetado": 237629.025, "meta": 215000, "meta_dia": 8373.70975}, "industrializado": {"meta": 53750, "real": 4588, "participacao_pct": 0.09653702867315977, "margem_pct": 0.22328080196163902}, "thermo": {"meta": 6450, "real": 549.49, "participacao_pct": 0.1197667829119442, "margem_pct": 0.15951551343973508}, "recompra_pct": 0.6739130434782609}];
+
+function corPct(pct) {
+  if (pct >= 1) return "good";
+  if (pct >= 0.7) return "warn";
+  return "bad";
+}
+
+function corBadge(atingidos) {
+  if (atingidos >= 3) return "good";
+  if (atingidos >= 1) return "warn";
+  return "bad";
+}
+
+// Cortes definidos pelo Edmar (binário, sem faixa intermediária amarela).
+function corParticipacaoIndustrializado(pct) {
+  return pct >= 0.25 ? "good" : "bad";
+}
+function corMargemIndustrializado(pct) {
+  return pct >= 0.18 ? "good" : "bad";
+}
+function corParticipacaoThermo(pct) {
+  return pct >= 0.03 ? "good" : "bad";
+}
+function corMargemThermo(pct) {
+  return pct >= 0.15 ? "good" : "bad";
+}
+
+// Recompra não tem meta pareada na planilha — faixa própria (taxa de
+// clientes que voltam a comprar), ajuste os cortes se quiser outro critério.
+function corRecompra(pct) {
+  if (pct >= 0.7) return "good";
+  if (pct >= 0.4) return "warn";
+  return "bad";
+}
+
+function fmtMoeda(v) {
+  return "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtPct(v) {
+  return (v * 100).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
+}
+
+function iniciais(nome) {
+  return nome.split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toUpperCase();
+}
+
+// cor de avatar determinística a partir do nome (paleta fixa, sem depender de foto real)
+const PALETA_AVATAR = ["#0E7C86", "#7A5CC7", "#C0672B", "#3D6FB4", "#1D9A5D", "#B4740A", "#B4406B"];
+function corAvatar(nome) {
+  let h = 0;
+  for (const c of nome) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PALETA_AVATAR[h % PALETA_AVATAR.length];
+}
+
+function linhaPilar(label, p) {
+  const cor = corPct(p.pct);
+  const largura = Math.min(p.pct * 100, 100);
+  return `
+    <div class="pilar">
+      <span class="label">${label}</span>
+      <span class="pct" style="color:var(--${cor})">${fmtPct(p.pct)}</span>
+      <div class="track"><div class="fill" style="width:${largura}%;background:var(--${cor})"></div></div>
+      <span class="sub">Meta ${p.meta.toLocaleString("pt-BR", {maximumFractionDigits: 2})} · Realizado ${p.real.toLocaleString("pt-BR", {maximumFractionDigits: 2})}</span>
+    </div>`;
+}
+
+function card(rca) {
+  const corB = corBadge(rca.pilares_atingidos);
+  const av = corAvatar(rca.nome);
+  const textoWhats = encodeURIComponent(
+    `*${rca.nome}* (RCA ${rca.codigo} · ${rca.rota})\n` +
+    `Pilares: ${rca.pilares_atingidos}/4\n` +
+    `Financeiro: ${fmtPct(rca.pilares.financeiro.pct)}\n` +
+    `Margem: ${fmtPct(rca.pilares.margem.pct)}\n` +
+    `Mix: ${fmtPct(rca.pilares.mix.pct)}\n` +
+    `Positivação: ${fmtPct(rca.pilares.positivacao.pct)}\n` +
+    `Tendência de fechamento: ${fmtPct(rca.tendencia.pct)}\n` +
+    `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
+    `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
+    `Recompra: ${fmtPct(rca.recompra_pct)}`
+  );
+
+  return `
+  <article class="card" id="card-${rca.codigo}" data-supervisor="${rca.supervisor}">
+    <div class="card-head">
+      <div class="avatar" style="background:${av}">${iniciais(rca.nome)}</div>
+      <div class="who">
+        <h2>${rca.nome}</h2>
+        <p class="meta">RCA ${rca.codigo} · ${rca.rota || rca.supervisor}</p>
+      </div>
+      <div class="head-actions">
+        <span class="badge-pilares" style="background:var(--${corB}-soft);color:var(--${corB})">${rca.pilares_atingidos}/4 pilares</span>
+        <button class="icon-btn" title="Imprimir" onclick="window.print()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        </button>
+        <a class="icon-btn" title="Enviar no WhatsApp" href="https://wa.me/?text=${textoWhats}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38a9.96 9.96 0 0 0 4.79 1.22h.01c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.15h-.01a8.2 8.2 0 0 1-4.17-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.35c0-4.52 3.68-8.2 8.22-8.2 2.2 0 4.26.86 5.81 2.41a8.15 8.15 0 0 1 2.4 5.8c0 4.52-3.68 8.2-8.21 8.2Zm4.5-6.15c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.96-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.08 0 1.22.89 2.4 1.01 2.57.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.66-1.17.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28Z"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pilares-list">
+      ${linhaPilar("Financeiro", rca.pilares.financeiro)}
+      ${linhaPilar("Margem", rca.pilares.margem)}
+      ${linhaPilar("Mix", rca.pilares.mix)}
+      ${linhaPilar("Positivação", rca.pilares.positivacao)}
+    </div>
+
+    <div class="box-tendencia">
+      <div class="top-row">
+        <span class="label">Tendência de fechamento</span>
+        <span class="pct" style="color:var(--${corPct(rca.tendencia.pct)})">${fmtPct(rca.tendencia.pct)}</span>
+      </div>
+      <div class="valor">${fmtMoeda(rca.tendencia.projetado)}</div>
+      <div class="foot-row">
+        <span>Meta ${fmtMoeda(rca.tendencia.meta)}</span>
+        <span>Projetado</span>
+      </div>
+      <div class="foot-row" style="margin-top:4px;padding-top:6px;border-top:1px dashed var(--border)">
+        <span>Meta do dia</span>
+        <span>${fmtMoeda(rca.tendencia.meta_dia)}</span>
+      </div>
+      <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
+        <span>Recompra</span>
+        <span class="pct" style="font-size:13px;color:var(--${corRecompra(rca.recompra_pct)})">${fmtPct(rca.recompra_pct)}</span>
+      </div>
+    </div>
+
+    <div class="mini-cards">
+      <div class="mini-card" style="--cor-categoria:#7A5CC7">
+        <div class="label">Industrializados</div>
+        <div class="pct-row">
+          <span class="sub-label">Participação</span>
+          <span class="pct" style="color:var(--${corParticipacaoIndustrializado(rca.industrializado.participacao_pct)})">${fmtPct(rca.industrializado.participacao_pct)}</span>
+        </div>
+        <div class="pct-row">
+          <span class="sub-label">Margem</span>
+          <span class="pct" style="color:var(--${corMargemIndustrializado(rca.industrializado.margem_pct)})">${fmtPct(rca.industrializado.margem_pct)}</span>
+        </div>
+        <div class="sub">Meta ${fmtMoeda(rca.industrializado.meta)}<br>Realizado ${fmtMoeda(rca.industrializado.real)}</div>
+      </div>
+      <div class="mini-card" style="--cor-categoria:#C0672B">
+        <div class="label">Thermoprocessados</div>
+        <div class="pct-row">
+          <span class="sub-label">Participação</span>
+          <span class="pct" style="color:var(--${corParticipacaoThermo(rca.thermo.participacao_pct)})">${fmtPct(rca.thermo.participacao_pct)}</span>
+        </div>
+        <div class="pct-row">
+          <span class="sub-label">Margem</span>
+          <span class="pct" style="color:var(--${corMargemThermo(rca.thermo.margem_pct)})">${fmtPct(rca.thermo.margem_pct)}</span>
+        </div>
+        <div class="sub">Meta ${fmtMoeda(rca.thermo.meta)}<br>Realizado ${fmtMoeda(rca.thermo.real)}</div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function montarResumo(dados) {
+  const total = dados.length;
+  const media = dados.reduce((s, r) => s + r.pilares_atingidos, 0) / (total || 1);
+  const acima3 = dados.filter(r => r.pilares_atingidos >= 3).length;
+  const supervisores = new Set(dados.map(r => r.supervisor)).size;
+  document.getElementById("summary").innerHTML = `
+    <div class="stat-pill"><div class="n">${total}</div><div class="l">RCAs</div></div>
+    <div class="stat-pill"><div class="n">${supervisores}</div><div class="l">Supervisores</div></div>
+    <div class="stat-pill"><div class="n">${media.toFixed(1)}</div><div class="l">Média pilares</div></div>
+    <div class="stat-pill"><div class="n">${acima3}</div><div class="l">Com 3-4 pilares</div></div>
+  `;
+}
+
+function media(valores) {
+  return valores.length ? valores.reduce((s, v) => s + v, 0) / valores.length : 0;
+}
+
+// Monta um "RCA" sintético com os totais do time — mesmo formato de dado
+// que um RCA de verdade, pra poder reaproveitar exatamente o mesmo card().
+function agregarTime(dados, nomeSupervisor) {
+  const somarMeta = campo => dados.reduce((s, r) => s + r.pilares[campo].meta, 0);
+  const somarReal = campo => dados.reduce((s, r) => s + r.pilares[campo].real, 0);
+  const pilar = campo => {
+    const meta = somarMeta(campo);
+    const real = somarReal(campo);
+    return { meta, real, pct: meta ? real / meta : 0 };
+  };
+
+  const metaFin = somarMeta("financeiro");
+  const projetado = dados.reduce((s, r) => s + r.tendencia.projetado, 0);
+  const metaDia = dados.reduce((s, r) => s + r.tendencia.meta_dia, 0);
+
+  return {
+    codigo: "EQUIPE",
+    nome: nomeSupervisor,
+    rota: `${dados.length} RCA${dados.length > 1 ? "s" : ""}`,
+    supervisor: nomeSupervisor,
+    pilares: {
+      positivacao: pilar("positivacao"),
+      margem: pilar("margem"),
+      mix: pilar("mix"),
+      financeiro: pilar("financeiro"),
+    },
+    pilares_atingidos: Math.round(media(dados.map(r => r.pilares_atingidos))),
+    tendencia: {
+      pct: metaFin ? projetado / metaFin : 0,
+      projetado,
+      meta: metaFin,
+      meta_dia: metaDia,
+    },
+    industrializado: {
+      meta: dados.reduce((s, r) => s + r.industrializado.meta, 0),
+      real: dados.reduce((s, r) => s + r.industrializado.real, 0),
+      participacao_pct: media(dados.map(r => r.industrializado.participacao_pct)),
+      margem_pct: media(dados.map(r => r.industrializado.margem_pct)),
+    },
+    thermo: {
+      meta: dados.reduce((s, r) => s + r.thermo.meta, 0),
+      real: dados.reduce((s, r) => s + r.thermo.real, 0),
+      participacao_pct: media(dados.map(r => r.thermo.participacao_pct)),
+      margem_pct: media(dados.map(r => r.thermo.margem_pct)),
+    },
+    recompra_pct: media(dados.map(r => r.recompra_pct)),
+  };
+}
+
+function montarResumoTime(dados, nomeSupervisor) {
+  const el = document.getElementById("resumoTime");
+  if (!dados.length) { el.innerHTML = ""; return; }
+  el.innerHTML = card(agregarTime(dados, nomeSupervisor));
+}
+
+function montarTabs(dados) {
+  const supervisores = [...new Set(dados.map(r => r.supervisor))].sort();
+  const contagem = s => dados.filter(r => r.supervisor === s).length;
+  const tabsEl = document.getElementById("tabs");
+  tabsEl.innerHTML =
+    `<button class="tab active" data-sup="__todos__">Todos <span class="count">${dados.length}</span></button>` +
+    supervisores.map(s => `<button class="tab" data-sup="${s}">${s} <span class="count">${contagem(s)}</span></button>`).join("");
+
+  tabsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    tabsEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    btn.classList.add("active");
+    filtrar(btn.dataset.sup);
+  });
+}
+
+function filtrar(sup) {
+  const cards = document.querySelectorAll(".card");
+  let visiveis = 0;
+  cards.forEach(c => {
+    const mostra = sup === "__todos__" || c.dataset.supervisor === sup;
+    c.style.display = mostra ? "" : "none";
+    if (mostra) visiveis++;
+  });
+  document.getElementById("empty").style.display = visiveis === 0 ? "block" : "none";
+
+  const filtrados = sup === "__todos__" ? DADOS : DADOS.filter(r => r.supervisor === sup);
+  montarResumoTime(filtrados, sup === "__todos__" ? "EQUIPE TODA" : sup);
+}
+
+function montar() {
+  montarResumo(DADOS);
+  const supervisorUnico = new Set(DADOS.map(r => r.supervisor)).size === 1 ? DADOS[0].supervisor : "EQUIPE TODA";
+  montarResumoTime(DADOS, supervisorUnico);
+  montarTabs(DADOS);
+  document.getElementById("grid").innerHTML = DADOS
+    .slice()
+    .sort((a, b) => b.pilares_atingidos - a.pilares_atingidos || a.nome.localeCompare(b.nome))
+    .map(card)
+    .join("");
+}
+
+montar();
+</script>

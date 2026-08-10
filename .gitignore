@@ -1,0 +1,10 @@
+debug/
+prints_teste/
+__pycache__/
+*.pyc
+teste_equipe_edmar.png
+links_supervisores.json
+atualizar_painel.bat
+atualizar_e_publicar.ps1
+testar_envio_supervisor.py
+whatsapp_multi.py
