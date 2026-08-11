@@ -835,7 +835,7 @@ def _svg_barras(itens, largura=560, sublabel=False):
     <text x="0" y="{y_rotulo}" font-size="12.5" font-weight="700" class="dv-ink-soft">{label}</text>''')
         if subtitulo:
             linhas.append(f'''
-    <text x="{trilho_x}" y="{y + 14}" font-size="11" font-weight="700" class="dv-ink">{subtitulo}</text>''')
+    <text x="{trilho_x}" y="{y + 15}" font-size="13.5" font-weight="800" class="dv-ink">{subtitulo}</text>''')
         linhas.append(f'''
     <rect x="{trilho_x}" y="{y_barra}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
     <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>
