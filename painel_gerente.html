@@ -1,0 +1,764 @@
+<title>Painel do Gerente — Equipe GYN</title>
+<style>
+
+:root {
+  --bg: #EEF1F4;
+  --surface: #FFFFFF;
+  --surface-2: #F5F7FA;
+  --border: #E1E6EB;
+  --ink: #10151C;
+  --ink-soft: #5B6472;
+  --ink-faint: #6B7684;
+  --accent: #0E7C86;
+  --accent-soft: #E4F4F3;
+  --accent-ink: #063A3F;
+  --accent-deep: #0B5158;
+  --accent-deep-2: #128A93;
+  --good: #1D9A5D;
+  --good-soft: #E4F5EC;
+  --warn: #B4740A;
+  --warn-soft: #FBF0DC;
+  --bad: #D33B3B;
+  --bad-soft: #FBE7E7;
+  --track: #E4E7EC;
+  --shadow: 0 1px 2px rgba(16, 21, 28, 0.04), 0 8px 24px -12px rgba(16, 21, 28, 0.18);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0B1116;
+    --surface: #131B22;
+    --surface-2: #1A232B;
+    --border: #253039;
+    --ink: #EAF0F4;
+    --ink-soft: #93A1AC;
+    --ink-faint: #64707B;
+    --accent: #4FD1C8;
+    --accent-soft: #12302E;
+    --accent-ink: #B6F1EB;
+    --accent-deep: #0A3F44;
+    --accent-deep-2: #1B6E74;
+    --good: #3FC17F;
+    --good-soft: #123625;
+    --warn: #E0A63C;
+    --warn-soft: #3A2C10;
+    --bad: #F0645E;
+    --bad-soft: #3A1616;
+    --track: #253039;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0B1116;
+  --surface: #131B22;
+  --surface-2: #1A232B;
+  --border: #253039;
+  --ink: #EAF0F4;
+  --ink-soft: #93A1AC;
+  --ink-faint: #64707B;
+  --accent: #4FD1C8;
+  --accent-soft: #12302E;
+  --accent-ink: #B6F1EB;
+  --accent-deep: #0A3F44;
+  --accent-deep-2: #1B6E74;
+  --good: #3FC17F;
+  --good-soft: #123625;
+  --warn: #E0A63C;
+  --warn-soft: #3A2C10;
+  --bad: #F0645E;
+  --bad-soft: #3A1616;
+  --track: #253039;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 12px 32px -16px rgba(0, 0, 0, 0.6);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 28px 20px 64px;
+}
+
+/* ---------- Header / summary ---------- */
+
+header.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+.title-block h1 {
+  margin: 0 0 4px;
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.title-block p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.summary-strip {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.stat-pill {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  min-width: 108px;
+  box-shadow: var(--shadow);
+}
+
+.stat-pill .n {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.stat-pill .l {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+
+/* ---------- Filter tabs ---------- */
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 14px;
+}
+
+.tab {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.tab:hover { border-color: var(--accent); color: var(--accent); }
+
+.tab.active {
+  background: var(--accent-deep);
+  border-color: var(--accent-deep);
+  color: #fff;
+}
+
+.tab .count {
+  opacity: 0.7;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+/* ---------- Resumo do time (mesmo card do vendedor, com totais somados) ---------- */
+
+.resumo-time {
+  max-width: 420px;
+  margin-bottom: 22px;
+}
+
+.resumo-time .card {
+  border-width: 2px;
+  border-color: var(--accent);
+}
+
+/* ---------- Card grid ---------- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 15px;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.card-head .who { flex: 1; min-width: 0; }
+
+.card-head h2 {
+  margin: 0;
+  font-size: 15.5px;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-head .meta {
+  margin: 1px 0 0;
+  font-size: 12px;
+  color: var(--ink-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.head-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+
+.badge-pilares {
+  font-size: 11.5px;
+  font-weight: 800;
+  padding: 4px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.icon-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--ink-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: none;
+}
+.icon-btn:hover { border-color: var(--accent); color: var(--accent); }
+.icon-btn svg { width: 14px; height: 14px; }
+
+/* ---------- Pilar rows ---------- */
+
+.pilar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 8px;
+  align-items: baseline;
+}
+
+.pilar .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.pilar .pct {
+  font-size: 15px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.pilar .track {
+  grid-column: 1 / -1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--track);
+  overflow: hidden;
+}
+
+.pilar .fill { height: 100%; border-radius: 999px; }
+
+.pilar .sub {
+  grid-column: 1 / -1;
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.pilares-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------- Tendência ---------- */
+
+.box-tendencia {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+}
+
+.box-tendencia .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+
+.box-tendencia .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+}
+
+.box-tendencia .pct {
+  font-size: 14px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.box-tendencia .valor {
+  font-size: 19px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 6px;
+}
+
+.box-tendencia .foot-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Industrializado / Thermo ---------- */
+
+.mini-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.mini-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 8px;
+  border-top: 3px solid var(--cor-categoria);
+  min-width: 0;
+}
+
+.mini-card .label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--ink-soft);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mini-card .pct-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.mini-card .pct {
+  font-size: 20px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.mini-card .sub-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+}
+
+.mini-card .sub {
+  font-size: 10.5px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.5;
+}
+
+/* ---------- Focus / a11y ---------- */
+
+button:focus-visible, .tab:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--ink-faint);
+  padding: 60px 0;
+  font-size: 14px;
+}
+
+footer.foot {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--ink-faint);
+}
+
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title-block">
+      <h1>Painel do Gerente</h1>
+      <p>Somatória geral e por supervisor — atualizado em 11/08/2026 13:33</p>
+    </div>
+  </header>
+
+  <section class="resumo-time" id="gerenteGeral" style="max-width:none"></section>
+
+  <h2 style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-soft);margin:0 0 14px;">Por supervisor</h2>
+  <main class="grid" id="gerenteGrid"></main>
+
+  <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
+</div>
+
+<script>
+const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 37, "pct": 0.6727272727272727}, "margem": {"meta": 11.3, "real": 5.542706597801407, "pct": 0.49050500865499175}, "mix": {"meta": 2.4, "real": 2.07, "pct": 0.8624999999999999}, "financeiro": {"meta": 1640000, "real": 556240.31, "pct": 0.33917092073170735}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.211324716898955, "projetado": 1986572.535714286, "meta": 1640000, "meta_dia": 60208.871666666666}, "industrializado": {"meta": 410000, "real": 34513.38, "participacao_pct": 0.06204760672594907, "margem_pct": 0.2326891340807536}, "thermo": {"meta": 49200, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.32432432432432434}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 43, "pct": 0.7962962962962963}, "margem": {"meta": 14, "real": 8.757239732574046, "pct": 0.625517123755289}, "mix": {"meta": 2.6, "real": 2.49, "pct": 0.9576923076923077}, "financeiro": {"meta": 1645000, "real": 406095.6603756, "pct": 0.24686666284231001}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8816666530082501, "projetado": 1450341.6441985713, "meta": 1645000, "meta_dia": 68828.01886802222}, "industrializado": {"meta": 411250, "real": 111540.66, "participacao_pct": 0.27466597376794294, "margem_pct": 0.16034170995939964}, "thermo": {"meta": 49350, "real": 53904.78, "participacao_pct": 0.13273911853710327, "margem_pct": -0.0253920292008242}, "recompra_pct": 0.46511627906976744}, {"codigo": "15", "nome": "WESLEY", "rota": "GYN RT", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 105, "real": 85, "pct": 0.8095238095238095}, "margem": {"meta": 13.7, "real": 13.847266143697421, "pct": 1.0107493535545564}, "mix": {"meta": 2.6, "real": 2.43, "pct": 0.9346153846153846}, "financeiro": {"meta": 326000, "real": 89667.425632, "pct": 0.2750534528588957}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9823337602103418, "projetado": 320240.80582857144, "meta": 326000, "meta_dia": 13129.58746488889}, "industrializado": {"meta": 81500, "real": 28277.06, "participacao_pct": 0.31535487721093497, "margem_pct": 0.22540507875288307}, "thermo": {"meta": 9780, "real": 2100.71, "participacao_pct": 0.07429025506894989, "margem_pct": 0.1637623123724836}, "recompra_pct": 0.5882352941176471}, {"codigo": "85", "nome": "CARLOS HENRIQUE", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 97, "real": 83, "pct": 0.8556701030927835}, "margem": {"meta": 12.9, "real": 13.853127895273484, "pct": 1.0738858833545337}, "mix": {"meta": 3.3, "real": 3.7, "pct": 1.1212121212121213}, "financeiro": {"meta": 367000, "real": 126599.992, "pct": 0.34495910626702997}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.2319968080965356, "projetado": 452142.82857142854, "meta": 367000, "meta_dia": 13355.556}, "industrializado": {"meta": 91750, "real": 30614.12, "participacao_pct": 0.24181770880364667, "margem_pct": 0.23565979787758062}, "thermo": {"meta": 11010, "real": 5618.36, "participacao_pct": 0.18352185200815832, "margem_pct": 0.16952903352437357}, "recompra_pct": 0.5301204819277109}, {"codigo": "81", "nome": "LOIOLA", "rota": "GYN RT", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 100, "real": 61, "pct": 0.61}, "margem": {"meta": 13.3, "real": 14.537874087728577, "pct": 1.0930732396788403}, "mix": {"meta": 2.9, "real": 2.71, "pct": 0.9344827586206896}, "financeiro": {"meta": 331000, "real": 62163.188, "pct": 0.1878041933534743}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.6707292619766941, "projetado": 222011.38571428575, "meta": 331000, "meta_dia": 14935.378444444443}, "industrializado": {"meta": 82750, "real": 17623.05, "participacao_pct": 0.283496560697627, "margem_pct": 0.24299767080045737}, "thermo": {"meta": 9930, "real": 3410.18, "participacao_pct": 0.193506799333827, "margem_pct": 0.07278585914174616}, "recompra_pct": 0.5409836065573771}, {"codigo": "83", "nome": "MARCOS SILVA -", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 99, "real": 76, "pct": 0.7676767676767676}, "margem": {"meta": 13, "real": 13.608753688262139, "pct": 1.0468272067893953}, "mix": {"meta": 2.7, "real": 2.54, "pct": 0.9407407407407407}, "financeiro": {"meta": 375000, "real": 119300.47498, "pct": 0.31813459994666665}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.136194999809524, "projetado": 426073.12492857146, "meta": 375000, "meta_dia": 14205.529167777779}, "industrializado": {"meta": 93750, "real": 12520.8, "participacao_pct": 0.10495180343665049, "margem_pct": 0.24927151974314735}, "thermo": {"meta": 11250, "real": 1849.32, "participacao_pct": 0.14769982748706154, "margem_pct": 0.15811939644409828}, "recompra_pct": 0.6447368421052632}, {"codigo": "192", "nome": "LUCAS LEAL", "rota": "G", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 77, "real": 55, "pct": 0.7142857142857143}, "margem": {"meta": 13.5, "real": 13.475231142048921, "pct": 0.9981652697814015}, "mix": {"meta": 2.9, "real": 2.86, "pct": 0.9862068965517241}, "financeiro": {"meta": 242000, "real": 67092.66, "pct": 0.2772423966942149}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.9901514167650531, "projetado": 239616.64285714287, "meta": 242000, "meta_dia": 9717.074444444444}, "industrializado": {"meta": 60500, "real": 16779.95, "participacao_pct": 0.2501011287970994, "margem_pct": 0.22283924104660624}, "thermo": {"meta": 7260, "real": 1580.41, "participacao_pct": 0.09418442843989404, "margem_pct": 0.15986322654501045}, "recompra_pct": 0.5636363636363636}, {"codigo": "649", "nome": "WALLACE SOUSA", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 79, "real": 53, "pct": 0.6708860759493671}, "margem": {"meta": 12.85, "real": 11.720457815291223, "pct": 0.912097884458461}, "mix": {"meta": 2.4, "real": 2.62, "pct": 1.0916666666666668}, "financeiro": {"meta": 232000, "real": 83880.15, "pct": 0.3615523706896551}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2912584667487683, "projetado": 299571.96428571426, "meta": 232000, "meta_dia": 8228.880555555555}, "industrializado": {"meta": 58000, "real": 15670.82, "participacao_pct": 0.186823938679175, "margem_pct": 0.21921927375848874}, "thermo": {"meta": 6960, "real": 2794.29, "participacao_pct": 0.17831166460976516, "margem_pct": 0.15240980874282908}, "recompra_pct": 0.6792452830188679}, {"codigo": "650", "nome": "ANDRE WILKER -", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 95, "real": 51, "pct": 0.5368421052631579}, "margem": {"meta": 13.5, "real": 13.494133980169225, "pct": 0.9995654800125352}, "mix": {"meta": 2.95, "real": 3.56, "pct": 1.206779661016949}, "financeiro": {"meta": 247000, "real": 66410.92, "pct": 0.2688701214574899}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9602504337767496, "projetado": 237181.85714285713, "meta": 247000, "meta_dia": 10032.726666666667}, "industrializado": {"meta": 61750, "real": 10996.32, "participacao_pct": 0.16557999798828266, "margem_pct": 0.23915047614110893}, "thermo": {"meta": 7410, "real": 2235.42, "participacao_pct": 0.20328800907940112, "margem_pct": 0.1846693159406286}, "recompra_pct": 0.9607843137254902}, {"codigo": "12", "nome": "FABIANO", "rota": "GYN R", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 60, "pct": 0.6185567010309279}, "margem": {"meta": 12.85, "real": 12.958542172061517, "pct": 1.0084468616390285}, "mix": {"meta": 2.5, "real": 2.38, "pct": 0.952}, "financeiro": {"meta": 260000, "real": 52591.356796, "pct": 0.20227444921538462}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.7224087471978021, "projetado": 187826.27427142856, "meta": 260000, "meta_dia": 11522.702400222222}, "industrializado": {"meta": 65000, "real": 10929.05, "participacao_pct": 0.20781076332358936, "margem_pct": 0.2500233465305767}, "thermo": {"meta": 7800, "real": 1250.58, "participacao_pct": 0.11442714600079605, "margem_pct": 0.18118401603735865}, "recompra_pct": 0.7666666666666667}, {"codigo": "471", "nome": "ANTONIO EDVALD", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 73, "pct": 0.7525773195876289}, "margem": {"meta": 12.85, "real": 12.560821990460108, "pct": 0.9774958747439773}, "mix": {"meta": 2.5, "real": 2.43, "pct": 0.9720000000000001}, "financeiro": {"meta": 250000, "real": 83464.9694, "pct": 0.3338598776}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.1923567057142859, "projetado": 298089.17642857146, "meta": 250000, "meta_dia": 9251.946144444444}, "industrializado": {"meta": 62500, "real": 7869.49, "participacao_pct": 0.09428494440926494, "margem_pct": 0.24094058189285458}, "thermo": {"meta": 7500, "real": 2191.67, "participacao_pct": 0.2785021646891984, "margem_pct": 0.17862509942828983}, "recompra_pct": 0.6027397260273972}, {"codigo": "383", "nome": "GABRIEL LOUREN", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 71, "pct": 0.7319587628865979}, "margem": {"meta": 12.85, "real": 12.186607931141298, "pct": 0.9483741580654707}, "mix": {"meta": 2.5, "real": 2.8, "pct": 1.1199999999999999}, "financeiro": {"meta": 450000, "real": 189466.54, "pct": 0.4210367555555556}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.5037026984126984, "projetado": 676666.2142857143, "meta": 450000, "meta_dia": 14474.08111111111}, "industrializado": {"meta": 112500, "real": 22871.14, "participacao_pct": 0.12071334600821865, "margem_pct": 0.2795594369060746}, "thermo": {"meta": 13500, "real": 3252.85, "participacao_pct": 0.14222509240903602, "margem_pct": 0.17402931430837565}, "recompra_pct": 0.5774647887323944}, {"codigo": "377", "nome": "CELISMAR", "rota": "GYN", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 115, "real": 75, "pct": 0.6521739130434783}, "margem": {"meta": 13, "real": 13.475138791542802, "pct": 1.0365491378109848}, "mix": {"meta": 2.5, "real": 2.57, "pct": 1.028}, "financeiro": {"meta": 210000, "real": 53018.51, "pct": 0.25246909523809524}}, "pilares_atingidos": 2, "tendencia": {"pct": 0.9016753401360544, "projetado": 189351.82142857142, "meta": 210000, "meta_dia": 8721.193888888889}, "industrializado": {"meta": 52500, "real": 12980.53, "participacao_pct": 0.2448301546007234, "margem_pct": 0.2166590340301975}, "thermo": {"meta": 6300, "real": 2085.1, "participacao_pct": 0.16063288633052733, "margem_pct": 0.15748726746151262}, "recompra_pct": 0.7066666666666667}, {"codigo": "657", "nome": "YURI ENRIQUE -", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 64, "real": 36, "pct": 0.5625}, "margem": {"meta": 13, "real": 13.219694386255211, "pct": 1.0168995681734778}, "mix": {"meta": 2.6, "real": 2.53, "pct": 0.973076923076923}, "financeiro": {"meta": 260000, "real": 69604.41002, "pct": 0.2677092693076923}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9561045332417581, "projetado": 248587.17864285712, "meta": 260000, "meta_dia": 10577.532776666667}, "industrializado": {"meta": 65000, "real": 12196.5, "participacao_pct": 0.17522596623540782, "margem_pct": 0.2517585019800762}, "thermo": {"meta": 7800, "real": 1691.07, "participacao_pct": 0.1386520723158283, "margem_pct": -0.08912892088914127}, "recompra_pct": 0.5277777777777778}, {"codigo": "781", "nome": "JOAO LUCAS  -", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 67, "real": 16, "pct": 0.23880597014925373}, "margem": {"meta": 13.5, "real": 12.391463864817238, "pct": 0.9178862122086843}, "mix": {"meta": 2.5, "real": 1.94, "pct": 0.776}, "financeiro": {"meta": 190000, "real": 11031.88, "pct": 0.05806252631578947}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.20736616541353384, "projetado": 39399.57142857143, "meta": 190000, "meta_dia": 9942.673333333332}, "industrializado": {"meta": 47500, "real": 288.22, "participacao_pct": 0.02612609999383605, "margem_pct": 0.2745148449101381}, "thermo": {"meta": 5700, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.9375}, {"codigo": "791", "nome": "LEANDRO GOMES", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 75, "real": 35, "pct": 0.4666666666666667}, "margem": {"meta": 13.5, "real": 13.792616413083218, "pct": 1.0216752898580161}, "mix": {"meta": 2.5, "real": 1.88, "pct": 0.752}, "financeiro": {"meta": 190000, "real": 24217.96994, "pct": 0.12746299968421052}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.4552249988721805, "projetado": 86492.74978571429, "meta": 190000, "meta_dia": 9210.112781111111}, "industrializado": {"meta": 47500, "real": 2912.87, "participacao_pct": 0.12027721593579614, "margem_pct": 0.2649059419747533}, "thermo": {"meta": 5700, "real": 517.03, "participacao_pct": 0.17749848087968223, "margem_pct": 0.22090957892578766}, "recompra_pct": 0.6857142857142857}, {"codigo": "738", "nome": "MARCEL HENRIQU", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 84, "real": 66, "pct": 0.7857142857142857}, "margem": {"meta": 13, "real": 12.435295287522862, "pct": 0.9565611759632972}, "mix": {"meta": 2.65, "real": 2.69, "pct": 1.0150943396226415}, "financeiro": {"meta": 300000, "real": 84574.850024, "pct": 0.28191616674666664}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0068434526666667, "projetado": 302053.0358, "meta": 300000, "meta_dia": 11968.063887555556}, "industrializado": {"meta": 75000, "real": 18351.62, "participacao_pct": 0.2169867282625073, "margem_pct": 0.18980596545700051}, "thermo": {"meta": 9000, "real": 2173.65, "participacao_pct": 0.11844458418384864, "margem_pct": 0.1680037376173717}, "recompra_pct": 0.5}, {"codigo": "164", "nome": "JOAO VITOR", "rota": "G", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 97, "real": 71, "pct": 0.7319587628865979}, "margem": {"meta": 13, "real": 12.087396003615362, "pct": 0.9297996925857971}, "mix": {"meta": 3, "real": 3.52, "pct": 1.1733333333333333}, "financeiro": {"meta": 480000, "real": 182247.44366, "pct": 0.3796821742916666}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.356007765327381, "projetado": 650883.7273571428, "meta": 480000, "meta_dia": 16541.808685555556}, "industrializado": {"meta": 120000, "real": 32332.23, "participacao_pct": 0.17740841435514926, "margem_pct": 0.1960059505527456}, "thermo": {"meta": 14400, "real": 5435.9, "participacao_pct": 0.16812635565192996, "margem_pct": 0.11831124577861978}, "recompra_pct": 0.5352112676056338}, {"codigo": "45", "nome": "TIAGO", "rota": "GYN RT", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 97, "real": 47, "pct": 0.4845360824742268}, "margem": {"meta": 13, "real": 10.773911710087372, "pct": 0.8287624392374902}, "mix": {"meta": 2.8, "real": 3.79, "pct": 1.3535714285714286}, "financeiro": {"meta": 380000, "real": 155918.7, "pct": 0.1}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.4654013157894736, "projetado": 556852.5, "meta": 380000, "meta_dia": 12448.96111111111}, "industrializado": {"meta": 95000, "real": 25973.05, "participacao_pct": 0.1665807244416481, "margem_pct": 0.2193729540750894}, "thermo": {"meta": 11400, "real": 2551.74, "participacao_pct": 0.09824568158148542, "margem_pct": 0.16506271702602923}, "recompra_pct": 0.723404255319149}, {"codigo": "428", "nome": "TAUA F.", "rota": "GYN", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 87, "real": 56, "pct": 0.6436781609195402}, "margem": {"meta": 13, "real": 12.421015488501418, "pct": 0.9554627298847245}, "mix": {"meta": 3, "real": 2.96, "pct": 0.9866666666666667}, "financeiro": {"meta": 300000, "real": 115695.57, "pct": 0.38565190000000005}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.3773282142857142, "projetado": 413198.46428571426, "meta": 300000, "meta_dia": 10239.135}, "industrializado": {"meta": 75000, "real": 28511.66, "participacao_pct": 0.24643692061848174, "margem_pct": 0.2213226977454136}, "thermo": {"meta": 9000, "real": 2774.95, "participacao_pct": 0.09732684803340107, "margem_pct": 0.16643061284707833}, "recompra_pct": 0.8035714285714286}, {"codigo": "439", "nome": "GUILHERME AUGU", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 94, "real": 64, "pct": 0.6808510638297872}, "margem": {"meta": 13, "real": 12.661179416351617, "pct": 0.9739368781808936}, "mix": {"meta": 2.5, "real": 2.72, "pct": 1.088}, "financeiro": {"meta": 330000, "real": 96474.01, "pct": 0.2923454848484848}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.0440910173160172, "projetado": 344550.0357142857, "meta": 330000, "meta_dia": 12973.66611111111}, "industrializado": {"meta": 82500, "real": 19107.75, "participacao_pct": 0.19806111511276459, "margem_pct": 0.20731620321597255}, "thermo": {"meta": 9900, "real": 5337.07, "participacao_pct": 0.27931441430833037, "margem_pct": 0.16051893949451665}, "recompra_pct": 0.5}, {"codigo": "622", "nome": "HAMBER", "rota": "GYN R", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 79, "real": 57, "pct": 0.7215189873417721}, "margem": {"meta": 13, "real": 12.177757164807398, "pct": 0.9367505511390306}, "mix": {"meta": 2.5, "real": 2.51, "pct": 1.004}, "financeiro": {"meta": 290000, "real": 86804.72, "pct": 0.29932662068965515}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.0690236453201971, "projetado": 310016.85714285716, "meta": 290000, "meta_dia": 11288.626666666667}, "industrializado": {"meta": 72500, "real": 11965.89, "participacao_pct": 0.13784837967336339, "margem_pct": 0.20558854666054927}, "thermo": {"meta": 8700, "real": 2338.39, "participacao_pct": 0.19542131843097338, "margem_pct": 0.08162305056384948}, "recompra_pct": 0.5087719298245614}, {"codigo": "735", "nome": "CARLOS RAFAEL", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 84, "real": 68, "pct": 0.8095238095238095}, "margem": {"meta": 13, "real": 11.418062478833734, "pct": 0.8783124983718257}, "mix": {"meta": 2.5, "real": 2.58, "pct": 1.032}, "financeiro": {"meta": 200000, "real": 55485.698, "pct": 0.27742848999999997}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9908160357142857, "projetado": 198163.20714285714, "meta": 200000, "meta_dia": 8028.5723333333335}, "industrializado": {"meta": 50000, "real": 10983.92, "participacao_pct": 0.1979594813784266, "margem_pct": 0.19265172244517434}, "thermo": {"meta": 6000, "real": 1973.56, "participacao_pct": 0.17967720085361147, "margem_pct": 0.16149695507407935}, "recompra_pct": 0.6323529411764706}, {"codigo": "16", "nome": "BERALDO", "rota": "GYN R", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 84, "real": 55, "pct": 0.6547619047619048}, "margem": {"meta": 13.3, "real": 11.788137248061192, "pct": 0.8863261088767813}, "mix": {"meta": 2.4, "real": 2.29, "pct": 0.9541666666666667}, "financeiro": {"meta": 265000, "real": 66092.50536, "pct": 0.24940568060377358}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8907345735849056, "projetado": 236044.66199999998, "meta": 265000, "meta_dia": 11050.416368888888}, "industrializado": {"meta": 66250, "real": 15466.12, "participacao_pct": 0.2340071679195307, "margem_pct": 0.24288449189583436}, "thermo": {"meta": 7950, "real": 696.09, "participacao_pct": 0.04500740974465477, "margem_pct": 0.1596263966556049}, "recompra_pct": 0.6909090909090909}, {"codigo": "398", "nome": "UCLEIBSON", "rota": "GY", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 72, "real": 46, "pct": 0.6388888888888888}, "margem": {"meta": 13.5, "real": 13.206485452879594, "pct": 0.9782581816947847}, "mix": {"meta": 2.4, "real": 2.35, "pct": 0.9791666666666667}, "financeiro": {"meta": 265000, "real": 69142.55, "pct": 0.26091528301886796}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.9318402964959569, "projetado": 246937.67857142858, "meta": 265000, "meta_dia": 10880.969444444445}, "industrializado": {"meta": 66250, "real": 5153.86, "participacao_pct": 0.0745396286367801, "margem_pct": 0.24916007831023732}, "thermo": {"meta": 7950, "real": 358.44, "participacao_pct": 0.06954787285646098, "margem_pct": 0.18790373538667565}, "recompra_pct": 0.5869565217391305}, {"codigo": "723", "nome": "JEAN PIERRE -", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 67, "real": 42, "pct": 0.6268656716417911}, "margem": {"meta": 12.85, "real": 14.25965414379782, "pct": 1.109700711579597}, "mix": {"meta": 2.4, "real": 2.3, "pct": 0.9583333333333333}, "financeiro": {"meta": 225000, "real": 62163.53, "pct": 0.2762823555555555}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9867226984126983, "projetado": 222012.60714285713, "meta": 225000, "meta_dia": 9046.470555555556}, "industrializado": {"meta": 56250, "real": 18512.73, "participacao_pct": 0.29780692956143257, "margem_pct": 0.2670738570270295}, "thermo": {"meta": 6750, "real": 1550.63, "participacao_pct": 0.08376020176386735, "margem_pct": 0.17160471432127597}, "recompra_pct": 0.6666666666666666}, {"codigo": "729", "nome": "MARCELO ALVES", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 74, "real": 45, "pct": 0.6081081081081081}, "margem": {"meta": 12.85, "real": 12.000782468259931, "pct": 0.933913032549411}, "mix": {"meta": 2.4, "real": 2.67, "pct": 1.1125}, "financeiro": {"meta": 245000, "real": 78763.22, "pct": 0.3214825306122449}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.148151895043732, "projetado": 281297.2142857143, "meta": 245000, "meta_dia": 9235.376666666667}, "industrializado": {"meta": 61250, "real": 5648.71, "participacao_pct": 0.07171761134194361, "margem_pct": 0.21367573169803364}, "thermo": {"meta": 7350, "real": 1452.92, "participacao_pct": 0.25721270874235, "margem_pct": 0.23597874324807971}, "recompra_pct": 0.4888888888888889}, {"codigo": "467", "nome": "IGOR SA", "rota": "GYN", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 75, "real": 48, "pct": 0.64}, "margem": {"meta": 12.85, "real": 12.05503340168053, "pct": 0.9381348950724149}, "mix": {"meta": 2.45, "real": 2.34, "pct": 0.9551020408163264}, "financeiro": {"meta": 270000, "real": 78255.13293, "pct": 0.2898338256666667}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.035120805952381, "projetado": 279482.6176071429, "meta": 270000, "meta_dia": 10652.492615}, "industrializado": {"meta": 67500, "real": 10386.01, "participacao_pct": 0.13271985633569097, "margem_pct": 0.26929887704710476}, "thermo": {"meta": 8100, "real": 1596.64, "participacao_pct": 0.15372987316592224, "margem_pct": 0.15901128230283595}, "recompra_pct": 0.4583333333333333}, {"codigo": "644", "nome": "ALBERTO SANTOS", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 82, "real": 58, "pct": 0.7073170731707317}, "margem": {"meta": 12.85, "real": 9.616310694375025, "pct": 0.7483510267996129}, "mix": {"meta": 2.4, "real": 2.68, "pct": 1.1166666666666667}, "financeiro": {"meta": 310000, "real": 152945.9245475, "pct": 0.4933739501532258}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.7620498219758065, "projetado": 546235.4448125, "meta": 310000, "meta_dia": 8725.226414027777}, "industrializado": {"meta": 77500, "real": 23596.45, "participacao_pct": 0.15427969113797285, "margem_pct": 0.19707667442348317}, "thermo": {"meta": 9300, "real": 2989.73, "participacao_pct": 0.12670253364383202, "margem_pct": 0.1133584976543032}, "recompra_pct": 0.603448275862069}, {"codigo": "698", "nome": "FERNANDO OLIVE", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 87, "real": 51, "pct": 0.5862068965517241}, "margem": {"meta": 12.85, "real": 11.008867607670894, "pct": 0.8567212146047388}, "mix": {"meta": 2.4, "real": 2.41, "pct": 1.0041666666666669}, "financeiro": {"meta": 215000, "real": 55889.1716, "pct": 0.2599496353488372}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9283915548172758, "projetado": 199604.1842857143, "meta": 215000, "meta_dia": 8839.490466666666}, "industrializado": {"meta": 53750, "real": 5362.27, "participacao_pct": 0.09594470353538037, "margem_pct": 0.22695986375173213}, "thermo": {"meta": 6450, "real": 738.99, "participacao_pct": 0.13781290386347572, "margem_pct": 0.1520898852217216}, "recompra_pct": 0.5882352941176471}, {"codigo": "42", "nome": "PAULO RONAN", "rota": "G", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 74, "real": 63, "pct": 0.8513513513513513}, "margem": {"meta": 13, "real": 12.482464994152355, "pct": 0.9601896149347966}, "mix": {"meta": 2.15, "real": 2, "pct": 0.9302325581395349}, "financeiro": {"meta": 306000, "real": 98569.6, "pct": 0.3221228758169935}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.150438842203548, "projetado": 352034.28571428574, "meta": 306000, "meta_dia": 11523.91111111111}, "industrializado": {"meta": 76500, "real": 6375.43, "participacao_pct": 0.06467947521345323, "margem_pct": 0.18510441987442428}, "thermo": {"meta": 9180, "real": 3565.99, "participacao_pct": 0.5593332528158884, "margem_pct": 0.1705812663344541}, "recompra_pct": 0.4603174603174603}, {"codigo": "334", "nome": "JOAO GABRIEL -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 64, "real": 41, "pct": 0.640625}, "margem": {"meta": 13, "real": 12.567968562572522, "pct": 0.9667668125055786}, "mix": {"meta": 2.15, "real": 2.16, "pct": 1.0046511627906978}, "financeiro": {"meta": 216000, "real": 75493.2, "pct": 0.34950555555555557}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2482341269841268, "projetado": 269618.5714285714, "meta": 216000, "meta_dia": 7805.9333333333325}, "industrializado": {"meta": 54000, "real": 2503.22, "participacao_pct": 0.033158218223628085, "margem_pct": 0.17219697533576744}, "thermo": {"meta": 6480, "real": 6513.89, "participacao_pct": 2.6022043607833116, "margem_pct": 0.16874523656371235}, "recompra_pct": 0.5853658536585366}, {"codigo": "793", "nome": "IRON OLIVEIRA", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 59, "real": 41, "pct": 0.6949152542372882}, "margem": {"meta": 13, "real": 15.889399991942492, "pct": 1.22226153784173}, "mix": {"meta": 2.15, "real": 2, "pct": 0.9302325581395349}, "financeiro": {"meta": 180000, "real": 50834.573, "pct": 0.28241429444444444}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.00862248015873, "projetado": 181552.0464285714, "meta": 180000, "meta_dia": 7175.857055555555}, "industrializado": {"meta": 45000, "real": 4535.35, "participacao_pct": 0.08921782425515801, "margem_pct": 0.23676912031045014}, "thermo": {"meta": 5400, "real": 863.52, "participacao_pct": 0.1903976539848082, "margem_pct": 0.2186012903094312}, "recompra_pct": 0.5365853658536586}, {"codigo": "381", "nome": "RODRIGO T", "rota": "GY", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 42, "real": 20, "pct": 0.47619047619047616}, "margem": {"meta": 13, "real": 14.502443310473465, "pct": 1.1155725623441126}, "mix": {"meta": 2.15, "real": 2.48, "pct": 1.1534883720930234}, "financeiro": {"meta": 175000, "real": 49500.14, "pct": 0.28285794285714283}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0102069387755102, "projetado": 176786.2142857143, "meta": 175000, "meta_dia": 6972.214444444445}, "industrializado": {"meta": 43750, "real": 1170.03, "participacao_pct": 0.023636902845123264, "margem_pct": 0.24162129312923603}, "thermo": {"meta": 5250, "real": 317.19, "participacao_pct": 0.2710956129330017, "margem_pct": 0.15719161070651655}, "recompra_pct": 0.6}, {"codigo": "473", "nome": "KAIKY DIAS", "rota": "G", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 87, "real": 73, "pct": 0.8390804597701149}, "margem": {"meta": 13, "real": 13.013440780728649, "pct": 1.001033906209896}, "mix": {"meta": 2.15, "real": 2.21, "pct": 1.027906976744186}, "financeiro": {"meta": 206000, "real": 90778.1093995, "pct": 0.4406704339781553}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.5738229784934117, "projetado": 324207.5335696428, "meta": 206000, "meta_dia": 6401.216144472222}, "industrializado": {"meta": 51500, "real": 12251.39, "participacao_pct": 0.1349597395346006, "margem_pct": 0.21011297949049038}, "thermo": {"meta": 6180, "real": 1486.07, "participacao_pct": 0.12129807311660146, "margem_pct": 0.19563607801516752}, "recompra_pct": 0.5342465753424658}, {"codigo": "751", "nome": "JULIO CESAR -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 52, "real": 49, "pct": 0.9423076923076923}, "margem": {"meta": 13, "real": 11.711494300191717, "pct": 0.9008841769378244}, "mix": {"meta": 2.15, "real": 2.08, "pct": 0.9674418604651164}, "financeiro": {"meta": 165000, "real": 60964.84, "pct": 0.36948387878787875}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.319585281385281, "projetado": 217731.5714285714, "meta": 165000, "meta_dia": 5779.731111111111}, "industrializado": {"meta": 41250, "real": 6969.65, "participacao_pct": 0.11432245208877773, "margem_pct": 0.20690336410006235}, "thermo": {"meta": 4950, "real": 3661.93, "participacao_pct": 0.5254108886385973, "margem_pct": 0.18117399575633616}, "recompra_pct": 0.3673469387755102}, {"codigo": "679", "nome": "RAFAEL COSTA -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 61, "real": 52, "pct": 0.8524590163934426}, "margem": {"meta": 13, "real": 13.207160655564568, "pct": 1.0159354350434282}, "mix": {"meta": 2.15, "real": 2.12, "pct": 0.986046511627907}, "financeiro": {"meta": 216000, "real": 70473.76, "pct": 0.3262674074074074}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.1652407407407406, "projetado": 251691.99999999997, "meta": 216000, "meta_dia": 8084.791111111111}, "industrializado": {"meta": 54000, "real": 4278.87, "participacao_pct": 0.0607157898202111, "margem_pct": 0.21477947481461218}, "thermo": {"meta": 6480, "real": 7123.43, "participacao_pct": 1.6647923400337006, "margem_pct": 0.16405900551391686}, "recompra_pct": 0.46153846153846156}, {"codigo": "687", "nome": "EDREY MARTINS", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 74, "real": 61, "pct": 0.8243243243243243}, "margem": {"meta": 13, "real": 14.711409951445184, "pct": 1.1316469193419372}, "mix": {"meta": 2.15, "real": 2.35, "pct": 1.0930232558139537}, "financeiro": {"meta": 216000, "real": 97112.92, "pct": 0.44959685185185183}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.6057030423280425, "projetado": 346831.85714285716, "meta": 216000, "meta_dia": 6604.837777777778}, "industrializado": {"meta": 54000, "real": 7334.53, "participacao_pct": 0.07552578997727594, "margem_pct": 0.2160822382620291}, "thermo": {"meta": 6480, "real": 2079.46, "participacao_pct": 0.28351646254088536, "margem_pct": 0.2146196155732738}, "recompra_pct": 0.5737704918032787}, {"codigo": "47", "nome": "MARCELO", "rota": "GYN R", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 108, "real": 83, "pct": 0.7685185185185185}, "margem": {"meta": 12.85, "real": 13.431239641716084, "pct": 1.045232656942886}, "mix": {"meta": 3, "real": 3.85, "pct": 1.2833333333333334}, "financeiro": {"meta": 405000, "real": 129422.5, "pct": 0.31956172839506175}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.1412918871252205, "projetado": 462223.2142857143, "meta": 405000, "meta_dia": 15309.861111111111}, "industrializado": {"meta": 101250, "real": 27818.9, "participacao_pct": 0.2149463964921092, "margem_pct": 0.2467829926129358}, "thermo": {"meta": 12150, "real": 6631.08, "participacao_pct": 0.23836600296920438, "margem_pct": 0.16169406278072354}, "recompra_pct": 0.6626506024096386}, {"codigo": "347", "nome": "MATIAS", "rota": "GYN R", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 76, "real": 48, "pct": 0.631578947368421}, "margem": {"meta": 12.9, "real": 11.877203429228777, "pct": 0.9207134441262618}, "mix": {"meta": 3, "real": 3, "pct": 1}, "financeiro": {"meta": 335000, "real": 87203.31, "pct": 0.26030838805970147}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9296728144989338, "projetado": 311440.39285714284, "meta": 335000, "meta_dia": 13766.482777777777}, "industrializado": {"meta": 83750, "real": 18966.3, "participacao_pct": 0.21749518452911937, "margem_pct": 0.21222993409362922}, "thermo": {"meta": 10050, "real": 8361.58, "participacao_pct": 0.4408651133853203, "margem_pct": 0.15152349613159233}, "recompra_pct": 0.5625}, {"codigo": "357", "nome": "LUCIANO", "rota": "GYN", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 85, "real": 62, "pct": 0.7294117647058823}, "margem": {"meta": 13.4, "real": 13.468590826655564, "pct": 1.0051187184071317}, "mix": {"meta": 2.65, "real": 2.92, "pct": 1.1018867924528302}, "financeiro": {"meta": 205000, "real": 61101.99, "pct": 0.29805848780487804}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0644945993031358, "projetado": 218221.39285714284, "meta": 205000, "meta_dia": 7994.333888888889}, "industrializado": {"meta": 51250, "real": 13077.24, "participacao_pct": 0.2140231439270636, "margem_pct": 0.22254395887817308}, "thermo": {"meta": 6150, "real": 4523.19, "participacao_pct": 0.3458826174330363, "margem_pct": 0.1675658790667648}, "recompra_pct": 0.7258064516129032}, {"codigo": "405", "nome": "WILLIAN", "rota": "GYN", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 110, "real": 59, "pct": 0.5363636363636364}, "margem": {"meta": 13.3, "real": 9.559577124355608, "pct": 0.7187651973199705}, "mix": {"meta": 2.35, "real": 2.23, "pct": 0.9489361702127659}, "financeiro": {"meta": 445000, "real": 102556.014883, "pct": 0.23046295479325843}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8230819814044943, "projetado": 366271.48172499996, "meta": 445000, "meta_dia": 19024.665839833335}, "industrializado": {"meta": 111250, "real": 10466.49, "participacao_pct": 0.10205632514036929, "margem_pct": 0.1869307802520234}, "thermo": {"meta": 13350, "real": 8909.41, "participacao_pct": 0.8512318838502688, "margem_pct": -0.2965515431751374}, "recompra_pct": 0.6101694915254238}, {"codigo": "561", "nome": "THALLES VIEIRA", "rota": "", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 77, "real": 48, "pct": 0.6233766233766234}, "margem": {"meta": 12.85, "real": 14.283142854820772, "pct": 1.1115286268343014}, "mix": {"meta": 2.5, "real": 2.87, "pct": 1.1480000000000001}, "financeiro": {"meta": 230000, "real": 49475.26, "pct": 0.21510982608695653}}, "pilares_atingidos": 2, "tendencia": {"pct": 0.7682493788819875, "projetado": 176697.35714285713, "meta": 230000, "meta_dia": 10029.152222222221}, "industrializado": {"meta": 57500, "real": 11052.8, "participacao_pct": 0.22340054402948056, "margem_pct": 0.23383592291546035}, "thermo": {"meta": 6900, "real": 1958.07, "participacao_pct": 0.17715601476548928, "margem_pct": 0.16445523787402894}, "recompra_pct": 0.5}, {"codigo": "660", "nome": "LUCAS", "rota": "GYN RT", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 76, "real": 46, "pct": 0.6052631578947368}, "margem": {"meta": 12.85, "real": 13.967646081628233, "pct": 1.0869763487648432}, "mix": {"meta": 2.5, "real": 2.88, "pct": 1.152}, "financeiro": {"meta": 170000, "real": 47736.18, "pct": 0.2808010588235294}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.002860924369748, "projetado": 170486.35714285716, "meta": 170000, "meta_dia": 6792.434444444445}, "industrializado": {"meta": 42500, "real": 10409.2, "participacao_pct": 0.21805682817519123, "margem_pct": 0.25041556204127124}, "thermo": {"meta": 5100, "real": 1688.42, "participacao_pct": 0.16220458824885678, "margem_pct": 0.16722231477002172}, "recompra_pct": 0.6956521739130435}, {"codigo": "722", "nome": "LUIZ GUSTAVO -", "rota": "", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 91, "real": 74, "pct": 0.8131868131868132}, "margem": {"meta": 12.85, "real": 11.418214115917737, "pct": 0.8885769740013804}, "mix": {"meta": 2.4, "real": 2.55, "pct": 1.0625}, "financeiro": {"meta": 240000, "real": 87203.27016, "pct": 0.363346959}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2976677107142858, "projetado": 311440.25057142857, "meta": 240000, "meta_dia": 8488.707213333333}, "industrializado": {"meta": 60000, "real": 12467.1, "participacao_pct": 0.14296596878907689, "margem_pct": 0.23904574542596113}, "thermo": {"meta": 7200, "real": 1835.99, "participacao_pct": 0.1472668062340079, "margem_pct": 0.13229389755281898}, "recompra_pct": 0.5405405405405406}];
+
+
+const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 37, "pct": 0.6727272727272727}, "margem": {"meta": 11.3, "real": 5.542706597801407, "pct": 0.49050500865499175}, "mix": {"meta": 2.4, "real": 2.07, "pct": 0.8624999999999999}, "financeiro": {"meta": 1640000, "real": 556240.31, "pct": 0.33917092073170735}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.211324716898955, "projetado": 1986572.535714286, "meta": 1640000, "meta_dia": 60208.871666666666}, "industrializado": {"meta": 410000, "real": 34513.38, "participacao_pct": 0.06204760672594907, "margem_pct": 0.2326891340807536}, "thermo": {"meta": 49200, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.32432432432432434}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 43, "pct": 0.7962962962962963}, "margem": {"meta": 14, "real": 8.757239732574046, "pct": 0.625517123755289}, "mix": {"meta": 2.6, "real": 2.49, "pct": 0.9576923076923077}, "financeiro": {"meta": 1645000, "real": 406095.6603756, "pct": 0.24686666284231001}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8816666530082501, "projetado": 1450341.6441985713, "meta": 1645000, "meta_dia": 68828.01886802222}, "industrializado": {"meta": 411250, "real": 111540.66, "participacao_pct": 0.27466597376794294, "margem_pct": 0.16034170995939964}, "thermo": {"meta": 49350, "real": 53904.78, "participacao_pct": 0.13273911853710327, "margem_pct": -0.0253920292008242}, "recompra_pct": 0.46511627906976744}, {"codigo": "15", "nome": "WESLEY", "rota": "GYN RT", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 105, "real": 85, "pct": 0.8095238095238095}, "margem": {"meta": 13.7, "real": 13.847266143697421, "pct": 1.0107493535545564}, "mix": {"meta": 2.6, "real": 2.43, "pct": 0.9346153846153846}, "financeiro": {"meta": 326000, "real": 89667.425632, "pct": 0.2750534528588957}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9823337602103418, "projetado": 320240.80582857144, "meta": 326000, "meta_dia": 13129.58746488889}, "industrializado": {"meta": 81500, "real": 28277.06, "participacao_pct": 0.31535487721093497, "margem_pct": 0.22540507875288307}, "thermo": {"meta": 9780, "real": 2100.71, "participacao_pct": 0.07429025506894989, "margem_pct": 0.1637623123724836}, "recompra_pct": 0.5882352941176471}, {"codigo": "85", "nome": "CARLOS HENRIQUE", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 97, "real": 83, "pct": 0.8556701030927835}, "margem": {"meta": 12.9, "real": 13.853127895273484, "pct": 1.0738858833545337}, "mix": {"meta": 3.3, "real": 3.7, "pct": 1.1212121212121213}, "financeiro": {"meta": 367000, "real": 126599.992, "pct": 0.34495910626702997}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.2319968080965356, "projetado": 452142.82857142854, "meta": 367000, "meta_dia": 13355.556}, "industrializado": {"meta": 91750, "real": 30614.12, "participacao_pct": 0.24181770880364667, "margem_pct": 0.23565979787758062}, "thermo": {"meta": 11010, "real": 5618.36, "participacao_pct": 0.18352185200815832, "margem_pct": 0.16952903352437357}, "recompra_pct": 0.5301204819277109}, {"codigo": "81", "nome": "LOIOLA", "rota": "GYN RT", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 100, "real": 61, "pct": 0.61}, "margem": {"meta": 13.3, "real": 14.537874087728577, "pct": 1.0930732396788403}, "mix": {"meta": 2.9, "real": 2.71, "pct": 0.9344827586206896}, "financeiro": {"meta": 331000, "real": 62163.188, "pct": 0.1878041933534743}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.6707292619766941, "projetado": 222011.38571428575, "meta": 331000, "meta_dia": 14935.378444444443}, "industrializado": {"meta": 82750, "real": 17623.05, "participacao_pct": 0.283496560697627, "margem_pct": 0.24299767080045737}, "thermo": {"meta": 9930, "real": 3410.18, "participacao_pct": 0.193506799333827, "margem_pct": 0.07278585914174616}, "recompra_pct": 0.5409836065573771}, {"codigo": "83", "nome": "MARCOS SILVA -", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 99, "real": 76, "pct": 0.7676767676767676}, "margem": {"meta": 13, "real": 13.608753688262139, "pct": 1.0468272067893953}, "mix": {"meta": 2.7, "real": 2.54, "pct": 0.9407407407407407}, "financeiro": {"meta": 375000, "real": 119300.47498, "pct": 0.31813459994666665}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.136194999809524, "projetado": 426073.12492857146, "meta": 375000, "meta_dia": 14205.529167777779}, "industrializado": {"meta": 93750, "real": 12520.8, "participacao_pct": 0.10495180343665049, "margem_pct": 0.24927151974314735}, "thermo": {"meta": 11250, "real": 1849.32, "participacao_pct": 0.14769982748706154, "margem_pct": 0.15811939644409828}, "recompra_pct": 0.6447368421052632}, {"codigo": "192", "nome": "LUCAS LEAL", "rota": "G", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 77, "real": 55, "pct": 0.7142857142857143}, "margem": {"meta": 13.5, "real": 13.475231142048921, "pct": 0.9981652697814015}, "mix": {"meta": 2.9, "real": 2.86, "pct": 0.9862068965517241}, "financeiro": {"meta": 242000, "real": 67092.66, "pct": 0.2772423966942149}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.9901514167650531, "projetado": 239616.64285714287, "meta": 242000, "meta_dia": 9717.074444444444}, "industrializado": {"meta": 60500, "real": 16779.95, "participacao_pct": 0.2501011287970994, "margem_pct": 0.22283924104660624}, "thermo": {"meta": 7260, "real": 1580.41, "participacao_pct": 0.09418442843989404, "margem_pct": 0.15986322654501045}, "recompra_pct": 0.5636363636363636}, {"codigo": "649", "nome": "WALLACE SOUSA", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 79, "real": 53, "pct": 0.6708860759493671}, "margem": {"meta": 12.85, "real": 11.720457815291223, "pct": 0.912097884458461}, "mix": {"meta": 2.4, "real": 2.62, "pct": 1.0916666666666668}, "financeiro": {"meta": 232000, "real": 83880.15, "pct": 0.3615523706896551}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2912584667487683, "projetado": 299571.96428571426, "meta": 232000, "meta_dia": 8228.880555555555}, "industrializado": {"meta": 58000, "real": 15670.82, "participacao_pct": 0.186823938679175, "margem_pct": 0.21921927375848874}, "thermo": {"meta": 6960, "real": 2794.29, "participacao_pct": 0.17831166460976516, "margem_pct": 0.15240980874282908}, "recompra_pct": 0.6792452830188679}, {"codigo": "650", "nome": "ANDRE WILKER -", "rota": "", "supervisor": "LEANDRO", "pilares": {"positivacao": {"meta": 95, "real": 51, "pct": 0.5368421052631579}, "margem": {"meta": 13.5, "real": 13.494133980169225, "pct": 0.9995654800125352}, "mix": {"meta": 2.95, "real": 3.56, "pct": 1.206779661016949}, "financeiro": {"meta": 247000, "real": 66410.92, "pct": 0.2688701214574899}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9602504337767496, "projetado": 237181.85714285713, "meta": 247000, "meta_dia": 10032.726666666667}, "industrializado": {"meta": 61750, "real": 10996.32, "participacao_pct": 0.16557999798828266, "margem_pct": 0.23915047614110893}, "thermo": {"meta": 7410, "real": 2235.42, "participacao_pct": 0.20328800907940112, "margem_pct": 0.1846693159406286}, "recompra_pct": 0.9607843137254902}, {"codigo": "12", "nome": "FABIANO", "rota": "GYN R", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 60, "pct": 0.6185567010309279}, "margem": {"meta": 12.85, "real": 12.958542172061517, "pct": 1.0084468616390285}, "mix": {"meta": 2.5, "real": 2.38, "pct": 0.952}, "financeiro": {"meta": 260000, "real": 52591.356796, "pct": 0.20227444921538462}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.7224087471978021, "projetado": 187826.27427142856, "meta": 260000, "meta_dia": 11522.702400222222}, "industrializado": {"meta": 65000, "real": 10929.05, "participacao_pct": 0.20781076332358936, "margem_pct": 0.2500233465305767}, "thermo": {"meta": 7800, "real": 1250.58, "participacao_pct": 0.11442714600079605, "margem_pct": 0.18118401603735865}, "recompra_pct": 0.7666666666666667}, {"codigo": "471", "nome": "ANTONIO EDVALD", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 73, "pct": 0.7525773195876289}, "margem": {"meta": 12.85, "real": 12.560821990460108, "pct": 0.9774958747439773}, "mix": {"meta": 2.5, "real": 2.43, "pct": 0.9720000000000001}, "financeiro": {"meta": 250000, "real": 83464.9694, "pct": 0.3338598776}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.1923567057142859, "projetado": 298089.17642857146, "meta": 250000, "meta_dia": 9251.946144444444}, "industrializado": {"meta": 62500, "real": 7869.49, "participacao_pct": 0.09428494440926494, "margem_pct": 0.24094058189285458}, "thermo": {"meta": 7500, "real": 2191.67, "participacao_pct": 0.2785021646891984, "margem_pct": 0.17862509942828983}, "recompra_pct": 0.6027397260273972}, {"codigo": "383", "nome": "GABRIEL LOUREN", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 97, "real": 71, "pct": 0.7319587628865979}, "margem": {"meta": 12.85, "real": 12.186607931141298, "pct": 0.9483741580654707}, "mix": {"meta": 2.5, "real": 2.8, "pct": 1.1199999999999999}, "financeiro": {"meta": 450000, "real": 189466.54, "pct": 0.4210367555555556}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.5037026984126984, "projetado": 676666.2142857143, "meta": 450000, "meta_dia": 14474.08111111111}, "industrializado": {"meta": 112500, "real": 22871.14, "participacao_pct": 0.12071334600821865, "margem_pct": 0.2795594369060746}, "thermo": {"meta": 13500, "real": 3252.85, "participacao_pct": 0.14222509240903602, "margem_pct": 0.17402931430837565}, "recompra_pct": 0.5774647887323944}, {"codigo": "377", "nome": "CELISMAR", "rota": "GYN", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 115, "real": 75, "pct": 0.6521739130434783}, "margem": {"meta": 13, "real": 13.475138791542802, "pct": 1.0365491378109848}, "mix": {"meta": 2.5, "real": 2.57, "pct": 1.028}, "financeiro": {"meta": 210000, "real": 53018.51, "pct": 0.25246909523809524}}, "pilares_atingidos": 2, "tendencia": {"pct": 0.9016753401360544, "projetado": 189351.82142857142, "meta": 210000, "meta_dia": 8721.193888888889}, "industrializado": {"meta": 52500, "real": 12980.53, "participacao_pct": 0.2448301546007234, "margem_pct": 0.2166590340301975}, "thermo": {"meta": 6300, "real": 2085.1, "participacao_pct": 0.16063288633052733, "margem_pct": 0.15748726746151262}, "recompra_pct": 0.7066666666666667}, {"codigo": "657", "nome": "YURI ENRIQUE -", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 64, "real": 36, "pct": 0.5625}, "margem": {"meta": 13, "real": 13.219694386255211, "pct": 1.0168995681734778}, "mix": {"meta": 2.6, "real": 2.53, "pct": 0.973076923076923}, "financeiro": {"meta": 260000, "real": 69604.41002, "pct": 0.2677092693076923}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9561045332417581, "projetado": 248587.17864285712, "meta": 260000, "meta_dia": 10577.532776666667}, "industrializado": {"meta": 65000, "real": 12196.5, "participacao_pct": 0.17522596623540782, "margem_pct": 0.2517585019800762}, "thermo": {"meta": 7800, "real": 1691.07, "participacao_pct": 0.1386520723158283, "margem_pct": -0.08912892088914127}, "recompra_pct": 0.5277777777777778}, {"codigo": "781", "nome": "JOAO LUCAS  -", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 67, "real": 16, "pct": 0.23880597014925373}, "margem": {"meta": 13.5, "real": 12.391463864817238, "pct": 0.9178862122086843}, "mix": {"meta": 2.5, "real": 1.94, "pct": 0.776}, "financeiro": {"meta": 190000, "real": 11031.88, "pct": 0.05806252631578947}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.20736616541353384, "projetado": 39399.57142857143, "meta": 190000, "meta_dia": 9942.673333333332}, "industrializado": {"meta": 47500, "real": 288.22, "participacao_pct": 0.02612609999383605, "margem_pct": 0.2745148449101381}, "thermo": {"meta": 5700, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.9375}, {"codigo": "791", "nome": "LEANDRO GOMES", "rota": "", "supervisor": "FLAVIANE", "pilares": {"positivacao": {"meta": 75, "real": 35, "pct": 0.4666666666666667}, "margem": {"meta": 13.5, "real": 13.792616413083218, "pct": 1.0216752898580161}, "mix": {"meta": 2.5, "real": 1.88, "pct": 0.752}, "financeiro": {"meta": 190000, "real": 24217.96994, "pct": 0.12746299968421052}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.4552249988721805, "projetado": 86492.74978571429, "meta": 190000, "meta_dia": 9210.112781111111}, "industrializado": {"meta": 47500, "real": 2912.87, "participacao_pct": 0.12027721593579614, "margem_pct": 0.2649059419747533}, "thermo": {"meta": 5700, "real": 517.03, "participacao_pct": 0.17749848087968223, "margem_pct": 0.22090957892578766}, "recompra_pct": 0.6857142857142857}, {"codigo": "738", "nome": "MARCEL HENRIQU", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 84, "real": 66, "pct": 0.7857142857142857}, "margem": {"meta": 13, "real": 12.435295287522862, "pct": 0.9565611759632972}, "mix": {"meta": 2.65, "real": 2.69, "pct": 1.0150943396226415}, "financeiro": {"meta": 300000, "real": 84574.850024, "pct": 0.28191616674666664}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0068434526666667, "projetado": 302053.0358, "meta": 300000, "meta_dia": 11968.063887555556}, "industrializado": {"meta": 75000, "real": 18351.62, "participacao_pct": 0.2169867282625073, "margem_pct": 0.18980596545700051}, "thermo": {"meta": 9000, "real": 2173.65, "participacao_pct": 0.11844458418384864, "margem_pct": 0.1680037376173717}, "recompra_pct": 0.5}, {"codigo": "164", "nome": "JOAO VITOR", "rota": "G", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 97, "real": 71, "pct": 0.7319587628865979}, "margem": {"meta": 13, "real": 12.087396003615362, "pct": 0.9297996925857971}, "mix": {"meta": 3, "real": 3.52, "pct": 1.1733333333333333}, "financeiro": {"meta": 480000, "real": 182247.44366, "pct": 0.3796821742916666}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.356007765327381, "projetado": 650883.7273571428, "meta": 480000, "meta_dia": 16541.808685555556}, "industrializado": {"meta": 120000, "real": 32332.23, "participacao_pct": 0.17740841435514926, "margem_pct": 0.1960059505527456}, "thermo": {"meta": 14400, "real": 5435.9, "participacao_pct": 0.16812635565192996, "margem_pct": 0.11831124577861978}, "recompra_pct": 0.5352112676056338}, {"codigo": "45", "nome": "TIAGO", "rota": "GYN RT", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 97, "real": 47, "pct": 0.4845360824742268}, "margem": {"meta": 13, "real": 10.773911710087372, "pct": 0.8287624392374902}, "mix": {"meta": 2.8, "real": 3.79, "pct": 1.3535714285714286}, "financeiro": {"meta": 380000, "real": 155918.7, "pct": 0.1}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.4654013157894736, "projetado": 556852.5, "meta": 380000, "meta_dia": 12448.96111111111}, "industrializado": {"meta": 95000, "real": 25973.05, "participacao_pct": 0.1665807244416481, "margem_pct": 0.2193729540750894}, "thermo": {"meta": 11400, "real": 2551.74, "participacao_pct": 0.09824568158148542, "margem_pct": 0.16506271702602923}, "recompra_pct": 0.723404255319149}, {"codigo": "428", "nome": "TAUA F.", "rota": "GYN", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 87, "real": 56, "pct": 0.6436781609195402}, "margem": {"meta": 13, "real": 12.421015488501418, "pct": 0.9554627298847245}, "mix": {"meta": 3, "real": 2.96, "pct": 0.9866666666666667}, "financeiro": {"meta": 300000, "real": 115695.57, "pct": 0.38565190000000005}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.3773282142857142, "projetado": 413198.46428571426, "meta": 300000, "meta_dia": 10239.135}, "industrializado": {"meta": 75000, "real": 28511.66, "participacao_pct": 0.24643692061848174, "margem_pct": 0.2213226977454136}, "thermo": {"meta": 9000, "real": 2774.95, "participacao_pct": 0.09732684803340107, "margem_pct": 0.16643061284707833}, "recompra_pct": 0.8035714285714286}, {"codigo": "439", "nome": "GUILHERME AUGU", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 94, "real": 64, "pct": 0.6808510638297872}, "margem": {"meta": 13, "real": 12.661179416351617, "pct": 0.9739368781808936}, "mix": {"meta": 2.5, "real": 2.72, "pct": 1.088}, "financeiro": {"meta": 330000, "real": 96474.01, "pct": 0.2923454848484848}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.0440910173160172, "projetado": 344550.0357142857, "meta": 330000, "meta_dia": 12973.66611111111}, "industrializado": {"meta": 82500, "real": 19107.75, "participacao_pct": 0.19806111511276459, "margem_pct": 0.20731620321597255}, "thermo": {"meta": 9900, "real": 5337.07, "participacao_pct": 0.27931441430833037, "margem_pct": 0.16051893949451665}, "recompra_pct": 0.5}, {"codigo": "622", "nome": "HAMBER", "rota": "GYN R", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 79, "real": 57, "pct": 0.7215189873417721}, "margem": {"meta": 13, "real": 12.177757164807398, "pct": 0.9367505511390306}, "mix": {"meta": 2.5, "real": 2.51, "pct": 1.004}, "financeiro": {"meta": 290000, "real": 86804.72, "pct": 0.29932662068965515}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.0690236453201971, "projetado": 310016.85714285716, "meta": 290000, "meta_dia": 11288.626666666667}, "industrializado": {"meta": 72500, "real": 11965.89, "participacao_pct": 0.13784837967336339, "margem_pct": 0.20558854666054927}, "thermo": {"meta": 8700, "real": 2338.39, "participacao_pct": 0.19542131843097338, "margem_pct": 0.08162305056384948}, "recompra_pct": 0.5087719298245614}, {"codigo": "735", "nome": "CARLOS RAFAEL", "rota": "", "supervisor": "IDEGLAN", "pilares": {"positivacao": {"meta": 84, "real": 68, "pct": 0.8095238095238095}, "margem": {"meta": 13, "real": 11.418062478833734, "pct": 0.8783124983718257}, "mix": {"meta": 2.5, "real": 2.58, "pct": 1.032}, "financeiro": {"meta": 200000, "real": 55485.698, "pct": 0.27742848999999997}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9908160357142857, "projetado": 198163.20714285714, "meta": 200000, "meta_dia": 8028.5723333333335}, "industrializado": {"meta": 50000, "real": 10983.92, "participacao_pct": 0.1979594813784266, "margem_pct": 0.19265172244517434}, "thermo": {"meta": 6000, "real": 1973.56, "participacao_pct": 0.17967720085361147, "margem_pct": 0.16149695507407935}, "recompra_pct": 0.6323529411764706}, {"codigo": "16", "nome": "BERALDO", "rota": "GYN R", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 84, "real": 55, "pct": 0.6547619047619048}, "margem": {"meta": 13.3, "real": 11.788137248061192, "pct": 0.8863261088767813}, "mix": {"meta": 2.4, "real": 2.29, "pct": 0.9541666666666667}, "financeiro": {"meta": 265000, "real": 66092.50536, "pct": 0.24940568060377358}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8907345735849056, "projetado": 236044.66199999998, "meta": 265000, "meta_dia": 11050.416368888888}, "industrializado": {"meta": 66250, "real": 15466.12, "participacao_pct": 0.2340071679195307, "margem_pct": 0.24288449189583436}, "thermo": {"meta": 7950, "real": 696.09, "participacao_pct": 0.04500740974465477, "margem_pct": 0.1596263966556049}, "recompra_pct": 0.6909090909090909}, {"codigo": "398", "nome": "UCLEIBSON", "rota": "GY", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 72, "real": 46, "pct": 0.6388888888888888}, "margem": {"meta": 13.5, "real": 13.206485452879594, "pct": 0.9782581816947847}, "mix": {"meta": 2.4, "real": 2.35, "pct": 0.9791666666666667}, "financeiro": {"meta": 265000, "real": 69142.55, "pct": 0.26091528301886796}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.9318402964959569, "projetado": 246937.67857142858, "meta": 265000, "meta_dia": 10880.969444444445}, "industrializado": {"meta": 66250, "real": 5153.86, "participacao_pct": 0.0745396286367801, "margem_pct": 0.24916007831023732}, "thermo": {"meta": 7950, "real": 358.44, "participacao_pct": 0.06954787285646098, "margem_pct": 0.18790373538667565}, "recompra_pct": 0.5869565217391305}, {"codigo": "723", "nome": "JEAN PIERRE -", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 67, "real": 42, "pct": 0.6268656716417911}, "margem": {"meta": 12.85, "real": 14.25965414379782, "pct": 1.109700711579597}, "mix": {"meta": 2.4, "real": 2.3, "pct": 0.9583333333333333}, "financeiro": {"meta": 225000, "real": 62163.53, "pct": 0.2762823555555555}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9867226984126983, "projetado": 222012.60714285713, "meta": 225000, "meta_dia": 9046.470555555556}, "industrializado": {"meta": 56250, "real": 18512.73, "participacao_pct": 0.29780692956143257, "margem_pct": 0.2670738570270295}, "thermo": {"meta": 6750, "real": 1550.63, "participacao_pct": 0.08376020176386735, "margem_pct": 0.17160471432127597}, "recompra_pct": 0.6666666666666666}, {"codigo": "729", "nome": "MARCELO ALVES", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 74, "real": 45, "pct": 0.6081081081081081}, "margem": {"meta": 12.85, "real": 12.000782468259931, "pct": 0.933913032549411}, "mix": {"meta": 2.4, "real": 2.67, "pct": 1.1125}, "financeiro": {"meta": 245000, "real": 78763.22, "pct": 0.3214825306122449}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.148151895043732, "projetado": 281297.2142857143, "meta": 245000, "meta_dia": 9235.376666666667}, "industrializado": {"meta": 61250, "real": 5648.71, "participacao_pct": 0.07171761134194361, "margem_pct": 0.21367573169803364}, "thermo": {"meta": 7350, "real": 1452.92, "participacao_pct": 0.25721270874235, "margem_pct": 0.23597874324807971}, "recompra_pct": 0.4888888888888889}, {"codigo": "467", "nome": "IGOR SA", "rota": "GYN", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 75, "real": 48, "pct": 0.64}, "margem": {"meta": 12.85, "real": 12.05503340168053, "pct": 0.9381348950724149}, "mix": {"meta": 2.45, "real": 2.34, "pct": 0.9551020408163264}, "financeiro": {"meta": 270000, "real": 78255.13293, "pct": 0.2898338256666667}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.035120805952381, "projetado": 279482.6176071429, "meta": 270000, "meta_dia": 10652.492615}, "industrializado": {"meta": 67500, "real": 10386.01, "participacao_pct": 0.13271985633569097, "margem_pct": 0.26929887704710476}, "thermo": {"meta": 8100, "real": 1596.64, "participacao_pct": 0.15372987316592224, "margem_pct": 0.15901128230283595}, "recompra_pct": 0.4583333333333333}, {"codigo": "644", "nome": "ALBERTO SANTOS", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 82, "real": 58, "pct": 0.7073170731707317}, "margem": {"meta": 12.85, "real": 9.616310694375025, "pct": 0.7483510267996129}, "mix": {"meta": 2.4, "real": 2.68, "pct": 1.1166666666666667}, "financeiro": {"meta": 310000, "real": 152945.9245475, "pct": 0.4933739501532258}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.7620498219758065, "projetado": 546235.4448125, "meta": 310000, "meta_dia": 8725.226414027777}, "industrializado": {"meta": 77500, "real": 23596.45, "participacao_pct": 0.15427969113797285, "margem_pct": 0.19707667442348317}, "thermo": {"meta": 9300, "real": 2989.73, "participacao_pct": 0.12670253364383202, "margem_pct": 0.1133584976543032}, "recompra_pct": 0.603448275862069}, {"codigo": "698", "nome": "FERNANDO OLIVE", "rota": "", "supervisor": "RICARDO", "pilares": {"positivacao": {"meta": 87, "real": 51, "pct": 0.5862068965517241}, "margem": {"meta": 12.85, "real": 11.008867607670894, "pct": 0.8567212146047388}, "mix": {"meta": 2.4, "real": 2.41, "pct": 1.0041666666666669}, "financeiro": {"meta": 215000, "real": 55889.1716, "pct": 0.2599496353488372}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9283915548172758, "projetado": 199604.1842857143, "meta": 215000, "meta_dia": 8839.490466666666}, "industrializado": {"meta": 53750, "real": 5362.27, "participacao_pct": 0.09594470353538037, "margem_pct": 0.22695986375173213}, "thermo": {"meta": 6450, "real": 738.99, "participacao_pct": 0.13781290386347572, "margem_pct": 0.1520898852217216}, "recompra_pct": 0.5882352941176471}, {"codigo": "42", "nome": "PAULO RONAN", "rota": "G", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 74, "real": 63, "pct": 0.8513513513513513}, "margem": {"meta": 13, "real": 12.482464994152355, "pct": 0.9601896149347966}, "mix": {"meta": 2.15, "real": 2, "pct": 0.9302325581395349}, "financeiro": {"meta": 306000, "real": 98569.6, "pct": 0.3221228758169935}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.150438842203548, "projetado": 352034.28571428574, "meta": 306000, "meta_dia": 11523.91111111111}, "industrializado": {"meta": 76500, "real": 6375.43, "participacao_pct": 0.06467947521345323, "margem_pct": 0.18510441987442428}, "thermo": {"meta": 9180, "real": 3565.99, "participacao_pct": 0.5593332528158884, "margem_pct": 0.1705812663344541}, "recompra_pct": 0.4603174603174603}, {"codigo": "334", "nome": "JOAO GABRIEL -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 64, "real": 41, "pct": 0.640625}, "margem": {"meta": 13, "real": 12.567968562572522, "pct": 0.9667668125055786}, "mix": {"meta": 2.15, "real": 2.16, "pct": 1.0046511627906978}, "financeiro": {"meta": 216000, "real": 75493.2, "pct": 0.34950555555555557}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2482341269841268, "projetado": 269618.5714285714, "meta": 216000, "meta_dia": 7805.9333333333325}, "industrializado": {"meta": 54000, "real": 2503.22, "participacao_pct": 0.033158218223628085, "margem_pct": 0.17219697533576744}, "thermo": {"meta": 6480, "real": 6513.89, "participacao_pct": 2.6022043607833116, "margem_pct": 0.16874523656371235}, "recompra_pct": 0.5853658536585366}, {"codigo": "793", "nome": "IRON OLIVEIRA", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 59, "real": 41, "pct": 0.6949152542372882}, "margem": {"meta": 13, "real": 15.889399991942492, "pct": 1.22226153784173}, "mix": {"meta": 2.15, "real": 2, "pct": 0.9302325581395349}, "financeiro": {"meta": 180000, "real": 50834.573, "pct": 0.28241429444444444}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.00862248015873, "projetado": 181552.0464285714, "meta": 180000, "meta_dia": 7175.857055555555}, "industrializado": {"meta": 45000, "real": 4535.35, "participacao_pct": 0.08921782425515801, "margem_pct": 0.23676912031045014}, "thermo": {"meta": 5400, "real": 863.52, "participacao_pct": 0.1903976539848082, "margem_pct": 0.2186012903094312}, "recompra_pct": 0.5365853658536586}, {"codigo": "381", "nome": "RODRIGO T", "rota": "GY", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 42, "real": 20, "pct": 0.47619047619047616}, "margem": {"meta": 13, "real": 14.502443310473465, "pct": 1.1155725623441126}, "mix": {"meta": 2.15, "real": 2.48, "pct": 1.1534883720930234}, "financeiro": {"meta": 175000, "real": 49500.14, "pct": 0.28285794285714283}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0102069387755102, "projetado": 176786.2142857143, "meta": 175000, "meta_dia": 6972.214444444445}, "industrializado": {"meta": 43750, "real": 1170.03, "participacao_pct": 0.023636902845123264, "margem_pct": 0.24162129312923603}, "thermo": {"meta": 5250, "real": 317.19, "participacao_pct": 0.2710956129330017, "margem_pct": 0.15719161070651655}, "recompra_pct": 0.6}, {"codigo": "473", "nome": "KAIKY DIAS", "rota": "G", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 87, "real": 73, "pct": 0.8390804597701149}, "margem": {"meta": 13, "real": 13.013440780728649, "pct": 1.001033906209896}, "mix": {"meta": 2.15, "real": 2.21, "pct": 1.027906976744186}, "financeiro": {"meta": 206000, "real": 90778.1093995, "pct": 0.4406704339781553}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.5738229784934117, "projetado": 324207.5335696428, "meta": 206000, "meta_dia": 6401.216144472222}, "industrializado": {"meta": 51500, "real": 12251.39, "participacao_pct": 0.1349597395346006, "margem_pct": 0.21011297949049038}, "thermo": {"meta": 6180, "real": 1486.07, "participacao_pct": 0.12129807311660146, "margem_pct": 0.19563607801516752}, "recompra_pct": 0.5342465753424658}, {"codigo": "751", "nome": "JULIO CESAR -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 52, "real": 49, "pct": 0.9423076923076923}, "margem": {"meta": 13, "real": 11.711494300191717, "pct": 0.9008841769378244}, "mix": {"meta": 2.15, "real": 2.08, "pct": 0.9674418604651164}, "financeiro": {"meta": 165000, "real": 60964.84, "pct": 0.36948387878787875}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.319585281385281, "projetado": 217731.5714285714, "meta": 165000, "meta_dia": 5779.731111111111}, "industrializado": {"meta": 41250, "real": 6969.65, "participacao_pct": 0.11432245208877773, "margem_pct": 0.20690336410006235}, "thermo": {"meta": 4950, "real": 3661.93, "participacao_pct": 0.5254108886385973, "margem_pct": 0.18117399575633616}, "recompra_pct": 0.3673469387755102}, {"codigo": "679", "nome": "RAFAEL COSTA -", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 61, "real": 52, "pct": 0.8524590163934426}, "margem": {"meta": 13, "real": 13.207160655564568, "pct": 1.0159354350434282}, "mix": {"meta": 2.15, "real": 2.12, "pct": 0.986046511627907}, "financeiro": {"meta": 216000, "real": 70473.76, "pct": 0.3262674074074074}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.1652407407407406, "projetado": 251691.99999999997, "meta": 216000, "meta_dia": 8084.791111111111}, "industrializado": {"meta": 54000, "real": 4278.87, "participacao_pct": 0.0607157898202111, "margem_pct": 0.21477947481461218}, "thermo": {"meta": 6480, "real": 7123.43, "participacao_pct": 1.6647923400337006, "margem_pct": 0.16405900551391686}, "recompra_pct": 0.46153846153846156}, {"codigo": "687", "nome": "EDREY MARTINS", "rota": "", "supervisor": "RICHARD", "pilares": {"positivacao": {"meta": 74, "real": 61, "pct": 0.8243243243243243}, "margem": {"meta": 13, "real": 14.711409951445184, "pct": 1.1316469193419372}, "mix": {"meta": 2.15, "real": 2.35, "pct": 1.0930232558139537}, "financeiro": {"meta": 216000, "real": 97112.92, "pct": 0.44959685185185183}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.6057030423280425, "projetado": 346831.85714285716, "meta": 216000, "meta_dia": 6604.837777777778}, "industrializado": {"meta": 54000, "real": 7334.53, "participacao_pct": 0.07552578997727594, "margem_pct": 0.2160822382620291}, "thermo": {"meta": 6480, "real": 2079.46, "participacao_pct": 0.28351646254088536, "margem_pct": 0.2146196155732738}, "recompra_pct": 0.5737704918032787}, {"codigo": "47", "nome": "MARCELO", "rota": "GYN R", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 108, "real": 83, "pct": 0.7685185185185185}, "margem": {"meta": 12.85, "real": 13.431239641716084, "pct": 1.045232656942886}, "mix": {"meta": 3, "real": 3.85, "pct": 1.2833333333333334}, "financeiro": {"meta": 405000, "real": 129422.5, "pct": 0.31956172839506175}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.1412918871252205, "projetado": 462223.2142857143, "meta": 405000, "meta_dia": 15309.861111111111}, "industrializado": {"meta": 101250, "real": 27818.9, "participacao_pct": 0.2149463964921092, "margem_pct": 0.2467829926129358}, "thermo": {"meta": 12150, "real": 6631.08, "participacao_pct": 0.23836600296920438, "margem_pct": 0.16169406278072354}, "recompra_pct": 0.6626506024096386}, {"codigo": "347", "nome": "MATIAS", "rota": "GYN R", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 76, "real": 48, "pct": 0.631578947368421}, "margem": {"meta": 12.9, "real": 11.877203429228777, "pct": 0.9207134441262618}, "mix": {"meta": 3, "real": 3, "pct": 1}, "financeiro": {"meta": 335000, "real": 87203.31, "pct": 0.26030838805970147}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9296728144989338, "projetado": 311440.39285714284, "meta": 335000, "meta_dia": 13766.482777777777}, "industrializado": {"meta": 83750, "real": 18966.3, "participacao_pct": 0.21749518452911937, "margem_pct": 0.21222993409362922}, "thermo": {"meta": 10050, "real": 8361.58, "participacao_pct": 0.4408651133853203, "margem_pct": 0.15152349613159233}, "recompra_pct": 0.5625}, {"codigo": "357", "nome": "LUCIANO", "rota": "GYN", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 85, "real": 62, "pct": 0.7294117647058823}, "margem": {"meta": 13.4, "real": 13.468590826655564, "pct": 1.0051187184071317}, "mix": {"meta": 2.65, "real": 2.92, "pct": 1.1018867924528302}, "financeiro": {"meta": 205000, "real": 61101.99, "pct": 0.29805848780487804}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.0644945993031358, "projetado": 218221.39285714284, "meta": 205000, "meta_dia": 7994.333888888889}, "industrializado": {"meta": 51250, "real": 13077.24, "participacao_pct": 0.2140231439270636, "margem_pct": 0.22254395887817308}, "thermo": {"meta": 6150, "real": 4523.19, "participacao_pct": 0.3458826174330363, "margem_pct": 0.1675658790667648}, "recompra_pct": 0.7258064516129032}, {"codigo": "405", "nome": "WILLIAN", "rota": "GYN", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 110, "real": 59, "pct": 0.5363636363636364}, "margem": {"meta": 13.3, "real": 9.559577124355608, "pct": 0.7187651973199705}, "mix": {"meta": 2.35, "real": 2.23, "pct": 0.9489361702127659}, "financeiro": {"meta": 445000, "real": 102556.014883, "pct": 0.23046295479325843}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8230819814044943, "projetado": 366271.48172499996, "meta": 445000, "meta_dia": 19024.665839833335}, "industrializado": {"meta": 111250, "real": 10466.49, "participacao_pct": 0.10205632514036929, "margem_pct": 0.1869307802520234}, "thermo": {"meta": 13350, "real": 8909.41, "participacao_pct": 0.8512318838502688, "margem_pct": -0.2965515431751374}, "recompra_pct": 0.6101694915254238}, {"codigo": "561", "nome": "THALLES VIEIRA", "rota": "", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 77, "real": 48, "pct": 0.6233766233766234}, "margem": {"meta": 12.85, "real": 14.283142854820772, "pct": 1.1115286268343014}, "mix": {"meta": 2.5, "real": 2.87, "pct": 1.1480000000000001}, "financeiro": {"meta": 230000, "real": 49475.26, "pct": 0.21510982608695653}}, "pilares_atingidos": 2, "tendencia": {"pct": 0.7682493788819875, "projetado": 176697.35714285713, "meta": 230000, "meta_dia": 10029.152222222221}, "industrializado": {"meta": 57500, "real": 11052.8, "participacao_pct": 0.22340054402948056, "margem_pct": 0.23383592291546035}, "thermo": {"meta": 6900, "real": 1958.07, "participacao_pct": 0.17715601476548928, "margem_pct": 0.16445523787402894}, "recompra_pct": 0.5}, {"codigo": "660", "nome": "LUCAS", "rota": "GYN RT", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 76, "real": 46, "pct": 0.6052631578947368}, "margem": {"meta": 12.85, "real": 13.967646081628233, "pct": 1.0869763487648432}, "mix": {"meta": 2.5, "real": 2.88, "pct": 1.152}, "financeiro": {"meta": 170000, "real": 47736.18, "pct": 0.2808010588235294}}, "pilares_atingidos": 2, "tendencia": {"pct": 1.002860924369748, "projetado": 170486.35714285716, "meta": 170000, "meta_dia": 6792.434444444445}, "industrializado": {"meta": 42500, "real": 10409.2, "participacao_pct": 0.21805682817519123, "margem_pct": 0.25041556204127124}, "thermo": {"meta": 5100, "real": 1688.42, "participacao_pct": 0.16220458824885678, "margem_pct": 0.16722231477002172}, "recompra_pct": 0.6956521739130435}, {"codigo": "722", "nome": "LUIZ GUSTAVO -", "rota": "", "supervisor": "RODRIGO", "pilares": {"positivacao": {"meta": 91, "real": 74, "pct": 0.8131868131868132}, "margem": {"meta": 12.85, "real": 11.418214115917737, "pct": 0.8885769740013804}, "mix": {"meta": 2.4, "real": 2.55, "pct": 1.0625}, "financeiro": {"meta": 240000, "real": 87203.27016, "pct": 0.363346959}}, "pilares_atingidos": 1, "tendencia": {"pct": 1.2976677107142858, "projetado": 311440.25057142857, "meta": 240000, "meta_dia": 8488.707213333333}, "industrializado": {"meta": 60000, "real": 12467.1, "participacao_pct": 0.14296596878907689, "margem_pct": 0.23904574542596113}, "thermo": {"meta": 7200, "real": 1835.99, "participacao_pct": 0.1472668062340079, "margem_pct": 0.13229389755281898}, "recompra_pct": 0.5405405405405406}];
+
+function corPct(pct) {
+  if (pct >= 1) return "good";
+  if (pct >= 0.7) return "warn";
+  return "bad";
+}
+
+function corBadge(atingidos) {
+  if (atingidos >= 3) return "good";
+  if (atingidos >= 1) return "warn";
+  return "bad";
+}
+
+// Cortes definidos pelo Edmar (binário, sem faixa intermediária amarela).
+function corParticipacaoIndustrializado(pct) {
+  return pct >= 0.25 ? "good" : "bad";
+}
+function corMargemIndustrializado(pct) {
+  return pct >= 0.18 ? "good" : "bad";
+}
+function corParticipacaoThermo(pct) {
+  return pct >= 0.03 ? "good" : "bad";
+}
+function corMargemThermo(pct) {
+  return pct >= 0.15 ? "good" : "bad";
+}
+
+// Recompra não tem meta pareada na planilha — faixa própria (taxa de
+// clientes que voltam a comprar), ajuste os cortes se quiser outro critério.
+function corRecompra(pct) {
+  if (pct >= 0.4) return "bad";
+  if (pct >= 0.2) return "warn";
+  return "good";
+}
+
+function fmtMoeda(v) {
+  return "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtPct(v) {
+  return (v * 100).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
+}
+
+function iniciais(nome) {
+  return nome.split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toUpperCase();
+}
+
+// cor de avatar determinística a partir do nome (paleta fixa, sem depender de foto real)
+const PALETA_AVATAR = ["#0E7C86", "#7A5CC7", "#C0672B", "#3D6FB4", "#1D9A5D", "#B4740A", "#B4406B"];
+function corAvatar(nome) {
+  let h = 0;
+  for (const c of nome) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return PALETA_AVATAR[h % PALETA_AVATAR.length];
+}
+
+function linhaPilar(label, p) {
+  const cor = corPct(p.pct);
+  const largura = Math.min(p.pct * 100, 100);
+  return `
+    <div class="pilar">
+      <span class="label">${label}</span>
+      <span class="pct" style="color:var(--${cor})">${fmtPct(p.pct)}</span>
+      <div class="track"><div class="fill" style="width:${largura}%;background:var(--${cor})"></div></div>
+      <span class="sub">Meta ${p.meta.toLocaleString("pt-BR", {maximumFractionDigits: 2})} · Realizado ${p.real.toLocaleString("pt-BR", {maximumFractionDigits: 2})}</span>
+    </div>`;
+}
+
+function card(rca) {
+  const corB = corBadge(rca.pilares_atingidos);
+  const av = corAvatar(rca.nome);
+  const textoWhats = encodeURIComponent(
+    `*${rca.nome}* (RCA ${rca.codigo} · ${rca.rota})\n` +
+    `Pilares: ${rca.pilares_atingidos}/4\n` +
+    `Financeiro: ${fmtPct(rca.pilares.financeiro.pct)}\n` +
+    `Margem: ${fmtPct(rca.pilares.margem.pct)}\n` +
+    `Mix: ${fmtPct(rca.pilares.mix.pct)}\n` +
+    `Positivação: ${fmtPct(rca.pilares.positivacao.pct)}\n` +
+    `Tendência de fechamento: ${fmtPct(rca.tendencia.pct)}\n` +
+    `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
+    `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
+    `Recompra: ${fmtPct(rca.recompra_pct)}`
+  );
+
+  return `
+  <article class="card" id="card-${rca.codigo}" data-supervisor="${rca.supervisor}">
+    <div class="card-head">
+      <div class="avatar" style="background:${av}">${iniciais(rca.nome)}</div>
+      <div class="who">
+        <h2>${rca.nome}</h2>
+        <p class="meta">RCA ${rca.codigo} · ${rca.rota || rca.supervisor}</p>
+      </div>
+      <div class="head-actions">
+        <span class="badge-pilares" style="background:var(--${corB}-soft);color:var(--${corB})">${rca.pilares_atingidos}/4 pilares</span>
+        <button class="icon-btn" title="Imprimir" onclick="window.print()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+        </button>
+        <a class="icon-btn" title="Enviar no WhatsApp" href="https://wa.me/?text=${textoWhats}" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.45 1.27 4.9L2 22l5.25-1.38a9.96 9.96 0 0 0 4.79 1.22h.01c5.52 0 10-4.48 10-10s-4.48-10-10-10Zm0 18.15h-.01a8.2 8.2 0 0 1-4.17-1.14l-.3-.18-3.11.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.35c0-4.52 3.68-8.2 8.22-8.2 2.2 0 4.26.86 5.81 2.41a8.15 8.15 0 0 1 2.4 5.8c0 4.52-3.68 8.2-8.21 8.2Zm4.5-6.15c-.25-.12-1.46-.72-1.68-.8-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.96-.14.16-.29.18-.53.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.24.24-.4.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14 0-.31-.02-.47-.02-.16 0-.43.06-.66.31-.22.24-.86.85-.86 2.08 0 1.22.89 2.4 1.01 2.57.12.16 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.66-1.17.21-.58.21-1.08.14-1.18-.06-.1-.22-.16-.47-.28Z"></path></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pilares-list">
+      ${linhaPilar("Financeiro", rca.pilares.financeiro)}
+      ${linhaPilar("Margem", rca.pilares.margem)}
+      ${linhaPilar("Mix", rca.pilares.mix)}
+      ${linhaPilar("Positivação", rca.pilares.positivacao)}
+    </div>
+
+    <div class="box-tendencia">
+      <div class="top-row">
+        <span class="label">Tendência de fechamento</span>
+        <span class="pct" style="color:var(--${corPct(rca.tendencia.pct)})">${fmtPct(rca.tendencia.pct)}</span>
+      </div>
+      <div class="valor">${fmtMoeda(rca.tendencia.projetado)}</div>
+      <div class="foot-row">
+        <span>Meta ${fmtMoeda(rca.tendencia.meta)}</span>
+        <span>Projetado</span>
+      </div>
+      <div class="foot-row" style="margin-top:4px;padding-top:6px;border-top:1px dashed var(--border)">
+        <span>Meta do dia</span>
+        <span>${fmtMoeda(rca.tendencia.meta_dia)}</span>
+      </div>
+      <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
+        <span>Recompra</span>
+        <span class="pct" style="font-size:13px;color:var(--${corRecompra(rca.recompra_pct)})">${fmtPct(rca.recompra_pct)}</span>
+      </div>
+    </div>
+
+    <div class="mini-cards">
+      <div class="mini-card" style="--cor-categoria:#7A5CC7">
+        <div class="label">Industrializados</div>
+        <div class="pct-row">
+          <span class="sub-label">Participação</span>
+          <span class="pct" style="color:var(--${corParticipacaoIndustrializado(rca.industrializado.participacao_pct)})">${fmtPct(rca.industrializado.participacao_pct)}</span>
+        </div>
+        <div class="pct-row">
+          <span class="sub-label">Margem</span>
+          <span class="pct" style="color:var(--${corMargemIndustrializado(rca.industrializado.margem_pct)})">${fmtPct(rca.industrializado.margem_pct)}</span>
+        </div>
+        <div class="sub">Meta ${fmtMoeda(rca.industrializado.meta)}<br>Realizado ${fmtMoeda(rca.industrializado.real)}</div>
+      </div>
+      <div class="mini-card" style="--cor-categoria:#C0672B">
+        <div class="label">Thermoprocessados</div>
+        <div class="pct-row">
+          <span class="sub-label">Participação</span>
+          <span class="pct" style="color:var(--${corParticipacaoThermo(rca.thermo.participacao_pct)})">${fmtPct(rca.thermo.participacao_pct)}</span>
+        </div>
+        <div class="pct-row">
+          <span class="sub-label">Margem</span>
+          <span class="pct" style="color:var(--${corMargemThermo(rca.thermo.margem_pct)})">${fmtPct(rca.thermo.margem_pct)}</span>
+        </div>
+        <div class="sub">Meta ${fmtMoeda(rca.thermo.meta)}<br>Realizado ${fmtMoeda(rca.thermo.real)}</div>
+      </div>
+    </div>
+  </article>`;
+}
+
+function montarResumo(dados) {
+  const total = dados.length;
+  const media = dados.reduce((s, r) => s + r.pilares_atingidos, 0) / (total || 1);
+  const acima3 = dados.filter(r => r.pilares_atingidos >= 3).length;
+  const supervisores = new Set(dados.map(r => r.supervisor)).size;
+  document.getElementById("summary").innerHTML = `
+    <div class="stat-pill"><div class="n">${total}</div><div class="l">RCAs</div></div>
+    <div class="stat-pill"><div class="n">${supervisores}</div><div class="l">Supervisores</div></div>
+    <div class="stat-pill"><div class="n">${media.toFixed(1)}</div><div class="l">Média pilares</div></div>
+    <div class="stat-pill"><div class="n">${acima3}</div><div class="l">Com 3-4 pilares</div></div>
+  `;
+}
+
+function media(valores) {
+  return valores.length ? valores.reduce((s, v) => s + v, 0) / valores.length : 0;
+}
+
+// Monta um "RCA" sintético com os totais do time — mesmo formato de dado
+// que um RCA de verdade, pra poder reaproveitar exatamente o mesmo card().
+function agregarTime(dados, nomeSupervisor) {
+  const somarMeta = campo => dados.reduce((s, r) => s + r.pilares[campo].meta, 0);
+  const somarReal = campo => dados.reduce((s, r) => s + r.pilares[campo].real, 0);
+  const pilar = campo => {
+    const meta = somarMeta(campo);
+    const real = somarReal(campo);
+    return { meta, real, pct: meta ? real / meta : 0 };
+  };
+
+  const metaFin = somarMeta("financeiro");
+  const projetado = dados.reduce((s, r) => s + r.tendencia.projetado, 0);
+  const metaDia = dados.reduce((s, r) => s + r.tendencia.meta_dia, 0);
+
+  return {
+    codigo: "EQUIPE",
+    nome: nomeSupervisor,
+    rota: `${dados.length} RCA${dados.length > 1 ? "s" : ""}`,
+    supervisor: nomeSupervisor,
+    pilares: {
+      positivacao: pilar("positivacao"),
+      margem: pilar("margem"),
+      mix: pilar("mix"),
+      financeiro: pilar("financeiro"),
+    },
+    pilares_atingidos: Math.round(media(dados.map(r => r.pilares_atingidos))),
+    tendencia: {
+      pct: metaFin ? projetado / metaFin : 0,
+      projetado,
+      meta: metaFin,
+      meta_dia: metaDia,
+    },
+    industrializado: {
+      meta: dados.reduce((s, r) => s + r.industrializado.meta, 0),
+      real: dados.reduce((s, r) => s + r.industrializado.real, 0),
+      participacao_pct: media(dados.map(r => r.industrializado.participacao_pct)),
+      margem_pct: media(dados.map(r => r.industrializado.margem_pct)),
+    },
+    thermo: {
+      meta: dados.reduce((s, r) => s + r.thermo.meta, 0),
+      real: dados.reduce((s, r) => s + r.thermo.real, 0),
+      participacao_pct: media(dados.map(r => r.thermo.participacao_pct)),
+      margem_pct: media(dados.map(r => r.thermo.margem_pct)),
+    },
+    recompra_pct: media(dados.map(r => r.recompra_pct)),
+  };
+}
+
+function montarResumoTime(dados, nomeSupervisor) {
+  const el = document.getElementById("resumoTime");
+  if (!dados.length) { el.innerHTML = ""; return; }
+  el.innerHTML = card(agregarTime(dados, nomeSupervisor));
+}
+
+function montarTabs(dados) {
+  const supervisores = [...new Set(dados.map(r => r.supervisor))].sort();
+  const contagem = s => dados.filter(r => r.supervisor === s).length;
+  const tabsEl = document.getElementById("tabs");
+  tabsEl.innerHTML =
+    `<button class="tab active" data-sup="__todos__">Todos <span class="count">${dados.length}</span></button>` +
+    supervisores.map(s => `<button class="tab" data-sup="${s}">${s} <span class="count">${contagem(s)}</span></button>`).join("");
+
+  tabsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".tab");
+    if (!btn) return;
+    tabsEl.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+    btn.classList.add("active");
+    filtrar(btn.dataset.sup);
+  });
+}
+
+function filtrar(sup) {
+  const cards = document.querySelectorAll(".card");
+  let visiveis = 0;
+  cards.forEach(c => {
+    const mostra = sup === "__todos__" || c.dataset.supervisor === sup;
+    c.style.display = mostra ? "" : "none";
+    if (mostra) visiveis++;
+  });
+  document.getElementById("empty").style.display = visiveis === 0 ? "block" : "none";
+
+  const filtrados = sup === "__todos__" ? DADOS : DADOS.filter(r => r.supervisor === sup);
+  montarResumoTime(filtrados, sup === "__todos__" ? "EQUIPE TODA" : sup);
+}
+
+function montar() {
+  montarResumo(DADOS);
+  const supervisorUnico = new Set(DADOS.map(r => r.supervisor)).size === 1 ? DADOS[0].supervisor : "EQUIPE TODA";
+  montarResumoTime(DADOS, supervisorUnico);
+  montarTabs(DADOS);
+  document.getElementById("grid").innerHTML = DADOS
+    .slice()
+    .sort((a, b) => b.pilares_atingidos - a.pilares_atingidos || a.nome.localeCompare(b.nome))
+    .map(card)
+    .join("");
+}
+
+
+function montarGerente(dados) {
+  const geral = agregarTime(dados, "GERÊNCIA GERAL");
+  document.getElementById("gerenteGeral").innerHTML = card(geral);
+
+  const supervisores = [...new Set(dados.map(r => r.supervisor))].sort();
+  document.getElementById("gerenteGrid").innerHTML = supervisores
+    .map(sup => card(agregarTime(dados.filter(r => r.supervisor === sup), sup)))
+    .join("");
+}
+
+montarGerente(DADOS);
+</script>
