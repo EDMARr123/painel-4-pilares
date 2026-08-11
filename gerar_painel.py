@@ -988,6 +988,8 @@ def gerar_html_gerente(dados, totais):
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
     # resto do site (participação/margem, critério binário definido pelo
     # Edmar) — meta/real são somáveis, participação/margem são médias.
+    # Ficam numa segunda fileira própria, separados dos 4 pilares principais.
+    kpis_html_industrializados = ""
     for label, chave, limite_participacao, limite_margem in [
         ("Industrializados", "industrializado", 0.25, 0.18),
         ("Thermoprocessados", "thermo", 0.03, 0.15),
@@ -1000,7 +1002,7 @@ def gerar_html_gerente(dados, totais):
         media_margem = sum(margens) / len(margens) if margens else 0
         classe_participacao = "dv-good" if media_participacao >= limite_participacao else "dv-bad"
         classe_margem = "dv-good" if media_margem >= limite_margem else "dv-bad"
-        kpis_html += f'''
+        kpis_html_industrializados += f'''
     <div class="dv-kpi {classe_margem}">
       <div class="l">{label}</div>
       <div class="v">{_fmt_moeda_py(real)}</div>
@@ -1071,6 +1073,9 @@ def gerar_html_gerente(dados, totais):
   </header>
 
   <section class="dv-kpis">{kpis_html}
+  </section>
+
+  <section class="dv-kpis">{kpis_html_industrializados}
   </section>
 
   <section class="dv-row dv-row-inv">
