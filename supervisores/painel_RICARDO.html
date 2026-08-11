@@ -457,7 +457,7 @@ footer.foot {
   <header class="top">
     <div class="title-block">
       <h1>Painel 4 Pilares</h1>
-      <p>Positivação · Margem · Mix · Financeiro — atualizado em 11/08/2026 06:43</p>
+      <p>Positivação · Margem · Mix · Financeiro — atualizado em 11/08/2026 06:48</p>
     </div>
     <div class="summary-strip" id="summary"></div>
   </header>
@@ -504,9 +504,9 @@ function corMargemThermo(pct) {
 // Recompra não tem meta pareada na planilha — faixa própria (taxa de
 // clientes que voltam a comprar), ajuste os cortes se quiser outro critério.
 function corRecompra(pct) {
-  if (pct >= 0.7) return "good";
-  if (pct >= 0.4) return "warn";
-  return "bad";
+  if (pct >= 0.4) return "bad";
+  if (pct >= 0.2) return "warn";
+  return "good";
 }
 
 function fmtMoeda(v) {
