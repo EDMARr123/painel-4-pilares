@@ -936,6 +936,11 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-legenda { display: flex; flex-direction: column; gap: 8px; }
 .dv-legenda-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
 .dv-dote { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.dv-dote.dv-good { background: var(--dv-good); } .dv-dote.dv-warn { background: var(--dv-warn); } .dv-dote.dv-bad { background: var(--dv-bad); }
+.dv-dote.dv-cat-1 { background: var(--dv-cat-1); } .dv-dote.dv-cat-2 { background: var(--dv-cat-2); }
+.dv-dote.dv-cat-3 { background: var(--dv-cat-3); } .dv-dote.dv-cat-4 { background: var(--dv-cat-4); }
+.dv-dote.dv-cat-5 { background: var(--dv-cat-5); } .dv-dote.dv-cat-6 { background: var(--dv-cat-6); }
+.dv-dote.dv-cat-7 { background: var(--dv-cat-7); }
 .dv-legenda-label { color: var(--ink-soft); font-weight: 600; flex: 1; white-space: nowrap; }
 .dv-legenda-valor { font-weight: 800; font-variant-numeric: tabular-nums; }
 """
