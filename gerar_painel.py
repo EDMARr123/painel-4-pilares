@@ -906,7 +906,8 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-kpi .badge.dv-bad { background: var(--bad-soft); color: var(--bad); }
 
 .dv-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; margin-bottom: 18px; }
-@media (max-width: 760px) { .dv-row { grid-template-columns: 1fr; } }
+.dv-row.dv-row-inv { grid-template-columns: 1fr 1.3fr; }
+@media (max-width: 760px) { .dv-row, .dv-row.dv-row-inv { grid-template-columns: 1fr; } }
 .dv-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
 .dv-panel h3 { margin: 0 0 16px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
 .dv-donut-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
@@ -1039,14 +1040,14 @@ def gerar_html_gerente(dados, totais):
   <section class="dv-kpis">{kpis_html}
   </section>
 
-  <section class="dv-row">
-    <div class="dv-panel">
-      <h3>Tendência de fechamento por supervisor</h3>
-      {svg_tendencia}
-    </div>
+  <section class="dv-row dv-row-inv">
     <div class="dv-panel">
       <h3>Participação no faturamento realizado</h3>
       <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+    </div>
+    <div class="dv-panel">
+      <h3>Tendência de fechamento por supervisor</h3>
+      {svg_tendencia}
     </div>
   </section>
 
