@@ -957,6 +957,9 @@ def gerar_html_gerente(dados, totais):
     # total da planilha). Margem/Mix: vêm prontos do bloco de totais da
     # planilha (T84/U84, T87/U87) — não são soma/média das linhas por RCA.
     fmt_pct_2casas = lambda v: _fmt_num_py(v * 100, 2) + "%"
+    meta_financeiro = soma("financeiro", "meta")
+    tendencia_projetado = sum(r["tendencia"]["projetado"] for r in dados)
+    tendencia_pct = tendencia_projetado / meta_financeiro if meta_financeiro else 0
     kpis_fonte = [
         ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
         ("Positivação", *[soma("positivacao", c) for c in ("meta", "real")], lambda v: _fmt_num_py(v, 0)),
@@ -967,12 +970,18 @@ def gerar_html_gerente(dados, totais):
     for label, meta, real, fmt in kpis_fonte:
         pct = real / meta if meta else 0
         classe = _classe_status(pct)
+        extra = ""
+        if label == "Financeiro":
+            classe_tendencia = _classe_status(tendencia_pct)
+            extra = f'''
+      <div class="m">Tendência {_fmt_moeda_py(tendencia_projetado)}</div>
+      <span class="badge {classe_tendencia}" style="margin-left:6px;">Tend. {_fmt_pct_py(tendencia_pct)}</span>'''
         kpis_html += f'''
     <div class="dv-kpi {classe}">
       <div class="l">{label}</div>
       <div class="v">{fmt(real)}</div>
       <div class="m">Meta {fmt(meta)}</div>
-      <span class="badge {classe}">{_fmt_pct_py(pct)}</span>
+      <span class="badge {classe}">{_fmt_pct_py(pct)}</span>{extra}
     </div>'''
 
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
