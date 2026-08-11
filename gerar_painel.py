@@ -813,13 +813,15 @@ def _classe_status(pct):
 def _svg_barras(itens, largura=560, sublabel=False):
     """itens: [(label, pct_0a1_pra_largura, texto_valor, classe_css)], ou com
     sublabel=True: [(label, subtitulo, pct, texto_valor, classe_css)] — nome
-    à esquerda, subtítulo (ex: R$ realizado) em cima da própria barra,
-    trilho + preenchido, valor à direita."""
+    à esquerda, subtítulo (ex: R$ realizado) em cima da própria barra, trilho
+    + preenchido. Sem sublabel, valor fica à direita da barra; com sublabel,
+    valor fica dentro da barra preenchida, em branco (some pra fora, em
+    tinta escura, se a barra estiver curta demais pra caber o texto)."""
     altura_linha = 44 if sublabel else 36
     rotulo_w = 132
     valor_w = 96
     trilho_x = rotulo_w
-    trilho_w = largura - rotulo_w - valor_w
+    trilho_w = largura - rotulo_w - (0 if sublabel else valor_w)
     linhas = []
     y = 0
     for item in itens:
@@ -838,7 +840,16 @@ def _svg_barras(itens, largura=560, sublabel=False):
     <text x="{trilho_x}" y="{y + 15}" font-size="13.5" font-weight="800" class="dv-ink">{subtitulo}</text>''')
         linhas.append(f'''
     <rect x="{trilho_x}" y="{y_barra}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
-    <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>
+    <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>''')
+        if sublabel:
+            if largura_fill >= 50:
+                linhas.append(f'''
+    <text x="{trilho_x + largura_fill - 8:.1f}" y="{y_rotulo}" font-size="12.5" font-weight="800" text-anchor="end" fill="#fff">{valor_txt}</text>''')
+            else:
+                linhas.append(f'''
+    <text x="{trilho_x + largura_fill + 6:.1f}" y="{y_rotulo}" font-size="12.5" font-weight="800" text-anchor="start" class="dv-ink">{valor_txt}</text>''')
+        else:
+            linhas.append(f'''
     <text x="{largura - 2}" y="{y_rotulo}" font-size="12.5" font-weight="800" text-anchor="end" class="dv-ink">{valor_txt}</text>''')
         y += altura_linha
     return (f'<svg viewBox="0 0 {largura} {y}" width="100%" height="{y}" role="img" '
