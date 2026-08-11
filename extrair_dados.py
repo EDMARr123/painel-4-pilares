@@ -31,6 +31,21 @@ CAMINHO_SOMA = r"C:\Users\edmar\Desktop\CONTAR 4 PILARES\SOMA NAO SALVA ENCIMA.x
 
 PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_SAIDA = os.path.join(PASTA_BASE, "dados.json")
+CAMINHO_SAIDA_TOTAIS = os.path.join(PASTA_BASE, "totais_gerais.json")
+
+
+def extrair_totais(ws):
+    """Bloco de totais gerais da planilha (linhas 82-98, coluna R = rótulo,
+    T/U = meta/realizado) — Margem e Mix aqui são o número final calculado
+    pelo Edmar na planilha, não uma média/soma das linhas por RCA."""
+    return {
+        "margem": {"meta": ws["T84"].value, "real": ws["U84"].value},
+        "mix": {"meta": ws["T87"].value, "real": ws["U87"].value},
+        "meta_clientes": ws["T92"].value,
+        "realizado_clientes": ws["T94"].value,
+        "nao_comprou": ws["T96"].value,
+        "recompra_pct": ws["T98"].value,
+    }
 
 
 def extrair():
@@ -117,6 +132,12 @@ def main():
     with open(CAMINHO_SAIDA, "w", encoding="utf-8") as f:
         json.dump(rcas, f, ensure_ascii=False, indent=2)
     print(f"{len(rcas)} RCAs extraídos. Salvo em: {CAMINHO_SAIDA}")
+
+    wb = openpyxl.load_workbook(CAMINHO_SOMA, data_only=True)
+    totais = extrair_totais(wb["SOMAR 4 PILARES"])
+    with open(CAMINHO_SAIDA_TOTAIS, "w", encoding="utf-8") as f:
+        json.dump(totais, f, ensure_ascii=False, indent=2)
+    print(f"Totais gerais salvos em: {CAMINHO_SAIDA_TOTAIS}")
 
 
 if __name__ == "__main__":

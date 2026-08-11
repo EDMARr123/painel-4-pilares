@@ -516,9 +516,9 @@ function corMargemThermo(pct) {
 // Recompra não tem meta pareada na planilha — faixa própria (taxa de
 // clientes que voltam a comprar), ajuste os cortes se quiser outro critério.
 function corRecompra(pct) {
-  if (pct >= 0.7) return "good";
-  if (pct >= 0.4) return "warn";
-  return "bad";
+  if (pct >= 0.4) return "bad";
+  if (pct >= 0.2) return "warn";
+  return "good";
 }
 
 function fmtMoeda(v) {
@@ -774,9 +774,306 @@ def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN"):
     return html
 
 
+# ---------------------------------------------------------------------------
+# Painel do GERENTE — dashboard de verdade (KPIs + gráficos), diferente do
+# resto do site (que reaproveita o card do vendedor). Gráficos em SVG
+# calculados no Python (dados fixos por geração, sem precisar de JS), com a
+# paleta validada da skill de dataviz: cores categóricas de série (7
+# supervisores) e cores de status (good/warning/critical) — ambas já
+# validadas pro contraste e daltonismo, não escolhidas no olho.
+# ---------------------------------------------------------------------------
+
+import math
+
+# CSS base do site (cores/tokens/tipografia/estrutura .wrap, header etc.) —
+# reaproveitado pra manter a mesma identidade visual do resto do painel.
+_CSS_COMPARTILHADO = TEMPLATE.split("<style>")[1].split("</style>")[0]
+
+
+def _fmt_moeda_py(v):
+    return "R$ " + f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def _fmt_num_py(v, casas=2):
+    return f"{v:,.{casas}f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
+def _fmt_pct_py(v):
+    return _fmt_num_py(v * 100, 1) + "%"
+
+
+def _classe_status(pct):
+    if pct >= 1:
+        return "dv-good"
+    if pct >= 0.7:
+        return "dv-warn"
+    return "dv-bad"
+
+
+def _svg_barras(itens, largura=560):
+    """itens: [(label, pct_0a1_pra_largura, texto_valor, classe_css)]. Barra
+    horizontal — nome à esquerda, trilho + preenchido, valor à direita."""
+    altura_linha = 36
+    rotulo_w = 132
+    valor_w = 96
+    trilho_x = rotulo_w
+    trilho_w = largura - rotulo_w - valor_w
+    linhas = []
+    y = 0
+    for label, pct, valor_txt, classe in itens:
+        largura_fill = max(3, min(max(pct, 0), 1) * trilho_w)
+        linhas.append(f'''
+    <text x="0" y="{y + 21}" font-size="12.5" font-weight="700" class="dv-ink-soft">{label}</text>
+    <rect x="{trilho_x}" y="{y + 10}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
+    <rect x="{trilho_x}" y="{y + 10}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>
+    <text x="{largura - 2}" y="{y + 21}" font-size="12.5" font-weight="800" text-anchor="end" class="dv-ink">{valor_txt}</text>''')
+        y += altura_linha
+    return (f'<svg viewBox="0 0 {largura} {y}" width="100%" height="{y}" role="img" '
+            f'aria-label="Gráfico de barras">{"".join(linhas)}</svg>')
+
+
+def _svg_donut(itens, tamanho=176, espessura=28):
+    """itens: [(label, valor, classe_css)]. Retorna (svg, legenda_html)."""
+    total = sum(v for _, v, _ in itens) or 1
+    r = (tamanho - espessura) / 2
+    cx = cy = tamanho / 2
+    circ = 2 * math.pi * r
+    acumulado = 0
+    arcos = []
+    for _, valor, classe in itens:
+        frac = valor / total
+        dash = frac * circ
+        dash_visivel = max(0.0, dash - 3)
+        offset = -(acumulado / total) * circ
+        acumulado += valor
+        arcos.append(
+            f'<circle cx="{cx}" cy="{cy}" r="{r:.1f}" fill="none" class="{classe}" '
+            f'stroke-width="{espessura}" stroke-dasharray="{dash_visivel:.2f} {circ - dash_visivel:.2f}" '
+            f'stroke-dashoffset="{offset:.2f}" transform="rotate(-90 {cx} {cy})"/>'
+        )
+    svg = (f'<svg viewBox="0 0 {tamanho} {tamanho}" width="{tamanho}" height="{tamanho}" role="img" '
+           f'aria-label="Gráfico de rosca">{"".join(arcos)}</svg>')
+
+    legenda = '<div class="dv-legenda">'
+    for label, valor, classe in itens:
+        pct_fatia = valor / total
+        legenda += (f'<div class="dv-legenda-item"><span class="dv-dote {classe}"></span>'
+                    f'<span class="dv-legenda-label">{label}</span>'
+                    f'<span class="dv-legenda-valor">{_fmt_pct_py(pct_fatia)}</span></div>')
+    legenda += "</div>"
+    return svg, legenda
+
+
+_CORES_CATEGORICAS = [f"dv-cat-{i}" for i in range(1, 8)]
+
+_CSS_DASHBOARD_GERENTE = """
+:root {
+  --dv-good: #0ca30c; --dv-warn: #fab219; --dv-bad: #d03b3b;
+  --dv-track: #E4E7EC;
+  --dv-cat-1: #2a78d6; --dv-cat-2: #eb6834; --dv-cat-3: #1baf7a; --dv-cat-4: #eda100;
+  --dv-cat-5: #e87ba4; --dv-cat-6: #008300; --dv-cat-7: #4a3aa7;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --dv-track: #253039;
+    --dv-cat-1: #3987e5; --dv-cat-2: #d95926; --dv-cat-3: #199e70; --dv-cat-4: #c98500;
+    --dv-cat-5: #d55181; --dv-cat-6: #008300; --dv-cat-7: #9085e9;
+  }
+}
+:root[data-theme="dark"] {
+  --dv-track: #253039;
+  --dv-cat-1: #3987e5; --dv-cat-2: #d95926; --dv-cat-3: #199e70; --dv-cat-4: #c98500;
+  --dv-cat-5: #d55181; --dv-cat-6: #008300; --dv-cat-7: #9085e9;
+}
+.dv-good { fill: var(--dv-good); } .dv-warn { fill: var(--dv-warn); } .dv-bad { fill: var(--dv-bad); }
+.dv-track { fill: var(--dv-track); }
+.dv-ink { fill: var(--ink); } .dv-ink-soft { fill: var(--ink-soft); }
+.dv-cat-1 { fill: var(--dv-cat-1); } .dv-cat-2 { fill: var(--dv-cat-2); } .dv-cat-3 { fill: var(--dv-cat-3); }
+.dv-cat-4 { fill: var(--dv-cat-4); } .dv-cat-5 { fill: var(--dv-cat-5); } .dv-cat-6 { fill: var(--dv-cat-6); }
+.dv-cat-7 { fill: var(--dv-cat-7); }
+
+.dv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 22px; }
+.dv-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; }
+.dv-kpi.dv-good { border-top-color: var(--dv-good); }
+.dv-kpi.dv-warn { border-top-color: var(--dv-warn); }
+.dv-kpi.dv-bad { border-top-color: var(--dv-bad); }
+.dv-kpi .l { font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); margin-bottom: 6px; }
+.dv-kpi .v { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 2px; }
+.dv-kpi .m { font-size: 12px; color: var(--ink-faint); margin-bottom: 10px; }
+.dv-kpi .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+.dv-kpi .badge.dv-good { background: var(--good-soft); color: var(--good); }
+.dv-kpi .badge.dv-warn { background: var(--warn-soft); color: var(--warn); }
+.dv-kpi .badge.dv-bad { background: var(--bad-soft); color: var(--bad); }
+
+.dv-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; margin-bottom: 18px; }
+@media (max-width: 760px) { .dv-row { grid-template-columns: 1fr; } }
+.dv-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
+.dv-panel h3 { margin: 0 0 16px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.dv-donut-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
+.dv-legenda { display: flex; flex-direction: column; gap: 8px; }
+.dv-legenda-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
+.dv-dote { width: 10px; height: 10px; border-radius: 3px; flex: none; }
+.dv-legenda-label { color: var(--ink-soft); font-weight: 600; flex: 1; white-space: nowrap; }
+.dv-legenda-valor { font-weight: 800; font-variant-numeric: tabular-nums; }
+"""
+
+TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
+
+
+def gerar_html_gerente(dados, totais):
+    import datetime
+    data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    def soma(pilar, campo):
+        return sum(r["pilares"][pilar][campo] for r in dados)
+
+    supervisores = sorted({r["supervisor"] for r in dados})
+
+    # ---- KPIs (somatória geral) ----
+    # Financeiro/Positivação: soma direta das linhas por RCA (bate com o
+    # total da planilha). Margem/Mix: vêm prontos do bloco de totais da
+    # planilha (T84/U84, T87/U87) — não são soma/média das linhas por RCA.
+    kpis_fonte = [
+        ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
+        ("Positivação", *[soma("positivacao", c) for c in ("meta", "real")], lambda v: _fmt_num_py(v, 0)),
+        ("Margem", totais["margem"]["meta"], totais["margem"]["real"], _fmt_pct_py),
+        ("Mix", totais["mix"]["meta"], totais["mix"]["real"], _fmt_pct_py),
+    ]
+    kpis_html = ""
+    for label, meta, real, fmt in kpis_fonte:
+        pct = real / meta if meta else 0
+        classe = _classe_status(pct)
+        kpis_html += f'''
+    <div class="dv-kpi {classe}">
+      <div class="l">{label}</div>
+      <div class="v">{fmt(real)}</div>
+      <div class="m">Meta {fmt(meta)}</div>
+      <span class="badge {classe}">{_fmt_pct_py(pct)}</span>
+    </div>'''
+
+    # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
+    # resto do site (participação/margem, critério binário definido pelo
+    # Edmar) — meta/real são somáveis, participação/margem são médias.
+    for label, chave, limite_participacao, limite_margem in [
+        ("Industrializados", "industrializado", 0.25, 0.18),
+        ("Thermoprocessados", "thermo", 0.03, 0.15),
+    ]:
+        meta = sum(r[chave]["meta"] for r in dados)
+        real = sum(r[chave]["real"] for r in dados)
+        participacoes = [r[chave]["participacao_pct"] for r in dados]
+        margens = [r[chave]["margem_pct"] for r in dados]
+        media_participacao = sum(participacoes) / len(participacoes) if participacoes else 0
+        media_margem = sum(margens) / len(margens) if margens else 0
+        classe_participacao = "dv-good" if media_participacao >= limite_participacao else "dv-bad"
+        classe_margem = "dv-good" if media_margem >= limite_margem else "dv-bad"
+        kpis_html += f'''
+    <div class="dv-kpi {classe_margem}">
+      <div class="l">{label}</div>
+      <div class="v">{_fmt_moeda_py(real)}</div>
+      <div class="m">Meta {_fmt_moeda_py(meta)}</div>
+      <span class="badge {classe_participacao}">Particip. {_fmt_pct_py(media_participacao)}</span>
+      <span class="badge {classe_margem}" style="margin-left:6px;">Margem {_fmt_pct_py(media_margem)}</span>
+    </div>'''
+
+    # ---- Gráfico 1: tendência de fechamento por supervisor (barras) ----
+    linhas_tendencia = []
+    for sup in supervisores:
+        do_sup = [r for r in dados if r["supervisor"] == sup]
+        meta_sup = sum(r["pilares"]["financeiro"]["meta"] for r in do_sup)
+        projetado_sup = sum(r["tendencia"]["projetado"] for r in do_sup)
+        pct = projetado_sup / meta_sup if meta_sup else 0
+        linhas_tendencia.append((sup, pct, _fmt_pct_py(pct), _classe_status(pct)))
+    linhas_tendencia.sort(key=lambda x: x[1], reverse=True)
+    svg_tendencia = _svg_barras(linhas_tendencia)
+
+    # ---- Gráfico 2: participação no faturamento realizado por supervisor (rosca) ----
+    fatias_faturamento = []
+    for i, sup in enumerate(supervisores):
+        do_sup = [r for r in dados if r["supervisor"] == sup]
+        real_sup = sum(r["pilares"]["financeiro"]["real"] for r in do_sup)
+        fatias_faturamento.append((sup, real_sup, _CORES_CATEGORICAS[i % len(_CORES_CATEGORICAS)]))
+    fatias_faturamento.sort(key=lambda x: x[1], reverse=True)
+    svg_faturamento, legenda_faturamento = _svg_donut(fatias_faturamento)
+
+    # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
+    linhas_pilares = []
+    maior_qtd = max(
+        (sum(1 for r in dados if r["supervisor"] == sup and r["pilares_atingidos"] >= 3) for sup in supervisores),
+        default=0,
+    ) or 1
+    for sup in supervisores:
+        qtd = sum(1 for r in dados if r["supervisor"] == sup and r["pilares_atingidos"] >= 3)
+        total_sup = sum(1 for r in dados if r["supervisor"] == sup)
+        linhas_pilares.append((sup, qtd / maior_qtd, f"{qtd}/{total_sup}", "dv-cat-1"))
+    linhas_pilares.sort(key=lambda x: x[1], reverse=True)
+    svg_pilares = _svg_barras(linhas_pilares)
+
+    # ---- Gráfico 4: RCAs por faixa de pilares atingidos (rosca, status) ----
+    baixo = sum(1 for r in dados if r["pilares_atingidos"] <= 1)
+    medio = sum(1 for r in dados if r["pilares_atingidos"] == 2)
+    alto = sum(1 for r in dados if r["pilares_atingidos"] >= 3)
+    fatias_faixa = [
+        ("0-1 pilares", baixo, "dv-bad"),
+        ("2 pilares", medio, "dv-warn"),
+        ("3-4 pilares", alto, "dv-good"),
+    ]
+    svg_faixa, legenda_faixa = _svg_donut(fatias_faixa)
+
+    total_rcas = len(dados)
+
+    corpo = f"""<title>Painel do Gerente — Equipe GYN</title>
+<style>
+{_CSS_COMPARTILHADO}
+{_CSS_DASHBOARD_GERENTE}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title-block">
+      <h1>Painel do Gerente</h1>
+      <p>{total_rcas} RCAs · {len(supervisores)} supervisores — atualizado em {data_extracao}</p>
+    </div>
+  </header>
+
+  <section class="dv-kpis">{kpis_html}
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel">
+      <h3>Tendência de fechamento por supervisor</h3>
+      {svg_tendencia}
+    </div>
+    <div class="dv-panel">
+      <h3>Participação no faturamento realizado</h3>
+      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel">
+      <h3>RCAs com 3-4 pilares por supervisor</h3>
+      {svg_pilares}
+    </div>
+    <div class="dv-panel">
+      <h3>RCAs por faixa de pilares atingidos</h3>
+      <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
+    </div>
+  </section>
+
+  <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
+</div>
+"""
+    return corpo
+
+
+CAMINHO_TOTAIS = os.path.join(PASTA_BASE, "totais_gerais.json")
+
+
 def main():
     with open(CAMINHO_DADOS, "r", encoding="utf-8") as f:
         dados = json.load(f)
+    with open(CAMINHO_TOTAIS, "r", encoding="utf-8") as f:
+        totais = json.load(f)
 
     html = gerar_html(dados)
     with open(CAMINHO_SAIDA, "w", encoding="utf-8") as f:
@@ -795,6 +1092,12 @@ def main():
         with open(caminho_sup, "w", encoding="utf-8") as f:
             f.write(html_sup)
         print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
+
+    html_gerente = gerar_html_gerente(dados, totais)
+    caminho_gerente = os.path.join(PASTA_BASE, "painel_gerente.html")
+    with open(caminho_gerente, "w", encoding="utf-8") as f:
+        f.write(html_gerente)
+    print(f"  -> Painel do gerente gerado em: {caminho_gerente}")
 
 
 if __name__ == "__main__":
