@@ -933,11 +933,12 @@ def gerar_html_gerente(dados, totais):
     # Financeiro/Positivação: soma direta das linhas por RCA (bate com o
     # total da planilha). Margem/Mix: vêm prontos do bloco de totais da
     # planilha (T84/U84, T87/U87) — não são soma/média das linhas por RCA.
+    fmt_pct_2casas = lambda v: _fmt_num_py(v * 100, 2) + "%"
     kpis_fonte = [
         ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
         ("Positivação", *[soma("positivacao", c) for c in ("meta", "real")], lambda v: _fmt_num_py(v, 0)),
-        ("Margem", totais["margem"]["meta"], totais["margem"]["real"], _fmt_pct_py),
-        ("Mix", totais["mix"]["meta"], totais["mix"]["real"], _fmt_pct_py),
+        ("Margem", totais["margem"]["meta"], totais["margem"]["real"], fmt_pct_2casas),
+        ("Mix", totais["mix"]["meta"], totais["mix"]["real"], fmt_pct_2casas),
     ]
     kpis_html = ""
     for label, meta, real, fmt in kpis_fonte:
