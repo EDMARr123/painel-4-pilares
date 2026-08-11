@@ -892,6 +892,15 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-cat-4 { fill: var(--dv-cat-4); } .dv-cat-5 { fill: var(--dv-cat-5); } .dv-cat-6 { fill: var(--dv-cat-6); }
 .dv-cat-7 { fill: var(--dv-cat-7); }
 
+.dv-donut-wrap circle { fill: none; }
+.dv-donut-wrap .dv-good { stroke: var(--dv-good); }
+.dv-donut-wrap .dv-warn { stroke: var(--dv-warn); }
+.dv-donut-wrap .dv-bad { stroke: var(--dv-bad); }
+.dv-donut-wrap .dv-cat-1 { stroke: var(--dv-cat-1); } .dv-donut-wrap .dv-cat-2 { stroke: var(--dv-cat-2); }
+.dv-donut-wrap .dv-cat-3 { stroke: var(--dv-cat-3); } .dv-donut-wrap .dv-cat-4 { stroke: var(--dv-cat-4); }
+.dv-donut-wrap .dv-cat-5 { stroke: var(--dv-cat-5); } .dv-donut-wrap .dv-cat-6 { stroke: var(--dv-cat-6); }
+.dv-donut-wrap .dv-cat-7 { stroke: var(--dv-cat-7); }
+
 .dv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 22px; }
 .dv-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; }
 .dv-kpi.dv-good { border-top-color: var(--dv-good); }
