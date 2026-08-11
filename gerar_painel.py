@@ -813,9 +813,9 @@ def _classe_status(pct):
 def _svg_barras(itens, largura=560, sublabel=False):
     """itens: [(label, pct_0a1_pra_largura, texto_valor, classe_css)], ou com
     sublabel=True: [(label, subtitulo, pct, texto_valor, classe_css)] — nome
-    à esquerda (+ subtítulo menor embaixo, ex: R$ realizado), trilho +
-    preenchido, valor à direita."""
-    altura_linha = 40 if sublabel else 36
+    à esquerda, subtítulo (ex: R$ realizado) em cima da própria barra,
+    trilho + preenchido, valor à direita."""
+    altura_linha = 44 if sublabel else 36
     rotulo_w = 132
     valor_w = 96
     trilho_x = rotulo_w
@@ -829,16 +829,17 @@ def _svg_barras(itens, largura=560, sublabel=False):
             label, pct, valor_txt, classe = item
             subtitulo = None
         largura_fill = max(3, min(max(pct, 0), 1) * trilho_w)
-        y_rotulo = y + (15 if subtitulo else 21)
+        y_barra = y + (20 if subtitulo else 10)
+        y_rotulo = y_barra + 11
         linhas.append(f'''
     <text x="0" y="{y_rotulo}" font-size="12.5" font-weight="700" class="dv-ink-soft">{label}</text>''')
         if subtitulo:
             linhas.append(f'''
-    <text x="0" y="{y_rotulo + 13}" font-size="11" font-weight="700" class="dv-ink">{subtitulo}</text>''')
+    <text x="{trilho_x}" y="{y + 14}" font-size="11" font-weight="700" class="dv-ink">{subtitulo}</text>''')
         linhas.append(f'''
-    <rect x="{trilho_x}" y="{y + 10}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
-    <rect x="{trilho_x}" y="{y + 10}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>
-    <text x="{largura - 2}" y="{y + 21}" font-size="12.5" font-weight="800" text-anchor="end" class="dv-ink">{valor_txt}</text>''')
+    <rect x="{trilho_x}" y="{y_barra}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
+    <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>
+    <text x="{largura - 2}" y="{y_rotulo}" font-size="12.5" font-weight="800" text-anchor="end" class="dv-ink">{valor_txt}</text>''')
         y += altura_linha
     return (f'<svg viewBox="0 0 {largura} {y}" width="100%" height="{y}" role="img" '
             f'aria-label="Gráfico de barras">{"".join(linhas)}</svg>')
