@@ -976,12 +976,13 @@ def gerar_html_gerente(dados, totais):
             extra = f'''
       <div class="m">Tendência {_fmt_moeda_py(tendencia_projetado)}</div>
       <span class="badge {classe_tendencia}" style="margin-left:6px;">Tend. {_fmt_pct_py(tendencia_pct)}</span>'''
+        badge_pct = "" if label == "Financeiro" else f'<span class="badge {classe}">{_fmt_pct_py(pct)}</span>'
         kpis_html += f'''
     <div class="dv-kpi {classe}">
       <div class="l">{label}</div>
       <div class="v">{fmt(real)}</div>
       <div class="m">Meta {fmt(meta)}</div>
-      <span class="badge {classe}">{_fmt_pct_py(pct)}</span>{extra}
+      {badge_pct}{extra}
     </div>'''
 
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
