@@ -834,15 +834,16 @@ def _svg_barras(itens, largura=560, sublabel=False):
             label, pct, valor_txt, classe = item
             linhas_subtitulo = None
         n_subtitulo = len(linhas_subtitulo) if linhas_subtitulo else 0
+        altura_linha_subtitulo = 17  # espaço de sobra pra 13.5px de fonte não colidir entre linhas
         largura_fill = max(3, min(max(pct, 0), 1) * trilho_w)
-        offset_barra = 12 + n_subtitulo * 13 if n_subtitulo else 10
+        offset_barra = n_subtitulo * altura_linha_subtitulo + 8 if n_subtitulo else 10
         y_barra = y + offset_barra
         y_rotulo = y_barra + 11
         linhas.append(f'''
     <text x="0" y="{y_rotulo}" font-size="12.5" font-weight="700" class="dv-ink-soft">{label}</text>''')
         for i, linha_txt in enumerate(linhas_subtitulo or []):
             linhas.append(f'''
-    <text x="{trilho_x}" y="{y + 15 + i * 13}" font-size="13.5" font-weight="800" class="dv-ink">{linha_txt}</text>''')
+    <text x="{trilho_x}" y="{y + 13 + i * altura_linha_subtitulo}" font-size="13.5" font-weight="800" class="dv-ink">{linha_txt}</text>''')
         linhas.append(f'''
     <rect x="{trilho_x}" y="{y_barra}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
     <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>''')
