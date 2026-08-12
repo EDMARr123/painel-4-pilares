@@ -812,12 +812,13 @@ def _classe_status(pct):
 
 def _svg_barras(itens, largura=560, sublabel=False):
     """itens: [(label, pct_0a1_pra_largura, texto_valor, classe_css)], ou com
-    sublabel=True: [(label, subtitulo, pct, texto_valor, classe_css)] — nome
-    à esquerda, subtítulo (ex: R$ realizado) em cima da própria barra, trilho
-    + preenchido. Sem sublabel, valor fica à direita da barra; com sublabel,
-    valor fica dentro da barra preenchida, em branco (some pra fora, em
-    tinta escura, se a barra estiver curta demais pra caber o texto)."""
-    altura_linha = 44 if sublabel else 36
+    sublabel=True: [(label, linhas_subtitulo, pct, texto_valor, classe_css)]
+    — nome à esquerda, 1+ linhas de subtítulo (ex: R$ realizado, Positivação
+    real/meta) em cima da própria barra, trilho + preenchido. Sem sublabel,
+    valor fica à direita da barra; com sublabel, valor fica dentro da barra
+    preenchida, em branco (some pra fora, em tinta escura, se a barra
+    estiver curta demais pra caber o texto). `linhas_subtitulo` é uma lista
+    de strings (uma por linha) ou None."""
     rotulo_w = 132
     valor_w = 96
     trilho_x = rotulo_w
@@ -826,18 +827,22 @@ def _svg_barras(itens, largura=560, sublabel=False):
     y = 0
     for item in itens:
         if sublabel:
-            label, subtitulo, pct, valor_txt, classe = item
+            label, linhas_subtitulo, pct, valor_txt, classe = item
+            if isinstance(linhas_subtitulo, str):
+                linhas_subtitulo = [linhas_subtitulo] if linhas_subtitulo else None
         else:
             label, pct, valor_txt, classe = item
-            subtitulo = None
+            linhas_subtitulo = None
+        n_subtitulo = len(linhas_subtitulo) if linhas_subtitulo else 0
         largura_fill = max(3, min(max(pct, 0), 1) * trilho_w)
-        y_barra = y + (20 if subtitulo else 10)
+        offset_barra = 12 + n_subtitulo * 13 if n_subtitulo else 10
+        y_barra = y + offset_barra
         y_rotulo = y_barra + 11
         linhas.append(f'''
     <text x="0" y="{y_rotulo}" font-size="12.5" font-weight="700" class="dv-ink-soft">{label}</text>''')
-        if subtitulo:
+        for i, linha_txt in enumerate(linhas_subtitulo or []):
             linhas.append(f'''
-    <text x="{trilho_x}" y="{y + 15}" font-size="13.5" font-weight="800" class="dv-ink">{subtitulo}</text>''')
+    <text x="{trilho_x}" y="{y + 15 + i * 13}" font-size="13.5" font-weight="800" class="dv-ink">{linha_txt}</text>''')
         linhas.append(f'''
     <rect x="{trilho_x}" y="{y_barra}" width="{trilho_w}" height="13" rx="6.5" class="dv-track"/>
     <rect x="{trilho_x}" y="{y_barra}" width="{largura_fill:.1f}" height="13" rx="6.5" class="{classe}"/>''')
@@ -851,7 +856,7 @@ def _svg_barras(itens, largura=560, sublabel=False):
         else:
             linhas.append(f'''
     <text x="{largura - 2}" y="{y_rotulo}" font-size="12.5" font-weight="800" text-anchor="end" class="dv-ink">{valor_txt}</text>''')
-        y += altura_linha
+        y += offset_barra + 13 + 11  # altura desta linha (até o fim da barra) + respiro
     return (f'<svg viewBox="0 0 {largura} {y}" width="100%" height="{y}" role="img" '
             f'aria-label="Gráfico de barras">{"".join(linhas)}</svg>')
 
@@ -1033,9 +1038,15 @@ def gerar_html_gerente(dados, totais):
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_sup = sum(r["pilares"]["financeiro"]["meta"] for r in do_sup)
         real_sup = sum(r["pilares"]["financeiro"]["real"] for r in do_sup)
+        meta_posit_sup = sum(r["pilares"]["positivacao"]["meta"] for r in do_sup)
+        real_posit_sup = sum(r["pilares"]["positivacao"]["real"] for r in do_sup)
         projetado_sup = sum(r["tendencia"]["projetado"] for r in do_sup)
         pct = projetado_sup / meta_sup if meta_sup else 0
-        linhas_tendencia.append((sup, _fmt_moeda_py(real_sup), pct, _fmt_pct_py(pct), _classe_status(pct)))
+        subtitulo = [
+            _fmt_moeda_py(real_sup),
+            f"Positivação {_fmt_num_py(real_posit_sup, 0)}/{_fmt_num_py(meta_posit_sup, 0)}",
+        ]
+        linhas_tendencia.append((sup, subtitulo, pct, _fmt_pct_py(pct), _classe_status(pct)))
     linhas_tendencia.sort(key=lambda x: x[2], reverse=True)
     svg_tendencia = _svg_barras(linhas_tendencia, sublabel=True)
 
