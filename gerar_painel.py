@@ -1077,9 +1077,11 @@ def gerar_html_gerente(dados, totais):
     for sup in supervisores:
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
+        real_ind = sum(r["industrializado"]["real"] for r in do_sup)
         margens_ind = [r["industrializado"]["margem_pct"] for r in do_sup]
         media_margem_ind = sum(margens_ind) / len(margens_ind) if margens_ind else 0
         meta_thermo = sum(r["thermo"]["meta"] for r in do_sup)
+        real_thermo = sum(r["thermo"]["real"] for r in do_sup)
         margens_thermo = [r["thermo"]["margem_pct"] for r in do_sup]
         media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
         classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
@@ -1088,8 +1090,10 @@ def gerar_html_gerente(dados, totais):
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td>{_fmt_moeda_py(meta_ind)}</td>
+        <td>{_fmt_moeda_py(real_ind)}</td>
         <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
         <td>{_fmt_moeda_py(meta_thermo)}</td>
+        <td>{_fmt_moeda_py(real_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
     tabela_ind_thermo = f'''
@@ -1097,14 +1101,16 @@ def gerar_html_gerente(dados, totais):
       <thead>
         <tr>
           <th>Supervisor</th>
-          <th colspan="2">Industrializado</th>
-          <th colspan="2">Thermo</th>
+          <th colspan="3">Industrializado</th>
+          <th colspan="3">Thermo</th>
         </tr>
         <tr class="dv-tab-sub">
           <th></th>
           <th>Meta</th>
+          <th>Realizado</th>
           <th>Margem</th>
           <th>Meta</th>
+          <th>Realizado</th>
           <th>Margem</th>
         </tr>
       </thead>
