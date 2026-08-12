@@ -457,7 +457,7 @@ footer.foot {
   <header class="top">
     <div class="title-block">
       <h1>Painel 4 Pilares</h1>
-      <p>Positivação · Margem · Mix · Financeiro — atualizado em 11/08/2026 15:43</p>
+      <p>Positivação · Margem · Mix · Financeiro — atualizado em 11/08/2026 22:29</p>
     </div>
     <div class="summary-strip" id="summary"></div>
   </header>
@@ -473,7 +473,7 @@ footer.foot {
 </div>
 
 <script>
-const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 37, "pct": 0.6727272727272727}, "margem": {"meta": 11.3, "real": 5.542706597801407, "pct": 0.49050500865499175}, "mix": {"meta": 2.4, "real": 2.07, "pct": 0.8624999999999999}, "financeiro": {"meta": 1640000, "real": 556240.31, "pct": 0.33917092073170735}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.211324716898955, "projetado": 1986572.535714286, "meta": 1640000, "meta_dia": 60208.871666666666}, "industrializado": {"meta": 410000, "real": 34513.38, "participacao_pct": 0.06204760672594907, "margem_pct": 0.2326891340807536}, "thermo": {"meta": 49200, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.32432432432432434}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 43, "pct": 0.7962962962962963}, "margem": {"meta": 14, "real": 8.757239732574046, "pct": 0.625517123755289}, "mix": {"meta": 2.6, "real": 2.49, "pct": 0.9576923076923077}, "financeiro": {"meta": 1645000, "real": 406095.6603756, "pct": 0.24686666284231001}}, "pilares_atingidos": 0, "tendencia": {"pct": 0.8816666530082501, "projetado": 1450341.6441985713, "meta": 1645000, "meta_dia": 68828.01886802222}, "industrializado": {"meta": 411250, "real": 111540.66, "participacao_pct": 0.27466597376794294, "margem_pct": 0.16034170995939964}, "thermo": {"meta": 49350, "real": 53904.78, "participacao_pct": 0.13273911853710327, "margem_pct": -0.0253920292008242}, "recompra_pct": 0.46511627906976744}];
+const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 40, "pct": 0.7272727272727273}, "margem": {"meta": 11.3, "real": 5.5654582440615386, "pct": 0.4925184286780122}, "mix": {"meta": 2.4, "real": 2.18, "pct": 0.9083333333333334}, "financeiro": {"meta": 1640000, "real": 595549.06, "pct": 0.36313967073170733}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.049070159891599, "projetado": 1720475.0622222223, "meta": 1640000, "meta_dia": 61438.29058823529}, "industrializado": {"meta": 410000, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "thermo": {"meta": 49200, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.3}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 44, "pct": 0.8148148148148148}, "margem": {"meta": 14, "real": 8.750841192734963, "pct": 0.6250600851953545}, "mix": {"meta": 2.6, "real": 2.69, "pct": 1.0346153846153845}, "financeiro": {"meta": 1645000, "real": 436579.7103756, "pct": 0.26539800022832827}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.7667053339929484, "projetado": 1261230.2744184001, "meta": 1645000, "meta_dia": 71083.54644849412}, "industrializado": {"meta": 411250, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "thermo": {"meta": 49350, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.4090909090909091}];
 
 function corPct(pct) {
   if (pct >= 1) return "good";
