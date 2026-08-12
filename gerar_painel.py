@@ -1169,11 +1169,17 @@ def gerar_html_gerente(dados, totais):
     <div class="dv-panel">
       <h3>Participação no faturamento realizado</h3>
       <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
-      {tabela_ind_thermo}
     </div>
     <div class="dv-panel">
       <h3>Tendência de fechamento por supervisor</h3>
       {svg_tendencia}
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel" style="grid-column: 1 / -1;">
+      <h3>Industrializado e Thermo por supervisor</h3>
+      {tabela_ind_thermo}
     </div>
   </section>
 
