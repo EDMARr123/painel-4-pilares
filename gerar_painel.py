@@ -970,6 +970,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela tbody tr:nth-child(even) { background: var(--surface-2); }
 .dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
+.dv-tabela .dv-tab-divisor { border-left: 2px solid var(--border); padding-left: 14px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1092,7 +1093,7 @@ def gerar_html_gerente(dados, totais):
         <td>{_fmt_moeda_py(meta_ind)}</td>
         <td>{_fmt_moeda_py(real_ind)}</td>
         <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
-        <td>{_fmt_moeda_py(meta_thermo)}</td>
+        <td class="dv-tab-divisor">{_fmt_moeda_py(meta_thermo)}</td>
         <td>{_fmt_moeda_py(real_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
@@ -1102,14 +1103,14 @@ def gerar_html_gerente(dados, totais):
         <tr>
           <th>Supervisor</th>
           <th colspan="3">Industrializado</th>
-          <th colspan="3">Thermo</th>
+          <th colspan="3" class="dv-tab-divisor">Thermo</th>
         </tr>
         <tr class="dv-tab-sub">
           <th></th>
           <th>Meta</th>
           <th>Realizado</th>
           <th>Margem</th>
-          <th>Meta</th>
+          <th class="dv-tab-divisor">Meta</th>
           <th>Realizado</th>
           <th>Margem</th>
         </tr>
