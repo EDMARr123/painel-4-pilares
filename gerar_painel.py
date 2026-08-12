@@ -1085,12 +1085,18 @@ def gerar_html_gerente(dados, totais):
         real_ind = sum(r["industrializado"]["real"] for r in do_sup)
         margens_ind = [r["industrializado"]["margem_pct"] for r in do_sup]
         media_margem_ind = sum(margens_ind) / len(margens_ind) if margens_ind else 0
+        participacoes_ind = [r["industrializado"]["participacao_pct"] for r in do_sup]
+        media_participacao_ind = sum(participacoes_ind) / len(participacoes_ind) if participacoes_ind else 0
         meta_thermo = sum(r["thermo"]["meta"] for r in do_sup)
         real_thermo = sum(r["thermo"]["real"] for r in do_sup)
         margens_thermo = [r["thermo"]["margem_pct"] for r in do_sup]
         media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
+        participacoes_thermo = [r["thermo"]["participacao_pct"] for r in do_sup]
+        media_participacao_thermo = sum(participacoes_thermo) / len(participacoes_thermo) if participacoes_thermo else 0
         classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
         classe_thermo = "dv-good" if media_margem_thermo >= 0.15 else "dv-bad"
+        classe_participacao_ind = "dv-good" if media_participacao_ind >= 0.25 else "dv-bad"
+        classe_participacao_thermo = "dv-good" if media_participacao_thermo >= 0.03 else "dv-bad"
         recompras = [r["recompra_pct"] for r in do_sup]
         media_recompra = sum(recompras) / len(recompras) if recompras else 0
         if media_recompra >= 0.40:
@@ -1104,6 +1110,7 @@ def gerar_html_gerente(dados, totais):
         <td class="dv-tab-sup">{sup}</td>
         <td>{_fmt_moeda_py(meta_ind)}</td>
         <td>{_fmt_moeda_py(real_ind)}</td>
+        <td class="{classe_participacao_ind}">{_fmt_pct_py(media_participacao_ind)}</td>
         <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
       </tr>'''
         linhas_thermo += f'''
@@ -1111,6 +1118,7 @@ def gerar_html_gerente(dados, totais):
         <td class="dv-tab-sup">{sup}</td>
         <td>{_fmt_moeda_py(meta_thermo)}</td>
         <td>{_fmt_moeda_py(real_thermo)}</td>
+        <td class="{classe_participacao_thermo}">{_fmt_pct_py(media_participacao_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
         linhas_recompra += f'''
@@ -1128,8 +1136,8 @@ def gerar_html_gerente(dados, totais):
       </tbody>
     </table>'''
 
-    tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Margem"])
-    tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Margem"])
+    tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
+    tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"])
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
