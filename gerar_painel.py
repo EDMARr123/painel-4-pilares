@@ -946,7 +946,9 @@ _CSS_DASHBOARD_GERENTE = """
 
 .dv-row { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; margin-bottom: 18px; }
 .dv-row.dv-row-inv { grid-template-columns: 1fr 1.3fr; }
+.dv-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 18px; }
 @media (max-width: 760px) { .dv-row, .dv-row.dv-row-inv { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { .dv-row-3 { grid-template-columns: 1fr; } }
 .dv-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
 .dv-panel h3 { margin: 0 0 16px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
 .dv-donut-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
@@ -971,8 +973,6 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
-.dv-tabela .dv-tab-divisor { border-left: 2px solid var(--border); padding-left: 28px; }
-.dv-tabela .dv-tab-fim { padding-right: 28px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1073,10 +1073,11 @@ def gerar_html_gerente(dados, totais):
     fatias_faturamento.sort(key=lambda x: x[1], reverse=True)
     svg_faturamento, legenda_faturamento = _svg_donut(fatias_faturamento)
 
-    # Tabela Industrializado/Thermo por supervisor (mesmos critérios de cor
-    # dos KPIs de cima: margem industrializado >=18% bom, margem thermo >=15%
-    # bom) — mostrada embaixo do donut de participação no faturamento.
-    linhas_ind_thermo = ""
+    # Industrializado/Thermo/Recompra por supervisor — 3 cards separados
+    # (mesmos critérios de cor dos KPIs de cima: margem industrializado
+    # >=18% bom, margem thermo >=15% bom; recompra >=40% ruim, 20-40%
+    # atenção, <20% bom).
+    linhas_ind, linhas_thermo, linhas_recompra = "", "", ""
     for sup in supervisores:
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
@@ -1089,9 +1090,6 @@ def gerar_html_gerente(dados, totais):
         media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
         classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
         classe_thermo = "dv-good" if media_margem_thermo >= 0.15 else "dv-bad"
-        # Recompra: quanto maior, pior (RCA repondo mercadoria que não vendeu) —
-        # >=40% ruim, 20-40% atenção, <20% bom (critério já usado nos cards
-        # de vendedor/supervisor).
         recompras = [r["recompra_pct"] for r in do_sup]
         media_recompra = sum(recompras) / len(recompras) if recompras else 0
         if media_recompra >= 0.40:
@@ -1100,40 +1098,38 @@ def gerar_html_gerente(dados, totais):
             classe_recompra = "dv-warn"
         else:
             classe_recompra = "dv-good"
-        linhas_ind_thermo += f'''
+        linhas_ind += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td>{_fmt_moeda_py(meta_ind)}</td>
         <td>{_fmt_moeda_py(real_ind)}</td>
-        <td class="{classe_ind} dv-tab-fim">{_fmt_pct_py(media_margem_ind)}</td>
-        <td class="dv-tab-divisor">{_fmt_moeda_py(meta_thermo)}</td>
-        <td>{_fmt_moeda_py(real_thermo)}</td>
-        <td class="{classe_thermo} dv-tab-fim">{_fmt_pct_py(media_margem_thermo)}</td>
-        <td class="{classe_recompra} dv-tab-divisor">{_fmt_pct_py(media_recompra)}</td>
+        <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
       </tr>'''
-    tabela_ind_thermo = f'''
+        linhas_thermo += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_moeda_py(meta_thermo)}</td>
+        <td>{_fmt_moeda_py(real_thermo)}</td>
+        <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
+      </tr>'''
+        linhas_recompra += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
+      </tr>'''
+
+    def _tabela_mini(linhas, colunas):
+        cabecalho = "".join(f"<th>{c}</th>" for c in colunas)
+        return f'''
     <table class="dv-tabela">
-      <thead>
-        <tr>
-          <th>Supervisor</th>
-          <th colspan="3">Industrializado</th>
-          <th colspan="3" class="dv-tab-divisor">Thermo</th>
-          <th class="dv-tab-divisor">Recompra</th>
-        </tr>
-        <tr class="dv-tab-sub">
-          <th></th>
-          <th>Meta</th>
-          <th>Realizado</th>
-          <th class="dv-tab-fim">Margem</th>
-          <th class="dv-tab-divisor">Meta</th>
-          <th>Realizado</th>
-          <th class="dv-tab-fim">Margem</th>
-          <th class="dv-tab-divisor"></th>
-        </tr>
-      </thead>
-      <tbody>{linhas_ind_thermo}
+      <thead><tr><th></th>{cabecalho}</tr></thead>
+      <tbody>{linhas}
       </tbody>
     </table>'''
+
+    tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Margem"])
+    tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Margem"])
+    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"])
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
@@ -1192,10 +1188,18 @@ def gerar_html_gerente(dados, totais):
     </div>
   </section>
 
-  <section class="dv-row">
-    <div class="dv-panel" style="grid-column: 1 / -1;">
-      <h3>Industrializado e Thermo por supervisor</h3>
-      {tabela_ind_thermo}
+  <section class="dv-row-3">
+    <div class="dv-panel">
+      <h3>Industrializado por supervisor</h3>
+      {tabela_industrializado}
+    </div>
+    <div class="dv-panel">
+      <h3>Thermo por supervisor</h3>
+      {tabela_thermo}
+    </div>
+    <div class="dv-panel">
+      <h3>Recompra por supervisor</h3>
+      {tabela_recompra}
     </div>
   </section>
 
