@@ -971,7 +971,8 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
-.dv-tabela .dv-tab-divisor { border-left: 2px solid var(--border); padding-left: 14px; }
+.dv-tabela .dv-tab-divisor { border-left: 2px solid var(--border); padding-left: 28px; }
+.dv-tabela .dv-tab-fim { padding-right: 28px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1104,10 +1105,10 @@ def gerar_html_gerente(dados, totais):
         <td class="dv-tab-sup">{sup}</td>
         <td>{_fmt_moeda_py(meta_ind)}</td>
         <td>{_fmt_moeda_py(real_ind)}</td>
-        <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
+        <td class="{classe_ind} dv-tab-fim">{_fmt_pct_py(media_margem_ind)}</td>
         <td class="dv-tab-divisor">{_fmt_moeda_py(meta_thermo)}</td>
         <td>{_fmt_moeda_py(real_thermo)}</td>
-        <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
+        <td class="{classe_thermo} dv-tab-fim">{_fmt_pct_py(media_margem_thermo)}</td>
         <td class="{classe_recompra} dv-tab-divisor">{_fmt_pct_py(media_recompra)}</td>
       </tr>'''
     tabela_ind_thermo = f'''
@@ -1123,10 +1124,10 @@ def gerar_html_gerente(dados, totais):
           <th></th>
           <th>Meta</th>
           <th>Realizado</th>
-          <th>Margem</th>
+          <th class="dv-tab-fim">Margem</th>
           <th class="dv-tab-divisor">Meta</th>
           <th>Realizado</th>
-          <th>Margem</th>
+          <th class="dv-tab-fim">Margem</th>
           <th class="dv-tab-divisor"></th>
         </tr>
       </thead>
