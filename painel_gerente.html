@@ -518,13 +518,23 @@ footer.foot {
 .dv-legenda-label { color: var(--ink-soft); font-weight: 600; flex: 1; white-space: nowrap; }
 .dv-legenda-valor { font-weight: 800; font-variant-numeric: tabular-nums; }
 
+.dv-tabela { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 11.5px; }
+.dv-tabela th, .dv-tabela td { padding: 5px 6px; text-align: right; font-variant-numeric: tabular-nums; }
+.dv-tabela thead th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); font-weight: 800; border-bottom: 1px solid var(--border); }
+.dv-tabela thead tr:first-child th { text-align: center; }
+.dv-tabela .dv-tab-sub th { padding-top: 2px; }
+.dv-tabela .dv-tab-sup { text-align: left; font-weight: 700; color: var(--ink-soft); }
+.dv-tabela tbody tr:nth-child(even) { background: var(--surface-2); }
+.dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
+.dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
+
 </style>
 
 <div class="wrap">
   <header class="top">
     <div class="title-block">
       <h1>Painel do Gerente</h1>
-      <p>45 RCAs · 7 supervisores — atualizado em 12/08/2026 09:21</p>
+      <p>45 RCAs · 7 supervisores — atualizado em 12/08/2026 09:33</p>
     </div>
   </header>
 
@@ -578,6 +588,74 @@ footer.foot {
     <div class="dv-panel">
       <h3>Participação no faturamento realizado</h3>
       <div class="dv-donut-wrap"><svg viewBox="0 0 176 176" width="176" height="176" role="img" aria-label="Gráfico de rosca"><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-1" stroke-width="28" stroke-dasharray="91.39 373.56" stroke-dashoffset="-0.00" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-3" stroke-width="28" stroke-dasharray="76.81 388.15" stroke-dashoffset="-94.39" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-4" stroke-width="28" stroke-dasharray="60.05 404.90" stroke-dashoffset="-174.20" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-5" stroke-width="28" stroke-dasharray="57.68 407.28" stroke-dashoffset="-237.25" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-6" stroke-width="28" stroke-dasharray="57.27 407.69" stroke-dashoffset="-297.93" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-7" stroke-width="28" stroke-dasharray="54.82 410.13" stroke-dashoffset="-358.20" transform="rotate(-90 88.0 88.0)"/><circle cx="88.0" cy="88.0" r="74.0" fill="none" class="dv-cat-2" stroke-width="28" stroke-dasharray="45.94 419.02" stroke-dashoffset="-416.02" transform="rotate(-90 88.0 88.0)"/></svg><div class="dv-legenda"><div class="dv-legenda-item"><span class="dv-dote dv-cat-1"></span><span class="dv-legenda-label">EDMAR</span><span class="dv-legenda-valor">20,3%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-3"></span><span class="dv-legenda-label">IDEGLAN</span><span class="dv-legenda-valor">17,2%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-4"></span><span class="dv-legenda-label">LEANDRO</span><span class="dv-legenda-valor">13,6%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-5"></span><span class="dv-legenda-label">RICARDO</span><span class="dv-legenda-valor">13,0%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-6"></span><span class="dv-legenda-label">RICHARD</span><span class="dv-legenda-valor">13,0%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-7"></span><span class="dv-legenda-label">RODRIGO</span><span class="dv-legenda-valor">12,4%</span></div><div class="dv-legenda-item"><span class="dv-dote dv-cat-2"></span><span class="dv-legenda-label">FLAVIANE</span><span class="dv-legenda-valor">10,5%</span></div></div></div>
+      
+    <table class="dv-tabela">
+      <thead>
+        <tr>
+          <th>Supervisor</th>
+          <th colspan="2">Industrializado</th>
+          <th colspan="2">Thermo</th>
+        </tr>
+        <tr class="dv-tab-sub">
+          <th></th>
+          <th>Meta</th>
+          <th>Margem</th>
+          <th>Meta</th>
+          <th>Margem</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td class="dv-tab-sup">EDMAR</td>
+        <td>R$ 821.250,00</td>
+        <td class="dv-good">19,1%</td>
+        <td>R$ 98.550,00</td>
+        <td class="dv-bad">-1,3%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">FLAVIANE</td>
+        <td>R$ 452.500,00</td>
+        <td class="dv-good">25,4%</td>
+        <td>R$ 54.300,00</td>
+        <td class="dv-bad">12,3%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">IDEGLAN</td>
+        <td>R$ 570.000,00</td>
+        <td class="dv-good">20,9%</td>
+        <td>R$ 68.400,00</td>
+        <td class="dv-bad">13,5%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">LEANDRO</td>
+        <td>R$ 530.000,00</td>
+        <td class="dv-good">23,0%</td>
+        <td>R$ 63.600,00</td>
+        <td class="dv-good">15,9%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">RICARDO</td>
+        <td>R$ 448.750,00</td>
+        <td class="dv-good">24,0%</td>
+        <td>R$ 53.850,00</td>
+        <td class="dv-good">16,5%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">RICHARD</td>
+        <td>R$ 420.000,00</td>
+        <td class="dv-good">21,3%</td>
+        <td>R$ 50.400,00</td>
+        <td class="dv-good">18,5%</td>
+      </tr>
+      <tr>
+        <td class="dv-tab-sup">RODRIGO</td>
+        <td>R$ 507.500,00</td>
+        <td class="dv-good">22,8%</td>
+        <td>R$ 60.900,00</td>
+        <td class="dv-bad">9,4%</td>
+      </tr>
+      </tbody>
+    </table>
     </div>
     <div class="dv-panel">
       <h3>Tendência de fechamento por supervisor</h3>

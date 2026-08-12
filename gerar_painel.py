@@ -960,6 +960,16 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-dote.dv-cat-7 { background: var(--dv-cat-7); }
 .dv-legenda-label { color: var(--ink-soft); font-weight: 600; flex: 1; white-space: nowrap; }
 .dv-legenda-valor { font-weight: 800; font-variant-numeric: tabular-nums; }
+
+.dv-tabela { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 11.5px; }
+.dv-tabela th, .dv-tabela td { padding: 5px 6px; text-align: right; font-variant-numeric: tabular-nums; }
+.dv-tabela thead th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); font-weight: 800; border-bottom: 1px solid var(--border); }
+.dv-tabela thead tr:first-child th { text-align: center; }
+.dv-tabela .dv-tab-sub th { padding-top: 2px; }
+.dv-tabela .dv-tab-sup { text-align: left; font-weight: 700; color: var(--ink-soft); }
+.dv-tabela tbody tr:nth-child(even) { background: var(--surface-2); }
+.dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
+.dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1060,6 +1070,48 @@ def gerar_html_gerente(dados, totais):
     fatias_faturamento.sort(key=lambda x: x[1], reverse=True)
     svg_faturamento, legenda_faturamento = _svg_donut(fatias_faturamento)
 
+    # Tabela Industrializado/Thermo por supervisor (mesmos critérios de cor
+    # dos KPIs de cima: margem industrializado >=18% bom, margem thermo >=15%
+    # bom) — mostrada embaixo do donut de participação no faturamento.
+    linhas_ind_thermo = ""
+    for sup in supervisores:
+        do_sup = [r for r in dados if r["supervisor"] == sup]
+        meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
+        margens_ind = [r["industrializado"]["margem_pct"] for r in do_sup]
+        media_margem_ind = sum(margens_ind) / len(margens_ind) if margens_ind else 0
+        meta_thermo = sum(r["thermo"]["meta"] for r in do_sup)
+        margens_thermo = [r["thermo"]["margem_pct"] for r in do_sup]
+        media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
+        classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
+        classe_thermo = "dv-good" if media_margem_thermo >= 0.15 else "dv-bad"
+        linhas_ind_thermo += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_moeda_py(meta_ind)}</td>
+        <td class="{classe_ind}">{_fmt_pct_py(media_margem_ind)}</td>
+        <td>{_fmt_moeda_py(meta_thermo)}</td>
+        <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
+      </tr>'''
+    tabela_ind_thermo = f'''
+    <table class="dv-tabela">
+      <thead>
+        <tr>
+          <th>Supervisor</th>
+          <th colspan="2">Industrializado</th>
+          <th colspan="2">Thermo</th>
+        </tr>
+        <tr class="dv-tab-sub">
+          <th></th>
+          <th>Meta</th>
+          <th>Margem</th>
+          <th>Meta</th>
+          <th>Margem</th>
+        </tr>
+      </thead>
+      <tbody>{linhas_ind_thermo}
+      </tbody>
+    </table>'''
+
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
     maior_qtd = max(
@@ -1110,6 +1162,7 @@ def gerar_html_gerente(dados, totais):
     <div class="dv-panel">
       <h3>Participação no faturamento realizado</h3>
       <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+      {tabela_ind_thermo}
     </div>
     <div class="dv-panel">
       <h3>Tendência de fechamento por supervisor</h3>
