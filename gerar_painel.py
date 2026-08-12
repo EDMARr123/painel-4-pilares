@@ -951,6 +951,7 @@ _CSS_DASHBOARD_GERENTE = """
 @media (max-width: 900px) { .dv-row-3 { grid-template-columns: 1fr; } }
 .dv-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
 .dv-panel h3 { margin: 0 0 16px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
+.dv-row-3 .dv-panel h3 { text-align: center; }
 .dv-donut-wrap { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; }
 .dv-legenda { display: flex; flex-direction: column; gap: 8px; }
 .dv-legenda-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
