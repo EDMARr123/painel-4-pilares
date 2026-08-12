@@ -1021,6 +1021,24 @@ def gerar_html_gerente(dados, totais):
       {badge_pct}{extra}
     </div>'''
 
+    # Recompra da equipe (média entre RCAs) — mesmo critério invertido usado
+    # nos cards de vendedor/supervisor: quanto maior, pior.
+    recompras_gerais = [r["recompra_pct"] for r in dados]
+    media_recompra_geral = sum(recompras_gerais) / len(recompras_gerais) if recompras_gerais else 0
+    if media_recompra_geral >= 0.40:
+        classe_recompra_geral = "dv-bad"
+    elif media_recompra_geral >= 0.20:
+        classe_recompra_geral = "dv-warn"
+    else:
+        classe_recompra_geral = "dv-good"
+    kpis_html += f'''
+    <div class="dv-kpi {classe_recompra_geral}">
+      <div class="l">Recompra</div>
+      <div class="v">{_fmt_pct_py(media_recompra_geral)}</div>
+      <div class="m">Média da equipe</div>
+      <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
+    </div>'''
+
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
     # resto do site (participação/margem, critério binário definido pelo
     # Edmar) — meta/real são somáveis, participação/margem são médias.
