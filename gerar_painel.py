@@ -970,6 +970,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela tbody tr:nth-child(even) { background: var(--surface-2); }
 .dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
+.dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela .dv-tab-divisor { border-left: 2px solid var(--border); padding-left: 14px; }
 """
 
@@ -1087,6 +1088,17 @@ def gerar_html_gerente(dados, totais):
         media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
         classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
         classe_thermo = "dv-good" if media_margem_thermo >= 0.15 else "dv-bad"
+        # Recompra: quanto maior, pior (RCA repondo mercadoria que não vendeu) —
+        # >=40% ruim, 20-40% atenção, <20% bom (critério já usado nos cards
+        # de vendedor/supervisor).
+        recompras = [r["recompra_pct"] for r in do_sup]
+        media_recompra = sum(recompras) / len(recompras) if recompras else 0
+        if media_recompra >= 0.40:
+            classe_recompra = "dv-bad"
+        elif media_recompra >= 0.20:
+            classe_recompra = "dv-warn"
+        else:
+            classe_recompra = "dv-good"
         linhas_ind_thermo += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>
@@ -1096,6 +1108,7 @@ def gerar_html_gerente(dados, totais):
         <td class="dv-tab-divisor">{_fmt_moeda_py(meta_thermo)}</td>
         <td>{_fmt_moeda_py(real_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
+        <td class="{classe_recompra} dv-tab-divisor">{_fmt_pct_py(media_recompra)}</td>
       </tr>'''
     tabela_ind_thermo = f'''
     <table class="dv-tabela">
@@ -1104,6 +1117,7 @@ def gerar_html_gerente(dados, totais):
           <th>Supervisor</th>
           <th colspan="3">Industrializado</th>
           <th colspan="3" class="dv-tab-divisor">Thermo</th>
+          <th class="dv-tab-divisor">Recompra</th>
         </tr>
         <tr class="dv-tab-sub">
           <th></th>
@@ -1113,6 +1127,7 @@ def gerar_html_gerente(dados, totais):
           <th class="dv-tab-divisor">Meta</th>
           <th>Realizado</th>
           <th>Margem</th>
+          <th class="dv-tab-divisor"></th>
         </tr>
       </thead>
       <tbody>{linhas_ind_thermo}
