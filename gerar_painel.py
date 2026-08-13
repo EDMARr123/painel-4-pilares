@@ -3,12 +3,24 @@ Gera painel.html a partir de dados.json — página única, autocontida
 (CSS/JS inline), pronta pra publicar como Artifact.
 """
 
+import base64
 import json
 import os
 
 PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_DADOS = os.path.join(PASTA_BASE, "dados.json")
 CAMINHO_SAIDA = os.path.join(PASTA_BASE, "painel.html")
+CAMINHO_LOGO = os.path.join(PASTA_BASE, "logo_tet.png")
+
+
+def _logo_data_uri():
+    """Logo T&T Alimentos embutida como base64, pra cada página continuar
+    sendo um arquivo único e autocontido (Artifact/GitHub Pages)."""
+    with open(CAMINHO_LOGO, "rb") as f:
+        return "data:image/png;base64," + base64.b64encode(f.read()).decode("ascii")
+
+
+_LOGO_TAG = '<img src="{}" alt="T&amp;T Alimentos" style="height:52px;width:auto;flex:none;" />'.format(_logo_data_uri())
 
 TEMPLATE = r"""<title>Painel 4 Pilares — Equipe GYN</title>
 <style>
@@ -471,7 +483,10 @@ footer.foot {
       <h1>Painel 4 Pilares</h1>
       <p>Positivação · Margem · Mix · Financeiro — atualizado em __DATA_EXTRACAO__</p>
     </div>
-    <div class="summary-strip" id="summary"></div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="summary-strip" id="summary"></div>
+      __LOGO_TAG__
+    </div>
   </header>
 
   <nav class="tabs" id="tabs"></nav>
@@ -784,6 +799,7 @@ def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN"):
 
     html = TEMPLATE.replace("__DADOS_JSON__", json.dumps(dados, ensure_ascii=False))
     html = html.replace("__DATA_EXTRACAO__", data_extracao)
+    html = html.replace("__LOGO_TAG__", _LOGO_TAG)
     html = html.replace("<title>Painel 4 Pilares — Equipe GYN</title>", f"<title>{titulo}</title>")
     return html
 
@@ -1095,8 +1111,10 @@ def gerar_html_gerente(dados, totais):
     svg_tendencia = _svg_barras(linhas_tendencia, sublabel=True)
 
     # Positivação por supervisor — card próprio (retirado do gráfico de
-    # tendência a pedido do Edmar, pra não poluir aquele gráfico).
+    # tendência a pedido do Edmar, pra não poluir aquele gráfico), com
+    # tabela + gráfico de barras lado a lado.
     linhas_positivacao = ""
+    linhas_positivacao_grafico = []
     for sup in supervisores:
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_posit_sup = sum(r["pilares"]["positivacao"]["meta"] for r in do_sup)
@@ -1110,6 +1128,9 @@ def gerar_html_gerente(dados, totais):
         <td>{_fmt_num_py(real_posit_sup, 0)}</td>
         <td class="{classe_posit_sup}">{_fmt_pct_py(pct_posit_sup)}</td>
       </tr>'''
+        linhas_positivacao_grafico.append((sup, pct_posit_sup, _fmt_pct_py(pct_posit_sup), classe_posit_sup))
+    linhas_positivacao_grafico.sort(key=lambda x: x[1], reverse=True)
+    svg_positivacao = _svg_barras(linhas_positivacao_grafico)
 
     # ---- Gráfico 2: participação no faturamento realizado por supervisor (rosca) ----
     fatias_faturamento = []
@@ -1235,6 +1256,7 @@ def gerar_html_gerente(dados, totais):
       <h1>Painel do Gerente</h1>
       <p>{total_rcas} RCAs · {len(supervisores)} supervisores — atualizado em {data_extracao}</p>
     </div>
+    {_LOGO_TAG}
   </header>
 
   <section class="dv-kpis">{kpis_html}
@@ -1255,9 +1277,13 @@ def gerar_html_gerente(dados, totais):
   </section>
 
   <section class="dv-row">
-    <div class="dv-panel" style="grid-column: 1 / -1;">
+    <div class="dv-panel">
       <h3>Positivação por supervisor</h3>
       {tabela_positivacao}
+    </div>
+    <div class="dv-panel">
+      <h3>Positivação — realizado / meta</h3>
+      {svg_positivacao}
     </div>
   </section>
 
