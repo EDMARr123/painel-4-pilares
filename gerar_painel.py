@@ -533,6 +533,10 @@ function fmtNum1(v) {
   return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
 }
 
+function fmtNum2(v) {
+  return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 function iniciais(nome) {
   return nome.split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toUpperCase();
 }
@@ -571,7 +575,7 @@ function card(rca) {
     `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
     `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
     `Recompra: ${fmtPct(rca.recompra_pct)}\n` +
-    `Média de pedidos: ${fmtNum1(rca.media_pedidos)}`
+    `Média de pedidos: ${fmtNum2(rca.media_pedidos)}`
   );
 
   return `
@@ -619,8 +623,8 @@ function card(rca) {
         <span class="pct" style="font-size:13px;color:var(--${corRecompra(rca.recompra_pct)})">${fmtPct(rca.recompra_pct)}</span>
       </div>
       <div class="foot-row" style="margin-top:6px;align-items:center">
-        <span>Média de pedidos</span>
-        <span class="pct" style="font-size:13px">${fmtNum1(rca.media_pedidos)}</span>
+        <span style="font-weight:800">Média de pedidos</span>
+        <span class="pct" style="font-size:13px;font-weight:800;color:var(--ink)">${fmtNum2(rca.media_pedidos)}</span>
       </div>
     </div>
 
