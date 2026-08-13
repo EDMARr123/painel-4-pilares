@@ -1139,6 +1139,13 @@ def gerar_html_gerente(dados, totais):
             classe_recompra = "dv-good"
         pedidos = [r["media_pedidos"] for r in do_sup]
         media_pedidos_sup = sum(pedidos) / len(pedidos) if pedidos else 0
+        # Escala de cor da média de pedidos: <10 ruim, 10-14,99 atenção, >=15 bom.
+        if media_pedidos_sup < 10:
+            classe_pedidos = "dv-bad"
+        elif media_pedidos_sup < 15:
+            classe_pedidos = "dv-warn"
+        else:
+            classe_pedidos = "dv-good"
         linhas_ind += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>
@@ -1159,7 +1166,7 @@ def gerar_html_gerente(dados, totais):
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
-        <td>{_fmt_num_py(media_pedidos_sup, 2)}</td>
+        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_sup, 2)}</td>
       </tr>'''
 
     def _tabela_mini(linhas, colunas):
