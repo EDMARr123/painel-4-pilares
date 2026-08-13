@@ -529,6 +529,10 @@ function fmtPct(v) {
   return (v * 100).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
 }
 
+function fmtNum1(v) {
+  return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+}
+
 function iniciais(nome) {
   return nome.split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toUpperCase();
 }
@@ -566,7 +570,8 @@ function card(rca) {
     `Tendência de fechamento: ${fmtPct(rca.tendencia.pct)}\n` +
     `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
     `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
-    `Recompra: ${fmtPct(rca.recompra_pct)}`
+    `Recompra: ${fmtPct(rca.recompra_pct)}\n` +
+    `Média de pedidos: ${fmtNum1(rca.media_pedidos)}`
   );
 
   return `
@@ -612,6 +617,10 @@ function card(rca) {
       <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
         <span>Recompra</span>
         <span class="pct" style="font-size:13px;color:var(--${corRecompra(rca.recompra_pct)})">${fmtPct(rca.recompra_pct)}</span>
+      </div>
+      <div class="foot-row" style="margin-top:6px;align-items:center">
+        <span>Média de pedidos</span>
+        <span class="pct" style="font-size:13px">${fmtNum1(rca.media_pedidos)}</span>
       </div>
     </div>
 
@@ -707,6 +716,7 @@ function agregarTime(dados, nomeSupervisor) {
       margem_pct: media(dados.map(r => r.thermo.margem_pct)),
     },
     recompra_pct: media(dados.map(r => r.recompra_pct)),
+    media_pedidos: media(dados.map(r => r.media_pedidos)),
   };
 }
 

@@ -34,17 +34,25 @@ CAMINHO_SAIDA = os.path.join(PASTA_BASE, "dados.json")
 CAMINHO_SAIDA_TOTAIS = os.path.join(PASTA_BASE, "totais_gerais.json")
 
 
+def _num(v):
+    """Blinda contra células com erro (#N/A etc) — acontece quando a planilha
+    tem vínculos externos quebrados (ex: aviso "Não foi possível obter
+    valores atualizados de uma pasta de trabalho vinculada" no Excel).
+    Cai pra 0 em vez de derrubar a geração inteira do painel."""
+    return v if isinstance(v, (int, float)) else 0
+
+
 def extrair_totais(ws):
     """Bloco de totais gerais da planilha (linhas 82-98, coluna R = rótulo,
     T/U = meta/realizado) — Margem e Mix aqui são o número final calculado
     pelo Edmar na planilha, não uma média/soma das linhas por RCA."""
     return {
-        "margem": {"meta": ws["T84"].value, "real": ws["U84"].value},
-        "mix": {"meta": ws["T87"].value, "real": ws["U87"].value},
-        "meta_clientes": ws["T92"].value,
-        "realizado_clientes": ws["T94"].value,
-        "nao_comprou": ws["T96"].value,
-        "recompra_pct": ws["T98"].value,
+        "margem": {"meta": _num(ws["T84"].value), "real": _num(ws["U84"].value)},
+        "mix": {"meta": _num(ws["T87"].value), "real": _num(ws["U87"].value)},
+        "meta_clientes": _num(ws["T92"].value),
+        "realizado_clientes": _num(ws["T94"].value),
+        "nao_comprou": _num(ws["T96"].value),
+        "recompra_pct": _num(ws["T98"].value),
     }
 
 
@@ -122,6 +130,7 @@ def extrair():
             # margem % vem -1 (placeholder de erro) quando não teve venda ainda — trata como 0.
             "thermo": {"meta": val(31), "real": thermo_real, "participacao_pct": val(33), "margem_pct": val(34) if thermo_real else 0},
             "recompra_pct": val(40),  # AN = "RECOMPRA"
+            "media_pedidos": val(57),  # BE = "MÉDIA PEDIDOS"
         })
 
     return rcas

@@ -457,7 +457,7 @@ footer.foot {
   <header class="top">
     <div class="title-block">
       <h1>Painel 4 Pilares</h1>
-      <p>Positivação · Margem · Mix · Financeiro — atualizado em 12/08/2026 14:56</p>
+      <p>Positivação · Margem · Mix · Financeiro — atualizado em 12/08/2026 23:07</p>
     </div>
     <div class="summary-strip" id="summary"></div>
   </header>
@@ -473,7 +473,7 @@ footer.foot {
 </div>
 
 <script>
-const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 40, "pct": 0.7272727272727273}, "margem": {"meta": 11.3, "real": 5.5654582440615386, "pct": 0.4925184286780122}, "mix": {"meta": 2.4, "real": 2.18, "pct": 0.9083333333333334}, "financeiro": {"meta": 1640000, "real": 595549.06, "pct": 0.36313967073170733}}, "pilares_atingidos": 0, "tendencia": {"pct": 1.049070159891599, "projetado": 1720475.0622222223, "meta": 1640000, "meta_dia": 61438.29058823529}, "industrializado": {"meta": 410000, "real": 41478.24, "participacao_pct": 0.06964705812817502, "margem_pct": 0.2259263609063451}, "thermo": {"meta": 49200, "real": 0, "participacao_pct": 0, "margem_pct": 0}, "recompra_pct": 0.3}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 44, "pct": 0.8148148148148148}, "margem": {"meta": 14, "real": 8.750841192734963, "pct": 0.6250600851953545}, "mix": {"meta": 2.6, "real": 2.69, "pct": 1.0346153846153845}, "financeiro": {"meta": 1645000, "real": 436579.7103756, "pct": 0.26539800022832827}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.7667053339929484, "projetado": 1261230.2744184001, "meta": 1645000, "meta_dia": 71083.54644849412}, "industrializado": {"meta": 411250, "real": 123148.36, "participacao_pct": 0.2820753165419724, "margem_pct": 0.15706044883748352}, "thermo": {"meta": 49350, "real": 53904.78, "participacao_pct": 0.12347064858700012, "margem_pct": -0.0253920292008242}, "recompra_pct": 0.4090909090909091}];
+const DADOS = [{"codigo": "23", "nome": "FABIO L.", "rota": "GYN", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 55, "real": 43, "pct": 0.7818181818181819}, "margem": {"meta": 11.3, "real": 6.287355170212919, "pct": 0.5564031124082229}, "mix": {"meta": 2.4, "real": 2.47, "pct": 1.0291666666666668}, "financeiro": {"meta": 1640000, "real": 623415.37, "pct": 0.3801313231707317}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.9883414402439024, "projetado": 1620879.9619999998, "meta": 1640000, "meta_dia": 63536.539375}, "industrializado": {"meta": 410000, "real": 46387.54, "participacao_pct": 0.07440872046513708, "margem_pct": 0.22014823334024616}, "thermo": {"meta": 49200, "real": 188.5, "participacao_pct": 0.00030236662275426416, "margem_pct": -11.498419382493369}, "recompra_pct": 0.32558139534883723, "media_pedidos": 16.2}, {"codigo": "33", "nome": "ARTHUR", "rota": "GYN RT", "supervisor": "EDMAR", "pilares": {"positivacao": {"meta": 54, "real": 44, "pct": 0.8148148148148148}, "margem": {"meta": 14, "real": 10.769525181136535, "pct": 0.7692517986526096}, "mix": {"meta": 2.6, "real": 2.97, "pct": 1.1423076923076922}, "financeiro": {"meta": 1645000, "real": 525801.2503756, "pct": 0.3196360184654103}}, "pilares_atingidos": 1, "tendencia": {"pct": 0.8310536480100666, "projetado": 1367083.2509765597, "meta": 1645000, "meta_dia": 69949.921851525}, "industrializado": {"meta": 411250, "real": 158986.15, "participacao_pct": 0.3023692885599456, "margem_pct": 0.1503154764713782}, "thermo": {"meta": 49350, "real": 53904.78, "participacao_pct": 0.10251930736470054, "margem_pct": -0.0253920292008242}, "recompra_pct": 0.36363636363636365, "media_pedidos": 18.9}];
 
 function corPct(pct) {
   if (pct >= 1) return "good";
@@ -517,6 +517,10 @@ function fmtPct(v) {
   return (v * 100).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + "%";
 }
 
+function fmtNum1(v) {
+  return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+}
+
 function iniciais(nome) {
   return nome.split(/\s+/).filter(Boolean).slice(0, 2).map(p => p[0]).join("").toUpperCase();
 }
@@ -554,7 +558,8 @@ function card(rca) {
     `Tendência de fechamento: ${fmtPct(rca.tendencia.pct)}\n` +
     `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
     `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
-    `Recompra: ${fmtPct(rca.recompra_pct)}`
+    `Recompra: ${fmtPct(rca.recompra_pct)}\n` +
+    `Média de pedidos: ${fmtNum1(rca.media_pedidos)}`
   );
 
   return `
@@ -600,6 +605,10 @@ function card(rca) {
       <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
         <span>Recompra</span>
         <span class="pct" style="font-size:13px;color:var(--${corRecompra(rca.recompra_pct)})">${fmtPct(rca.recompra_pct)}</span>
+      </div>
+      <div class="foot-row" style="margin-top:6px;align-items:center">
+        <span>Média de pedidos</span>
+        <span class="pct" style="font-size:13px">${fmtNum1(rca.media_pedidos)}</span>
       </div>
     </div>
 
@@ -695,6 +704,7 @@ function agregarTime(dados, nomeSupervisor) {
       margem_pct: media(dados.map(r => r.thermo.margem_pct)),
     },
     recompra_pct: media(dados.map(r => r.recompra_pct)),
+    media_pedidos: media(dados.map(r => r.media_pedidos)),
   };
 }
 
