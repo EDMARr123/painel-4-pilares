@@ -1089,13 +1089,27 @@ def gerar_html_gerente(dados, totais):
         real_posit_sup = sum(r["pilares"]["positivacao"]["real"] for r in do_sup)
         projetado_sup = sum(r["tendencia"]["projetado"] for r in do_sup)
         pct = projetado_sup / meta_sup if meta_sup else 0
-        subtitulo = [
-            _fmt_moeda_py(real_sup),
-            f"Positivação {_fmt_num_py(real_posit_sup, 0)}/{_fmt_num_py(meta_posit_sup, 0)}",
-        ]
+        subtitulo = [_fmt_moeda_py(real_sup)]
         linhas_tendencia.append((sup, subtitulo, pct, _fmt_pct_py(pct), _classe_status(pct)))
     linhas_tendencia.sort(key=lambda x: x[2], reverse=True)
     svg_tendencia = _svg_barras(linhas_tendencia, sublabel=True)
+
+    # Positivação por supervisor — card próprio (retirado do gráfico de
+    # tendência a pedido do Edmar, pra não poluir aquele gráfico).
+    linhas_positivacao = ""
+    for sup in supervisores:
+        do_sup = [r for r in dados if r["supervisor"] == sup]
+        meta_posit_sup = sum(r["pilares"]["positivacao"]["meta"] for r in do_sup)
+        real_posit_sup = sum(r["pilares"]["positivacao"]["real"] for r in do_sup)
+        pct_posit_sup = real_posit_sup / meta_posit_sup if meta_posit_sup else 0
+        classe_posit_sup = _classe_status(pct_posit_sup)
+        linhas_positivacao += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_num_py(meta_posit_sup, 0)}</td>
+        <td>{_fmt_num_py(real_posit_sup, 0)}</td>
+        <td class="{classe_posit_sup}">{_fmt_pct_py(pct_posit_sup)}</td>
+      </tr>'''
 
     # ---- Gráfico 2: participação no faturamento realizado por supervisor (rosca) ----
     fatias_faturamento = []
@@ -1181,6 +1195,7 @@ def gerar_html_gerente(dados, totais):
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de pedidos"])
+    tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"])
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
@@ -1236,6 +1251,13 @@ def gerar_html_gerente(dados, totais):
     <div class="dv-panel">
       <h3>Tendência de fechamento por supervisor</h3>
       {svg_tendencia}
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel" style="grid-column: 1 / -1;">
+      <h3>Positivação por supervisor</h3>
+      {tabela_positivacao}
     </div>
   </section>
 
