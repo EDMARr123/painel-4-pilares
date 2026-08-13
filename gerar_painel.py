@@ -1137,6 +1137,8 @@ def gerar_html_gerente(dados, totais):
             classe_recompra = "dv-warn"
         else:
             classe_recompra = "dv-good"
+        pedidos = [r["media_pedidos"] for r in do_sup]
+        media_pedidos_sup = sum(pedidos) / len(pedidos) if pedidos else 0
         linhas_ind += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>
@@ -1157,6 +1159,7 @@ def gerar_html_gerente(dados, totais):
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
+        <td>{_fmt_num_py(media_pedidos_sup, 2)}</td>
       </tr>'''
 
     def _tabela_mini(linhas, colunas):
@@ -1170,7 +1173,7 @@ def gerar_html_gerente(dados, totais):
 
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
-    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"])
+    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de pedidos"])
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
