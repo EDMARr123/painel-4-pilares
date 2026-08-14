@@ -22,7 +22,12 @@ def _logo_data_uri():
 
 _LOGO_TAG = '<img src="{}" alt="T&amp;T Alimentos" style="height:52px;width:auto;flex:none;" />'.format(_logo_data_uri())
 
-TEMPLATE = r"""<title>Painel 4 Pilares — Equipe GYN</title>
+TEMPLATE = r"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel 4 Pilares — Equipe GYN</title>
 <style>
 :root {
   --bg: #EEF1F4;
@@ -476,6 +481,8 @@ footer.foot {
   color: var(--ink-faint);
 }
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
@@ -790,6 +797,8 @@ function montar() {
 
 montar();
 </script>
+</body>
+</html>
 """
 
 
@@ -1244,11 +1253,18 @@ def gerar_html_gerente(dados, totais):
 
     total_rcas = len(dados)
 
-    corpo = f"""<title>Painel do Gerente — Equipe GYN</title>
+    corpo = f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel do Gerente — Equipe GYN</title>
 <style>
 {_CSS_COMPARTILHADO}
 {_CSS_DASHBOARD_GERENTE}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
@@ -1315,6 +1331,8 @@ def gerar_html_gerente(dados, totais):
 
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
 </div>
+</body>
+</html>
 """
     return corpo
 
