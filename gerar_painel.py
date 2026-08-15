@@ -11,6 +11,7 @@ PASTA_BASE = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_DADOS = os.path.join(PASTA_BASE, "dados.json")
 CAMINHO_SAIDA = os.path.join(PASTA_BASE, "painel.html")
 CAMINHO_LOGO = os.path.join(PASTA_BASE, "logo_tet.png")
+PASTA_FOTOS_SUPERVISORES = os.path.join(PASTA_BASE, "fotos_supervisores")
 
 
 def _logo_data_uri():
@@ -21,6 +22,26 @@ def _logo_data_uri():
 
 
 _LOGO_TAG = '<img src="{}" alt="T&amp;T Alimentos" style="height:52px;width:auto;flex:none;" />'.format(_logo_data_uri())
+
+
+def _fotos_supervisores_json():
+    """Fotos dos supervisores (uma por supervisor, se existir em
+    fotos_supervisores/{NOME}.jpg) embutidas como base64 — usadas no card
+    de resumo do time no lugar do avatar de iniciais."""
+    fotos = {}
+    if os.path.isdir(PASTA_FOTOS_SUPERVISORES):
+        for nome_arquivo in os.listdir(PASTA_FOTOS_SUPERVISORES):
+            nome, ext = os.path.splitext(nome_arquivo)
+            if ext.lower() not in (".jpg", ".jpeg", ".png"):
+                continue
+            tipo_mime = "image/png" if ext.lower() == ".png" else "image/jpeg"
+            with open(os.path.join(PASTA_FOTOS_SUPERVISORES, nome_arquivo), "rb") as f:
+                b64 = base64.b64encode(f.read()).decode("ascii")
+            fotos[nome.upper()] = f"data:{tipo_mime};base64,{b64}"
+    return json.dumps(fotos, ensure_ascii=False)
+
+
+_FOTOS_SUPERVISORES_JSON = _fotos_supervisores_json()
 
 TEMPLATE = r"""<!doctype html>
 <html lang="pt-BR">
@@ -508,6 +529,7 @@ footer.foot {
 
 <script>
 const DADOS = __DADOS_JSON__;
+const FOTOS_SUPERVISORES = __FOTOS_SUPERVISORES_JSON__;
 
 function corPct(pct) {
   if (pct >= 1) return "good";
@@ -586,6 +608,10 @@ function linhaPilar(label, p) {
 function card(rca) {
   const corB = corBadge(rca.pilares_atingidos);
   const av = corAvatar(rca.nome);
+  const fotoSupervisor = rca.codigo === "EQUIPE" ? FOTOS_SUPERVISORES[rca.nome] : null;
+  const avatarHtml = fotoSupervisor
+    ? `<div class="avatar" style="padding:0;overflow:hidden"><img src="${fotoSupervisor}" alt="${rca.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>`
+    : `<div class="avatar" style="background:${av}">${iniciais(rca.nome)}</div>`;
   const textoWhats = encodeURIComponent(
     `*${rca.nome}* (RCA ${rca.codigo} · ${rca.rota})\n` +
     `Pilares: ${rca.pilares_atingidos}/4\n` +
@@ -603,7 +629,7 @@ function card(rca) {
   return `
   <article class="card" id="card-${rca.codigo}" data-supervisor="${rca.supervisor}">
     <div class="card-head">
-      <div class="avatar" style="background:${av}">${iniciais(rca.nome)}</div>
+      ${avatarHtml}
       <div class="who">
         <h2>${rca.nome}</h2>
         <p class="meta">RCA ${rca.codigo} · ${rca.rota || rca.supervisor}</p>
@@ -807,6 +833,7 @@ def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN"):
     data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
 
     html = TEMPLATE.replace("__DADOS_JSON__", json.dumps(dados, ensure_ascii=False))
+    html = html.replace("__FOTOS_SUPERVISORES_JSON__", _FOTOS_SUPERVISORES_JSON)
     html = html.replace("__DATA_EXTRACAO__", data_extracao)
     html = html.replace("__LOGO_TAG__", _LOGO_TAG)
     html = html.replace("<title>Painel 4 Pilares — Equipe GYN</title>", f"<title>{titulo}</title>")
