@@ -12,6 +12,7 @@ CAMINHO_DADOS = os.path.join(PASTA_BASE, "dados.json")
 CAMINHO_SAIDA = os.path.join(PASTA_BASE, "painel.html")
 CAMINHO_LOGO = os.path.join(PASTA_BASE, "logo_tet.png")
 PASTA_FOTOS_SUPERVISORES = os.path.join(PASTA_BASE, "fotos_supervisores")
+PASTA_FOTOS_RCAS = os.path.join(PASTA_BASE, "fotos_rcas")
 
 
 def _logo_data_uri():
@@ -42,6 +43,32 @@ def _fotos_supervisores_json():
 
 
 _FOTOS_SUPERVISORES_JSON = _fotos_supervisores_json()
+
+
+def _fotos_rcas_json():
+    """Fotos individuais dos RCAs, organizadas em fotos_rcas/{SUPERVISOR}/
+    {NOME_RCA}.jpg (uma subpasta por equipe, ex: fotos_rcas/LEANDRO/) —
+    embutidas como base64 e usadas no card do vendedor no lugar do avatar
+    de iniciais. Chave = nome do RCA em maiúsculas (mesmo texto usado em
+    dados.json), não precisa bater com o código."""
+    fotos = {}
+    if os.path.isdir(PASTA_FOTOS_RCAS):
+        for nome_pasta_supervisor in os.listdir(PASTA_FOTOS_RCAS):
+            pasta_supervisor = os.path.join(PASTA_FOTOS_RCAS, nome_pasta_supervisor)
+            if not os.path.isdir(pasta_supervisor):
+                continue
+            for nome_arquivo in os.listdir(pasta_supervisor):
+                nome, ext = os.path.splitext(nome_arquivo)
+                if ext.lower() not in (".jpg", ".jpeg", ".png"):
+                    continue
+                tipo_mime = "image/png" if ext.lower() == ".png" else "image/jpeg"
+                with open(os.path.join(pasta_supervisor, nome_arquivo), "rb") as f:
+                    b64 = base64.b64encode(f.read()).decode("ascii")
+                fotos[nome.upper().strip()] = f"data:{tipo_mime};base64,{b64}"
+    return json.dumps(fotos, ensure_ascii=False)
+
+
+_FOTOS_RCAS_JSON = _fotos_rcas_json()
 
 TEMPLATE = r"""<!doctype html>
 <html lang="pt-BR">
@@ -530,6 +557,14 @@ footer.foot {
 <script>
 const DADOS = __DADOS_JSON__;
 const FOTOS_SUPERVISORES = __FOTOS_SUPERVISORES_JSON__;
+const FOTOS_RCAS = __FOTOS_RCAS_JSON__;
+
+function normalizarNomeFoto(nome) {
+  // Nomes em dados.json às vezes vêm com um "-" solto no final (sobra do
+  // split de rota em extrair_dados.py, ex: "ANDRE WILKER -") — remove isso
+  // antes de bater com a chave do arquivo de foto.
+  return nome.replace(/\s*-\s*$/, "").trim().toUpperCase();
+}
 
 function corPct(pct) {
   if (pct >= 1) return "good";
@@ -608,9 +643,11 @@ function linhaPilar(label, p) {
 function card(rca) {
   const corB = corBadge(rca.pilares_atingidos);
   const av = corAvatar(rca.nome);
-  const fotoSupervisor = rca.codigo === "EQUIPE" ? FOTOS_SUPERVISORES[rca.nome] : null;
-  const avatarHtml = fotoSupervisor
-    ? `<div class="avatar" style="padding:0;overflow:hidden"><img src="${fotoSupervisor}" alt="${rca.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>`
+  const foto = rca.codigo === "EQUIPE"
+    ? FOTOS_SUPERVISORES[rca.nome]
+    : FOTOS_RCAS[normalizarNomeFoto(rca.nome)];
+  const avatarHtml = foto
+    ? `<div class="avatar" style="padding:0;overflow:hidden"><img src="${foto}" alt="${rca.nome}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"></div>`
     : `<div class="avatar" style="background:${av}">${iniciais(rca.nome)}</div>`;
   const textoWhats = encodeURIComponent(
     `*${rca.nome}* (RCA ${rca.codigo} · ${rca.rota})\n` +
@@ -834,6 +871,7 @@ def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN"):
 
     html = TEMPLATE.replace("__DADOS_JSON__", json.dumps(dados, ensure_ascii=False))
     html = html.replace("__FOTOS_SUPERVISORES_JSON__", _FOTOS_SUPERVISORES_JSON)
+    html = html.replace("__FOTOS_RCAS_JSON__", _FOTOS_RCAS_JSON)
     html = html.replace("__DATA_EXTRACAO__", data_extracao)
     html = html.replace("__LOGO_TAG__", _LOGO_TAG)
     html = html.replace("<title>Painel 4 Pilares — Equipe GYN</title>", f"<title>{titulo}</title>")
