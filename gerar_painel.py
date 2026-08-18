@@ -447,8 +447,8 @@ header.top {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  font-weight: 700;
-  color: var(--ink-faint);
+  font-weight: 800;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
 }
 
