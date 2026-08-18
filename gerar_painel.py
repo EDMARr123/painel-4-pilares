@@ -669,7 +669,7 @@ function card(rca) {
     `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
     `Recompra: ${fmtPct(rca.recompra_pct)}\n` +
     `Média de pedidos: ${fmtNum2(rca.media_pedidos)}\n` +
-    `SKU: ${fmtNum0(rca.sku.real)} / ${fmtNum0(rca.sku.meta)}`
+    `SKU: ${fmtNum0(rca.sku.meta)} / ${fmtNum0(rca.sku.real)}`
   );
 
   return `
@@ -722,7 +722,7 @@ function card(rca) {
       </div>
       <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
         <span>SKU</span>
-        <span class="pct" style="font-size:13px;color:var(--${corSku(rca.sku)})">${fmtNum0(rca.sku.real)} / ${fmtNum0(rca.sku.meta)}</span>
+        <span class="pct" style="font-size:13px;color:var(--${corSku(rca.sku)})">${fmtNum0(rca.sku.meta)} / ${fmtNum0(rca.sku.real)}</span>
       </div>
     </div>
 
