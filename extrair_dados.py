@@ -3,21 +3,23 @@ Extrai os dados do painel "4 Pilares" a partir de SOMA NAO SALVA ENCIMA.xlsx
 (aba "SOMAR 4 PILARES") e salva um dados.json pronto pro gerador de HTML
 consumir.
 
-Layout da aba (colunas, confirmado em 08/08): blocos por supervisor (linha
+Layout da aba (colunas, confirmado em 17/08): blocos por supervisor (linha
 com nome do supervisor na col D + cabeçalho "POSITIVAÇÃO" na col E),
 seguidos de 1 linha por RCA até a próxima linha de subtotal.
 
 Por RCA:
 - C=código, D=nome
-- E/F/G/H = positivação meta/real/falta/%
-- J/K/L   = margem meta/real/%
-- N/O/P   = mix meta/real/%
-- R/S/T   = financeiro meta/real/falta R$; V = financeiro % (real/meta)
-- W       = tendência % de fechamento
-- Y/Z/AA  = industrializado meta/realizado/margem % (pode ser negativa)
-- AC/AD/AE= thermoprocessado meta/realizado/margem % (pode ser negativa)
-- AG      = nº de pilares atingidos (0-4)
-- BH/BI   = SKU meta/realizado
+- E/F/G/H    = positivação meta/real/falta/%
+- J/K/L      = margem meta/real/%
+- N/O/P      = mix meta/real/%
+- R/S/T      = financeiro meta/real/falta R$; V = financeiro % (real/meta)
+- X          = tendência % de fechamento
+- AA/AB/AC/AD= industrializado meta/realizado/participação/margem % (pode ser negativa)
+- AF/AG/AH/AI= thermoprocessado meta/realizado/participação/margem % (pode ser negativa)
+- AK         = nº de pilares atingidos (0-4)
+- AO         = recompra %
+- BF         = média de pedidos
+- BH/BI      = SKU meta/realizado
 
 Tendência "projetado R$" = REAL(S) / TRABALHADOS * DIAS_UTEIS (globais no
 topo da planilha, linhas 4-5).
@@ -108,11 +110,12 @@ def extrair():
         # meta do mês (vem negativo na planilha — é falta, não excedente).
         meta_dia = abs(val(21))
 
-        # Layout confirmado em 09/08: colunas "PARTICIPAÇÃO" novas empurraram
-        # margem/pilar/média/recompra pra direita — Z/AA/AB/AC = meta/real/
-        # participação/margem (industrializado); AE/AF/AG/AH = idem (thermo).
-        industrializado_real = val(27)
-        thermo_real = val(32)
+        # Layout confirmado em 17/08: AA/AB/AC/AD = meta/real/participação/
+        # margem (industrializado); AF/AG/AH/AI = idem (thermo); AK = pilar;
+        # AO = recompra; BF = média pedidos (uma coluna adiante do que a
+        # planilha tinha antes — surgiu uma coluna nova à esquerda do bloco).
+        industrializado_real = val(28)
+        thermo_real = val(33)
 
         rcas.append({
             "codigo": codigo_str,
@@ -125,13 +128,13 @@ def extrair():
                 "mix": {"meta": val(14), "real": val(15), "pct": val(16)},
                 "financeiro": {"meta": meta_financeiro, "real": real_financeiro, "pct": val(22)},
             },
-            "pilares_atingidos": int(val(36)),
+            "pilares_atingidos": int(val(37)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(26), "real": industrializado_real, "participacao_pct": val(28), "margem_pct": val(29)},
+            "industrializado": {"meta": val(27), "real": industrializado_real, "participacao_pct": val(29), "margem_pct": val(30)},
             # margem % vem -1 (placeholder de erro) quando não teve venda ainda — trata como 0.
-            "thermo": {"meta": val(31), "real": thermo_real, "participacao_pct": val(33), "margem_pct": val(34) if thermo_real else 0},
-            "recompra_pct": val(40),  # AN = "RECOMPRA"
-            "media_pedidos": val(57),  # BE = "MÉDIA PEDIDOS"
+            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": val(34), "margem_pct": val(35) if thermo_real else 0},
+            "recompra_pct": val(41),  # AO = "RECOMPRA"
+            "media_pedidos": val(58),  # BF = "MÉDIA PEDIDOS"
             "sku": {"meta": val(60), "real": val(61)},  # BH/BI = "SKU" meta/realizado
         })
 
