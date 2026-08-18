@@ -600,6 +600,10 @@ function corRecompra(pct) {
   return "good";
 }
 
+function corSku(sku) {
+  return corPct(sku.meta ? sku.real / sku.meta : 0);
+}
+
 function fmtMoeda(v) {
   return "R$ " + Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
@@ -614,6 +618,10 @@ function fmtNum1(v) {
 
 function fmtNum2(v) {
   return Number(v).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function fmtNum0(v) {
+  return Number(v).toLocaleString("pt-BR", { maximumFractionDigits: 0 });
 }
 
 function iniciais(nome) {
@@ -660,7 +668,8 @@ function card(rca) {
     `Industrializados: margem ${fmtPct(rca.industrializado.margem_pct)} (real. ${fmtMoeda(rca.industrializado.real)})\n` +
     `Thermoprocessados: margem ${fmtPct(rca.thermo.margem_pct)} (real. ${fmtMoeda(rca.thermo.real)})\n` +
     `Recompra: ${fmtPct(rca.recompra_pct)}\n` +
-    `Média de pedidos: ${fmtNum2(rca.media_pedidos)}`
+    `Média de pedidos: ${fmtNum2(rca.media_pedidos)}\n` +
+    `SKU: ${fmtNum0(rca.sku.real)} / ${fmtNum0(rca.sku.meta)}`
   );
 
   return `
@@ -710,6 +719,10 @@ function card(rca) {
       <div class="foot-row" style="margin-top:6px;align-items:center">
         <span style="font-weight:800">Média de pedidos</span>
         <span class="pct" style="font-size:13px;font-weight:800;color:var(--ink)">${fmtNum2(rca.media_pedidos)}</span>
+      </div>
+      <div class="foot-row" style="margin-top:6px;padding-top:6px;border-top:1px dashed var(--border);align-items:center">
+        <span>SKU</span>
+        <span class="pct" style="font-size:13px;color:var(--${corSku(rca.sku)})">${fmtNum0(rca.sku.real)} / ${fmtNum0(rca.sku.meta)}</span>
       </div>
     </div>
 
@@ -806,6 +819,10 @@ function agregarTime(dados, nomeSupervisor) {
     },
     recompra_pct: media(dados.map(r => r.recompra_pct)),
     media_pedidos: media(dados.map(r => r.media_pedidos)),
+    sku: {
+      meta: dados.reduce((s, r) => s + r.sku.meta, 0),
+      real: dados.reduce((s, r) => s + r.sku.real, 0),
+    },
   };
 }
 

@@ -17,6 +17,7 @@ Por RCA:
 - Y/Z/AA  = industrializado meta/realizado/margem % (pode ser negativa)
 - AC/AD/AE= thermoprocessado meta/realizado/margem % (pode ser negativa)
 - AG      = nº de pilares atingidos (0-4)
+- BH/BI   = SKU meta/realizado
 
 Tendência "projetado R$" = REAL(S) / TRABALHADOS * DIAS_UTEIS (globais no
 topo da planilha, linhas 4-5).
@@ -131,6 +132,7 @@ def extrair():
             "thermo": {"meta": val(31), "real": thermo_real, "participacao_pct": val(33), "margem_pct": val(34) if thermo_real else 0},
             "recompra_pct": val(40),  # AN = "RECOMPRA"
             "media_pedidos": val(57),  # BE = "MÉDIA PEDIDOS"
+            "sku": {"meta": val(60), "real": val(61)},  # BH/BI = "SKU" meta/realizado
         })
 
     return rcas
