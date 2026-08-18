@@ -41,8 +41,8 @@
     },
     "thermo": {
       "meta": 49200,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 741.6,
+      "participacao_pct": 0.0009527149331140575,
       "margem_pct": 0
     },
     "recompra_pct": 0.42592592592592593,
@@ -94,8 +94,8 @@
     },
     "thermo": {
       "meta": 49350,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 8329.88,
+      "participacao_pct": 0.013044850849096734,
       "margem_pct": 0
     },
     "recompra_pct": 0.20454545454545456,
@@ -147,8 +147,8 @@
     },
     "thermo": {
       "meta": 9780,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 231.464,
+      "participacao_pct": 0.0014646934150798218,
       "margem_pct": 0
     },
     "recompra_pct": 0.3627450980392157,
@@ -200,8 +200,8 @@
     },
     "thermo": {
       "meta": 11010,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 554.216,
+      "participacao_pct": 0.002516073988724601,
       "margem_pct": 0
     },
     "recompra_pct": 0.38144329896907214,
@@ -253,8 +253,8 @@
     },
     "thermo": {
       "meta": 9930,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 339.464,
+      "participacao_pct": 0.002458899286624832,
       "margem_pct": 0
     },
     "recompra_pct": 0.4050632911392405,
@@ -306,8 +306,8 @@
     },
     "thermo": {
       "meta": 11250,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 169.344,
+      "participacao_pct": 0.0008641726362084397,
       "margem_pct": 0
     },
     "recompra_pct": 0.3595505617977528,
@@ -359,8 +359,8 @@
     },
     "thermo": {
       "meta": 7260,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 165.24,
+      "participacao_pct": 0.0015113305892067363,
       "margem_pct": 0
     },
     "recompra_pct": 0.42424242424242425,
@@ -412,8 +412,8 @@
     },
     "thermo": {
       "meta": 6960,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 269.712,
+      "participacao_pct": 0.0019794279289477904,
       "margem_pct": 0
     },
     "recompra_pct": 0.43661971830985913,
@@ -465,8 +465,8 @@
     },
     "thermo": {
       "meta": 7410,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 229.792,
+      "participacao_pct": 0.0019674095565837013,
       "margem_pct": 0
     },
     "recompra_pct": 0.515625,
@@ -518,8 +518,8 @@
     },
     "thermo": {
       "meta": 7800,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 139.792,
+      "participacao_pct": 0.0015239966326566156,
       "margem_pct": 0
     },
     "recompra_pct": 0.5,
@@ -571,8 +571,8 @@
     },
     "thermo": {
       "meta": 7500,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 176.68,
+      "participacao_pct": 0.0014623831637339399,
       "margem_pct": 0
     },
     "recompra_pct": 0.4588235294117647,
@@ -624,8 +624,8 @@
     },
     "thermo": {
       "meta": 13500,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 294.912,
+      "participacao_pct": 0.0009734233895253351,
       "margem_pct": 0
     },
     "recompra_pct": 0.5102040816326531,
@@ -677,8 +677,8 @@
     },
     "thermo": {
       "meta": 6300,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 245.856,
+      "participacao_pct": 0.00266744494629979,
       "margem_pct": 0
     },
     "recompra_pct": 0.4787234042553192,
@@ -730,8 +730,8 @@
     },
     "thermo": {
       "meta": 7800,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 187.728,
+      "participacao_pct": 0.0015970195227406896,
       "margem_pct": 0
     },
     "recompra_pct": 0.3829787234042553,
@@ -783,8 +783,8 @@
     },
     "thermo": {
       "meta": 5700,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 72.432,
+      "participacao_pct": 0.001695658346940962,
       "margem_pct": 0
     },
     "recompra_pct": 0.5555555555555556,
@@ -836,8 +836,8 @@
     },
     "thermo": {
       "meta": 5700,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 38.04,
+      "participacao_pct": 0.0008592848746561582,
       "margem_pct": 0
     },
     "recompra_pct": 0.4186046511627907,
@@ -889,8 +889,8 @@
     },
     "thermo": {
       "meta": 9000,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 439.192,
+      "participacao_pct": 0.0028278188783278655,
       "margem_pct": 0
     },
     "recompra_pct": 0.42045454545454547,
@@ -942,8 +942,8 @@
     },
     "thermo": {
       "meta": 14400,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 679.984,
+      "participacao_pct": 0.0023590414120593655,
       "margem_pct": 0
     },
     "recompra_pct": 0.35353535353535354,
@@ -995,8 +995,8 @@
     },
     "thermo": {
       "meta": 11400,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 338.072,
+      "participacao_pct": 0.0012990880077252377,
       "margem_pct": 0
     },
     "recompra_pct": 0.4461538461538462,
@@ -1048,8 +1048,8 @@
     },
     "thermo": {
       "meta": 9000,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 233.504,
+      "participacao_pct": 0.0012508136845565136,
       "margem_pct": 0
     },
     "recompra_pct": 0.6666666666666666,
@@ -1101,8 +1101,8 @@
     },
     "thermo": {
       "meta": 9900,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 578.064,
+      "participacao_pct": 0.0033963328646062925,
       "margem_pct": 0
     },
     "recompra_pct": 0.3875,
@@ -1154,8 +1154,8 @@
     },
     "thermo": {
       "meta": 8700,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 184.392,
+      "participacao_pct": 0.0010879084701242887,
       "margem_pct": 0
     },
     "recompra_pct": 0.36764705882352944,
@@ -1207,8 +1207,8 @@
     },
     "thermo": {
       "meta": 6000,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 180.056,
+      "participacao_pct": 0.0019329710698033412,
       "margem_pct": 0
     },
     "recompra_pct": 0.45348837209302323,
@@ -1260,8 +1260,8 @@
     },
     "thermo": {
       "meta": 7950,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 76.344,
+      "participacao_pct": 0.000717847121915066,
       "margem_pct": 0
     },
     "recompra_pct": 0.47058823529411764,
@@ -1313,8 +1313,8 @@
     },
     "thermo": {
       "meta": 7950,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 155.112,
+      "participacao_pct": 0.001231730740826738,
       "margem_pct": 0
     },
     "recompra_pct": 0.4909090909090909,
@@ -1366,8 +1366,8 @@
     },
     "thermo": {
       "meta": 6750,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 152.952,
+      "participacao_pct": 0.0014277303901531484,
       "margem_pct": 0
     },
     "recompra_pct": 0.5192307692307693,
@@ -1419,8 +1419,8 @@
     },
     "thermo": {
       "meta": 7350,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 103.176,
+      "participacao_pct": 0.0007983016360169781,
       "margem_pct": 0
     },
     "recompra_pct": 0.48,
@@ -1472,8 +1472,8 @@
     },
     "thermo": {
       "meta": 8100,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 149.08,
+      "participacao_pct": 0.0011728805015421102,
       "margem_pct": 0
     },
     "recompra_pct": 0.5333333333333333,
@@ -1525,8 +1525,8 @@
     },
     "thermo": {
       "meta": 9300,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 258.192,
+      "participacao_pct": 0.0010535591959609457,
       "margem_pct": 0
     },
     "recompra_pct": 0.39705882352941174,
@@ -1578,8 +1578,8 @@
     },
     "thermo": {
       "meta": 6450,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 114.24,
+      "participacao_pct": 0.0010998944484936892,
       "margem_pct": 0
     },
     "recompra_pct": 0.5747126436781609,
@@ -1631,8 +1631,8 @@
     },
     "thermo": {
       "meta": 9180,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 360.824,
+      "participacao_pct": 0.0021848618340894917,
       "margem_pct": 0
     },
     "recompra_pct": 0.2702702702702703,
@@ -1684,8 +1684,8 @@
     },
     "thermo": {
       "meta": 6480,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 788.4,
+      "participacao_pct": 0.005991785072219333,
       "margem_pct": 0
     },
     "recompra_pct": 0.5076923076923077,
@@ -1737,8 +1737,8 @@
     },
     "thermo": {
       "meta": 5400,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 77.264,
+      "participacao_pct": 0.0009826037149323473,
       "margem_pct": 0
     },
     "recompra_pct": 0.3191489361702128,
@@ -1790,8 +1790,8 @@
     },
     "thermo": {
       "meta": 5250,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 26.2,
+      "participacao_pct": 0.00038235225441894135,
       "margem_pct": 0
     },
     "recompra_pct": 0.48,
@@ -1843,8 +1843,8 @@
     },
     "thermo": {
       "meta": 6180,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 150.112,
+      "participacao_pct": 0.0010481323866873633,
       "margem_pct": 0
     },
     "recompra_pct": 0.4367816091954023,
@@ -1896,8 +1896,8 @@
     },
     "thermo": {
       "meta": 4950,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 437.68,
+      "participacao_pct": 0.004768113859526058,
       "margem_pct": 0
     },
     "recompra_pct": 0.15384615384615385,
@@ -1949,8 +1949,8 @@
     },
     "thermo": {
       "meta": 6480,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 605.632,
+      "participacao_pct": 0.005313842319183606,
       "margem_pct": 0
     },
     "recompra_pct": 0.39344262295081966,
@@ -2002,8 +2002,8 @@
     },
     "thermo": {
       "meta": 6480,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 208.6,
+      "participacao_pct": 0.0013342714355721796,
       "margem_pct": 0
     },
     "recompra_pct": 0.4230769230769231,
@@ -2055,8 +2055,8 @@
     },
     "thermo": {
       "meta": 12150,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 520.2,
+      "participacao_pct": 0.0024317779241685446,
       "margem_pct": 0
     },
     "recompra_pct": 0.36,
@@ -2108,8 +2108,8 @@
     },
     "thermo": {
       "meta": 10050,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 772.856,
+      "participacao_pct": 0.004713513777246502,
       "margem_pct": 0
     },
     "recompra_pct": 0.38028169014084506,
@@ -2161,8 +2161,8 @@
     },
     "thermo": {
       "meta": 6150,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 416.936,
+      "participacao_pct": 0.004007688638035073,
       "margem_pct": 0
     },
     "recompra_pct": 0.5581395348837209,
@@ -2214,8 +2214,8 @@
     },
     "thermo": {
       "meta": 13350,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 984.792,
+      "participacao_pct": 0.005483999269647718,
       "margem_pct": 0
     },
     "recompra_pct": 0.475,
@@ -2267,8 +2267,8 @@
     },
     "thermo": {
       "meta": 6900,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 195.176,
+      "participacao_pct": 0.0020950274260629,
       "margem_pct": 0
     },
     "recompra_pct": 0.36507936507936506,
@@ -2320,8 +2320,8 @@
     },
     "thermo": {
       "meta": 5100,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 153.816,
+      "participacao_pct": 0.001970816499425217,
       "margem_pct": 0
     },
     "recompra_pct": 0.46551724137931033,
@@ -2373,8 +2373,8 @@
     },
     "thermo": {
       "meta": 7200,
-      "real": 0,
-      "participacao_pct": 0,
+      "real": 152.248,
+      "participacao_pct": 0.0011138940728188053,
       "margem_pct": 0
     },
     "recompra_pct": 0.3516483516483517,

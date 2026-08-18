@@ -505,8 +505,8 @@ header.top {
 
 .mini-card .sub {
   font-size: 10.5px;
-  font-weight: 700;
-  color: var(--ink-faint);
+  font-weight: 800;
+  color: var(--ink);
   font-variant-numeric: tabular-nums;
   line-height: 1.5;
 }

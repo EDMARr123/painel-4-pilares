@@ -27,8 +27,13 @@ topo da planilha, linhas 4-5).
 
 import json
 import os
+import re
+import xml.etree.ElementTree as ET
+import zipfile
 
 import openpyxl
+
+_NS = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
 
 CAMINHO_SOMA = r"C:\Users\edmar\Desktop\CONTAR 4 PILARES\SOMA NAO SALVA ENCIMA.xlsx"
 
@@ -43,6 +48,65 @@ def _num(v):
     valores atualizados de uma pasta de trabalho vinculada" no Excel).
     Cai pra 0 em vez de derrubar a geração inteira do painel."""
     return v if isinstance(v, (int, float)) else 0
+
+
+def _achar_external_link_xml(caminho_xlsx, contem_no_nome):
+    """Acha o cache <externalLink> (xl/externalLinks/externalLinkN.xml) cujo
+    arquivo de origem contém `contem_no_nome` no caminho, e devolve o XML já
+    parseado — ou None se o vínculo não existir/tiver sido removido."""
+    with zipfile.ZipFile(caminho_xlsx) as z:
+        rels = [n for n in z.namelist() if re.fullmatch(r"xl/externalLinks/_rels/externalLink\d+\.xml\.rels", n)]
+        for rels_path in rels:
+            rels_xml = ET.fromstring(z.read(rels_path))
+            if any(contem_no_nome.lower() in (rel.get("Target") or "").lower() for rel in rels_xml):
+                link_path = rels_path.replace("_rels/", "").rsplit(".rels", 1)[0]
+                return ET.fromstring(z.read(link_path))
+    return None
+
+
+def _cache_por_nome(external_link_el):
+    """Lê o snapshot cacheado do <externalLink> e devolve {NOME (antes do
+    primeiro ' - '): {coluna: valor}}. Casa por NOME em vez de código porque
+    o THERMOPROCESSADO.xls usa um sistema de códigos diferente do resto da
+    planilha (18/08: código do WESLEY é 15 na SOMA e 117 no export de
+    Thermo — mesmo RCA, códigos diferentes — o que quebra o VLOOKUP por
+    código e faz o realizado de Thermo cair pra 0 em todo mundo)."""
+    if external_link_el is None:
+        return {}
+
+    def valor(cell):
+        v = cell.find(f"{_NS}v")
+        if v is None:
+            return None
+        if cell.get("t") == "str":
+            return v.text
+        try:
+            return float(v.text)
+        except (TypeError, ValueError):
+            return v.text
+
+    cache = {}
+    for row in external_link_el.findall(f".//{_NS}sheetData/{_NS}row"):
+        celulas = {re.match(r"^[A-Z]+", c.get("r")).group(): valor(c) for c in row}
+        nome_bruto = celulas.get("B")
+        if not isinstance(nome_bruto, str):
+            continue
+        nome = re.split(r"\s+-\s+", nome_bruto.strip(), maxsplit=1)[0].strip().upper()
+        cache[nome] = celulas
+    return cache
+
+
+def _achar_no_cache(cache, nome_rca):
+    """Casa `nome_rca` com uma chave do cache por igualdade ou prefixo (nos
+    dois sentidos) — necessário porque alguns nomes vêm truncados na própria
+    célula de origem da SOMA (ex: '471 - ANTONIO EDVALD', sem sobrenome)."""
+    alvo = nome_rca.strip().upper()
+    if alvo in cache:
+        return cache[alvo]
+    candidatos = [k for k in cache if k.startswith(alvo) or alvo.startswith(k)]
+    if len(candidatos) == 1:
+        return cache[candidatos[0]]
+    return None
 
 
 def extrair_totais(ws):
@@ -65,6 +129,10 @@ def extrair():
 
     dias_uteis = ws.cell(row=4, column=6).value
     trabalhados = ws.cell(row=5, column=6).value
+
+    # Bypassa o VLOOKUP quebrado de Thermo (veja _cache_por_nome) lendo o
+    # realizado/margem direto do snapshot cacheado do vínculo externo.
+    cache_thermo = _cache_por_nome(_achar_external_link_xml(CAMINHO_SOMA, "THERMOPROCESSADO"))
 
     rcas = []
     supervisor_atual = None
@@ -115,7 +183,18 @@ def extrair():
         # AO = recompra; BF = média pedidos (uma coluna adiante do que a
         # planilha tinha antes — surgiu uma coluna nova à esquerda do bloco).
         industrializado_real = val(28)
-        thermo_real = val(33)
+
+        info_thermo = _achar_no_cache(cache_thermo, nome_rca)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(33)
+        thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
+        # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
+        # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
+        # mesmo significado de margem que tem no arquivo de Industrializado —
+        # em vez de arriscar mostrar um número inventado, mantém 0 até o
+        # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
+        thermo_margem_pct = val(35) if thermo_real else 0
+        if thermo_margem_pct < 0:
+            thermo_margem_pct = 0
 
         rcas.append({
             "codigo": codigo_str,
@@ -131,8 +210,7 @@ def extrair():
             "pilares_atingidos": int(val(37)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
             "industrializado": {"meta": val(27), "real": industrializado_real, "participacao_pct": val(29), "margem_pct": val(30)},
-            # margem % vem -1 (placeholder de erro) quando não teve venda ainda — trata como 0.
-            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": val(34), "margem_pct": val(35) if thermo_real else 0},
+            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct},
             "recompra_pct": val(41),  # AO = "RECOMPRA"
             "media_pedidos": val(58),  # BF = "MÉDIA PEDIDOS"
             "sku": {"meta": val(60), "real": val(61)},  # BH/BI = "SKU" meta/realizado
