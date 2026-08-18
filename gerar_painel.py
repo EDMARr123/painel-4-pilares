@@ -395,6 +395,7 @@ header.top {
 .pilar .sub {
   grid-column: 1 / -1;
   font-size: 11px;
+  font-weight: 700;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
 }
@@ -446,6 +447,7 @@ header.top {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
+  font-weight: 700;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
 }
@@ -503,6 +505,7 @@ header.top {
 
 .mini-card .sub {
   font-size: 10.5px;
+  font-weight: 700;
   color: var(--ink-faint);
   font-variant-numeric: tabular-nums;
   line-height: 1.5;
