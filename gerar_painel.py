@@ -742,7 +742,7 @@ function card(rca) {
         </div>
         <div class="pct-row">
           <span class="sub-label">Prêmio</span>
-          <span class="pct" style="color:var(--good)">${fmtMoeda(rca.industrializado.premio)}</span>
+          <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.industrializado.premio)}</span>
         </div>
         <div class="sub">Meta ${fmtMoeda(rca.industrializado.meta)}<br>Realizado ${fmtMoeda(rca.industrializado.real)}</div>
       </div>
@@ -758,7 +758,7 @@ function card(rca) {
         </div>
         <div class="pct-row">
           <span class="sub-label">Prêmio</span>
-          <span class="pct" style="color:var(--good)">${fmtMoeda(rca.thermo.premio)}</span>
+          <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.thermo.premio)}</span>
         </div>
         <div class="sub">Meta ${fmtMoeda(rca.thermo.meta)}<br>Realizado ${fmtMoeda(rca.thermo.real)}</div>
       </div>
