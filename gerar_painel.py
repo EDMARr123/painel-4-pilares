@@ -734,11 +734,11 @@ function card(rca) {
         <div class="label">Industrializados</div>
         <div class="pct-row">
           <span class="sub-label">Participação</span>
-          <span class="pct" style="color:var(--${corParticipacaoIndustrializado(rca.industrializado.participacao_pct)})">${fmtPct(rca.industrializado.participacao_pct)}</span>
+          <span class="pct" style="font-size:13px;color:var(--${corParticipacaoIndustrializado(rca.industrializado.participacao_pct)})">${fmtPct(rca.industrializado.participacao_pct)}</span>
         </div>
         <div class="pct-row">
           <span class="sub-label">Margem</span>
-          <span class="pct" style="color:var(--${corMargemIndustrializado(rca.industrializado.margem_pct)})">${fmtPct(rca.industrializado.margem_pct)}</span>
+          <span class="pct" style="font-size:13px;color:var(--${corMargemIndustrializado(rca.industrializado.margem_pct)})">${fmtPct(rca.industrializado.margem_pct)}</span>
         </div>
         <div class="pct-row">
           <span class="sub-label">Prêmio</span>
@@ -750,11 +750,11 @@ function card(rca) {
         <div class="label">Thermoprocessados</div>
         <div class="pct-row">
           <span class="sub-label">Participação</span>
-          <span class="pct" style="color:var(--${corParticipacaoThermo(rca.thermo.participacao_pct)})">${fmtPct(rca.thermo.participacao_pct)}</span>
+          <span class="pct" style="font-size:13px;color:var(--${corParticipacaoThermo(rca.thermo.participacao_pct)})">${fmtPct(rca.thermo.participacao_pct)}</span>
         </div>
         <div class="pct-row">
           <span class="sub-label">Margem</span>
-          <span class="pct" style="color:var(--${corMargemThermo(rca.thermo.margem_pct)})">${fmtPct(rca.thermo.margem_pct)}</span>
+          <span class="pct" style="font-size:13px;color:var(--${corMargemThermo(rca.thermo.margem_pct)})">${fmtPct(rca.thermo.margem_pct)}</span>
         </div>
         <div class="pct-row">
           <span class="sub-label">Prêmio</span>
