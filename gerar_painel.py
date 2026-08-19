@@ -740,6 +740,10 @@ function card(rca) {
           <span class="sub-label">Margem</span>
           <span class="pct" style="color:var(--${corMargemIndustrializado(rca.industrializado.margem_pct)})">${fmtPct(rca.industrializado.margem_pct)}</span>
         </div>
+        <div class="pct-row">
+          <span class="sub-label">Prêmio</span>
+          <span class="pct" style="color:var(--good)">${fmtMoeda(rca.industrializado.premio)}</span>
+        </div>
         <div class="sub">Meta ${fmtMoeda(rca.industrializado.meta)}<br>Realizado ${fmtMoeda(rca.industrializado.real)}</div>
       </div>
       <div class="mini-card" style="--cor-categoria:#C0672B">
@@ -751,6 +755,10 @@ function card(rca) {
         <div class="pct-row">
           <span class="sub-label">Margem</span>
           <span class="pct" style="color:var(--${corMargemThermo(rca.thermo.margem_pct)})">${fmtPct(rca.thermo.margem_pct)}</span>
+        </div>
+        <div class="pct-row">
+          <span class="sub-label">Prêmio</span>
+          <span class="pct" style="color:var(--good)">${fmtMoeda(rca.thermo.premio)}</span>
         </div>
         <div class="sub">Meta ${fmtMoeda(rca.thermo.meta)}<br>Realizado ${fmtMoeda(rca.thermo.real)}</div>
       </div>

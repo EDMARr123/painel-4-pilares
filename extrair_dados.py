@@ -20,6 +20,8 @@ Por RCA:
 - AO         = recompra %
 - BF         = média de pedidos
 - BH/BI      = SKU meta/realizado
+- BK         = prêmio R$ do industrializado
+- BM         = prêmio R$ do thermoprocessado
 
 Tendência "projetado R$" = REAL(S) / TRABALHADOS * DIAS_UTEIS (globais no
 topo da planilha, linhas 4-5).
@@ -209,8 +211,8 @@ def extrair():
             },
             "pilares_atingidos": int(val(37)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(27), "real": industrializado_real, "participacao_pct": val(29), "margem_pct": val(30)},
-            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct},
+            "industrializado": {"meta": val(27), "real": industrializado_real, "participacao_pct": val(29), "margem_pct": val(30), "premio": val(63)},
+            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(65)},
             "recompra_pct": val(41),  # AO = "RECOMPRA"
             "media_pedidos": val(58),  # BF = "MÉDIA PEDIDOS"
             "sku": {"meta": val(60), "real": val(61)},  # BH/BI = "SKU" meta/realizado
