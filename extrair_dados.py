@@ -3,25 +3,29 @@ Extrai os dados do painel "4 Pilares" a partir de SOMA NAO SALVA ENCIMA.xlsx
 (aba "SOMAR 4 PILARES") e salva um dados.json pronto pro gerador de HTML
 consumir.
 
-Layout da aba (colunas, confirmado em 17/08): blocos por supervisor (linha
-com nome do supervisor na col D + cabeçalho "POSITIVAÇÃO" na col E),
-seguidos de 1 linha por RCA até a próxima linha de subtotal.
+Layout da aba (colunas, confirmado em 19/08 após reorganização da planilha
+pelo Edmar — colunas de pilar/recompra/SKU/prêmio mudaram de lugar em
+relação à versão de 17/08): blocos por supervisor (linha com nome do
+supervisor na col D + cabeçalho "POSITIVAÇÃO" na col E), seguidos de 1
+linha por RCA até a próxima linha de subtotal.
 
 Por RCA:
 - C=código, D=nome
 - E/F/G/H    = positivação meta/real/falta/%
 - J/K/L      = margem meta/real/%
 - N/O/P      = mix meta/real/%
-- R/S/T      = financeiro meta/real/falta R$; V = financeiro % (real/meta)
-- X          = tendência % de fechamento
-- AA/AB/AC/AD= industrializado meta/realizado/participação/margem % (pode ser negativa)
-- AF/AG/AH/AI= thermoprocessado meta/realizado/participação/margem % (pode ser negativa)
-- AK         = nº de pilares atingidos (0-4)
-- AO         = recompra %
-- BF         = média de pedidos
-- BH/BI      = SKU meta/realizado
-- BK         = prêmio R$ do industrializado
-- BM         = prêmio R$ do thermoprocessado
+- R/S/T      = financeiro meta/real/falta R$; U = meta do dia
+- W           = tendência % de fechamento (V = tendência R$, já bate com o
+  projetado calculado abaixo)
+- Z          = nº de pilares atingidos (0-4)
+- AC/AD/AE/AF = industrializado meta/realizado/participação/margem % (pode ser negativa)
+- AJ/AK/AL/AM = thermoprocessado meta/realizado/participação/margem % (pode ser negativa)
+- BA/BB      = recompra (contagem/%) — espelha AO/AP, mas é o bloco com o
+  cabeçalho "RECOMPRA" explícito
+- BD         = média de pedidos
+- BF/BG      = SKU meta/realizado
+- BI         = prêmio R$ do industrializado
+- BK         = prêmio R$ do thermoprocessado
 
 Tendência "projetado R$" = REAL(S) / TRABALHADOS * DIAS_UTEIS (globais no
 topo da planilha, linhas 4-5).
@@ -175,26 +179,30 @@ def extrair():
         real_financeiro = val(19)  # S
         meta_financeiro = val(18)  # R
         projetado = (real_financeiro / trabalhados * dias_uteis) if trabalhados else 0
-        tendencia_pct = val(24)  # X = "TENTÊNCIA" (%) — bate com projetado/meta
+        tendencia_pct = val(23)  # W = "TENTÊNCIA" (%) — bate com projetado/meta
         # U = "META DIA": quanto falta vender por dia útil restante pra bater a
         # meta do mês (vem negativo na planilha — é falta, não excedente).
         meta_dia = abs(val(21))
+        # A coluna de % financeiro (real/meta) que existia antes sumiu na
+        # reorganização de 19/08 — calcula direto em vez de depender de uma
+        # coluna fixa.
+        financeiro_pct = (real_financeiro / meta_financeiro) if meta_financeiro else 0
 
-        # Layout confirmado em 17/08: AA/AB/AC/AD = meta/real/participação/
-        # margem (industrializado); AF/AG/AH/AI = idem (thermo); AK = pilar;
-        # AO = recompra; BF = média pedidos (uma coluna adiante do que a
-        # planilha tinha antes — surgiu uma coluna nova à esquerda do bloco).
-        industrializado_real = val(28)
+        # Layout confirmado em 19/08: AC/AD/AE/AF = meta/real/participação/
+        # margem (industrializado); AJ/AK/AL/AM = idem (thermo); Z = pilar;
+        # BA/BB = recompra; BD = média pedidos; BF/BG = SKU meta/real;
+        # BI/BK = prêmio industrializado/thermo.
+        industrializado_real = val(30)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
-        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(33)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(37)
         thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
         # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
         # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
         # mesmo significado de margem que tem no arquivo de Industrializado —
         # em vez de arriscar mostrar um número inventado, mantém 0 até o
         # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
-        thermo_margem_pct = val(35) if thermo_real else 0
+        thermo_margem_pct = val(39) if thermo_real else 0
         if thermo_margem_pct < 0:
             thermo_margem_pct = 0
 
@@ -207,15 +215,15 @@ def extrair():
                 "positivacao": {"meta": val(5), "real": val(6), "pct": val(8)},
                 "margem": {"meta": val(10), "real": val(11), "pct": val(12)},
                 "mix": {"meta": val(14), "real": val(15), "pct": val(16)},
-                "financeiro": {"meta": meta_financeiro, "real": real_financeiro, "pct": val(22)},
+                "financeiro": {"meta": meta_financeiro, "real": real_financeiro, "pct": financeiro_pct},
             },
-            "pilares_atingidos": int(val(37)),
+            "pilares_atingidos": int(val(26)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(27), "real": industrializado_real, "participacao_pct": val(29), "margem_pct": val(30), "premio": val(63)},
-            "thermo": {"meta": val(32), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(65)},
-            "recompra_pct": val(41),  # AO = "RECOMPRA"
-            "media_pedidos": val(58),  # BF = "MÉDIA PEDIDOS"
-            "sku": {"meta": val(60), "real": val(61)},  # BH/BI = "SKU" meta/realizado
+            "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(61)},
+            "thermo": {"meta": val(36), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(63)},
+            "recompra_pct": val(54),  # BB = "RECOMPRA" %
+            "media_pedidos": val(56),  # BD = "MÉDIA PEDIDOS"
+            "sku": {"meta": val(58), "real": val(59)},  # BF/BG = "SKU" meta/realizado
         })
 
     return rcas
