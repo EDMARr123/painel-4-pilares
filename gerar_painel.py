@@ -284,7 +284,7 @@ header.top {
   padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 8px;
 }
 
 .card-head {
@@ -729,7 +729,7 @@ function card(rca) {
       </div>
     </div>
 
-    <div class="mini-card" style="--cor-categoria:#2B7FC0;margin-bottom:10px">
+    <div class="mini-card" style="--cor-categoria:#2B7FC0">
       <div class="label">Positivação Premiada</div>
       <div class="pct-row">
         <span class="sub-label">Dia 15 — Resultado ${fmtNum0(rca.positivacao_dia15.resultado)}</span>
