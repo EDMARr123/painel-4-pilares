@@ -154,7 +154,6 @@ body {
   color: var(--ink);
   font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  font-weight: 700;
 }
 
 .wrap {
@@ -236,7 +235,7 @@ header.top {
   color: var(--ink-soft);
   font: inherit;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 600;
   padding: 7px 14px;
   border-radius: 999px;
   cursor: pointer;
@@ -253,7 +252,7 @@ header.top {
 
 .tab .count {
   opacity: 0.7;
-  font-weight: 700;
+  font-weight: 500;
   margin-left: 4px;
 }
 
@@ -1116,7 +1115,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-dote.dv-cat-3 { background: var(--dv-cat-3); } .dv-dote.dv-cat-4 { background: var(--dv-cat-4); }
 .dv-dote.dv-cat-5 { background: var(--dv-cat-5); } .dv-dote.dv-cat-6 { background: var(--dv-cat-6); }
 .dv-dote.dv-cat-7 { background: var(--dv-cat-7); }
-.dv-legenda-label { color: var(--ink-soft); font-weight: 700; flex: 1; white-space: nowrap; }
+.dv-legenda-label { color: var(--ink-soft); font-weight: 600; flex: 1; white-space: nowrap; }
 .dv-legenda-valor { font-weight: 800; font-variant-numeric: tabular-nums; }
 
 .dv-tabela { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 11.5px; }
