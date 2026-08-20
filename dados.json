@@ -52,6 +52,14 @@
     "sku": {
       "meta": 120,
       "real": 68
+    },
+    "positivacao_dia15": {
+      "resultado": 46,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 41,
+      "premio": 0
     }
   },
   {
@@ -107,6 +115,14 @@
     "sku": {
       "meta": 120,
       "real": 57
+    },
+    "positivacao_dia15": {
+      "resultado": 43,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 27,
+      "premio": 0
     }
   },
   {
@@ -162,6 +178,14 @@
     "sku": {
       "meta": 120,
       "real": 83
+    },
+    "positivacao_dia15": {
+      "resultado": 101,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 48,
+      "premio": 0
     }
   },
   {
@@ -217,6 +241,14 @@
     "sku": {
       "meta": 120,
       "real": 104
+    },
+    "positivacao_dia15": {
+      "resultado": 97,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 32,
+      "premio": 0
     }
   },
   {
@@ -272,6 +304,14 @@
     "sku": {
       "meta": 120,
       "real": 91
+    },
+    "positivacao_dia15": {
+      "resultado": 71,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 34,
+      "premio": 0
     }
   },
   {
@@ -327,6 +367,14 @@
     "sku": {
       "meta": 120,
       "real": 92
+    },
+    "positivacao_dia15": {
+      "resultado": 87,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 31,
+      "premio": 0
     }
   },
   {
@@ -382,6 +430,14 @@
     "sku": {
       "meta": 120,
       "real": 79
+    },
+    "positivacao_dia15": {
+      "resultado": 66,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 33,
+      "premio": 0
     }
   },
   {
@@ -437,6 +493,14 @@
     "sku": {
       "meta": 120,
       "real": 86
+    },
+    "positivacao_dia15": {
+      "resultado": 71,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 30,
+      "premio": 0
     }
   },
   {
@@ -492,6 +556,14 @@
     "sku": {
       "meta": 120,
       "real": 109
+    },
+    "positivacao_dia15": {
+      "resultado": 64,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 39,
+      "premio": 0
     }
   },
   {
@@ -547,6 +619,14 @@
     "sku": {
       "meta": 120,
       "real": 69
+    },
+    "positivacao_dia15": {
+      "resultado": 75,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 24,
+      "premio": 0
     }
   },
   {
@@ -602,6 +682,14 @@
     "sku": {
       "meta": 120,
       "real": 99
+    },
+    "positivacao_dia15": {
+      "resultado": 84,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 38,
+      "premio": 0
     }
   },
   {
@@ -657,6 +745,14 @@
     "sku": {
       "meta": 120,
       "real": 102
+    },
+    "positivacao_dia15": {
+      "resultado": 95,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 32,
+      "premio": 0
     }
   },
   {
@@ -712,6 +808,14 @@
     "sku": {
       "meta": 120,
       "real": 84
+    },
+    "positivacao_dia15": {
+      "resultado": 92,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 44,
+      "premio": 0
     }
   },
   {
@@ -767,6 +871,14 @@
     "sku": {
       "meta": 120,
       "real": 81
+    },
+    "positivacao_dia15": {
+      "resultado": 43,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 23,
+      "premio": 0
     }
   },
   {
@@ -822,6 +934,14 @@
     "sku": {
       "meta": 120,
       "real": 64
+    },
+    "positivacao_dia15": {
+      "resultado": 32,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 18,
+      "premio": 0
     }
   },
   {
@@ -877,6 +997,14 @@
     "sku": {
       "meta": 120,
       "real": 57
+    },
+    "positivacao_dia15": {
+      "resultado": 42,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 13,
+      "premio": 0
     }
   },
   {
@@ -932,6 +1060,14 @@
     "sku": {
       "meta": 120,
       "real": 92
+    },
+    "positivacao_dia15": {
+      "resultado": 87,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 33,
+      "premio": 0
     }
   },
   {
@@ -987,6 +1123,14 @@
     "sku": {
       "meta": 120,
       "real": 102
+    },
+    "positivacao_dia15": {
+      "resultado": 97,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 43,
+      "premio": 0
     }
   },
   {
@@ -1042,6 +1186,14 @@
     "sku": {
       "meta": 120,
       "real": 99
+    },
+    "positivacao_dia15": {
+      "resultado": 63,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 53,
+      "premio": 0
     }
   },
   {
@@ -1097,6 +1249,14 @@
     "sku": {
       "meta": 120,
       "real": 92
+    },
+    "positivacao_dia15": {
+      "resultado": 86,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 17,
+      "premio": 0
     }
   },
   {
@@ -1152,6 +1312,14 @@
     "sku": {
       "meta": 120,
       "real": 78
+    },
+    "positivacao_dia15": {
+      "resultado": 77,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 44,
+      "premio": 0
     }
   },
   {
@@ -1207,6 +1375,14 @@
     "sku": {
       "meta": 120,
       "real": 92
+    },
+    "positivacao_dia15": {
+      "resultado": 66,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 31,
+      "premio": 0
     }
   },
   {
@@ -1262,6 +1438,14 @@
     "sku": {
       "meta": 120,
       "real": 85
+    },
+    "positivacao_dia15": {
+      "resultado": 85,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 30,
+      "premio": 0
     }
   },
   {
@@ -1317,6 +1501,14 @@
     "sku": {
       "meta": 120,
       "real": 67
+    },
+    "positivacao_dia15": {
+      "resultado": 67,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 28,
+      "premio": 0
     }
   },
   {
@@ -1372,6 +1564,14 @@
     "sku": {
       "meta": 120,
       "real": 60
+    },
+    "positivacao_dia15": {
+      "resultado": 54,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 21,
+      "premio": 0
     }
   },
   {
@@ -1427,6 +1627,14 @@
     "sku": {
       "meta": 120,
       "real": 68
+    },
+    "positivacao_dia15": {
+      "resultado": 50,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 29,
+      "premio": 0
     }
   },
   {
@@ -1482,6 +1690,14 @@
     "sku": {
       "meta": 120,
       "real": 65
+    },
+    "positivacao_dia15": {
+      "resultado": 74,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 23,
+      "premio": 0
     }
   },
   {
@@ -1537,6 +1753,14 @@
     "sku": {
       "meta": 120,
       "real": 77
+    },
+    "positivacao_dia15": {
+      "resultado": 75,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 17,
+      "premio": 0
     }
   },
   {
@@ -1592,6 +1816,14 @@
     "sku": {
       "meta": 120,
       "real": 79
+    },
+    "positivacao_dia15": {
+      "resultado": 68,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 30,
+      "premio": 0
     }
   },
   {
@@ -1647,6 +1879,14 @@
     "sku": {
       "meta": 120,
       "real": 73
+    },
+    "positivacao_dia15": {
+      "resultado": 86,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 26,
+      "premio": 0
     }
   },
   {
@@ -1702,6 +1942,14 @@
     "sku": {
       "meta": 120,
       "real": 54
+    },
+    "positivacao_dia15": {
+      "resultado": 74,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 48,
+      "premio": 0
     }
   },
   {
@@ -1757,6 +2005,14 @@
     "sku": {
       "meta": 120,
       "real": 53
+    },
+    "positivacao_dia15": {
+      "resultado": 63,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 21,
+      "premio": 0
     }
   },
   {
@@ -1812,6 +2068,14 @@
     "sku": {
       "meta": 120,
       "real": 63
+    },
+    "positivacao_dia15": {
+      "resultado": 46,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 29,
+      "premio": 0
     }
   },
   {
@@ -1867,6 +2131,14 @@
     "sku": {
       "meta": 120,
       "real": 54
+    },
+    "positivacao_dia15": {
+      "resultado": 23,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 14,
+      "premio": 0
     }
   },
   {
@@ -1922,6 +2194,14 @@
     "sku": {
       "meta": 120,
       "real": 73
+    },
+    "positivacao_dia15": {
+      "resultado": 87,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 33,
+      "premio": 0
     }
   },
   {
@@ -1977,6 +2257,14 @@
     "sku": {
       "meta": 120,
       "real": 54
+    },
+    "positivacao_dia15": {
+      "resultado": 52,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 26,
+      "premio": 0
     }
   },
   {
@@ -2032,6 +2320,14 @@
     "sku": {
       "meta": 120,
       "real": 65
+    },
+    "positivacao_dia15": {
+      "resultado": 61,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 26,
+      "premio": 0
     }
   },
   {
@@ -2087,6 +2383,14 @@
     "sku": {
       "meta": 120,
       "real": 75
+    },
+    "positivacao_dia15": {
+      "resultado": 75,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 37,
+      "premio": 0
     }
   },
   {
@@ -2142,6 +2446,14 @@
     "sku": {
       "meta": 120,
       "real": 97
+    },
+    "positivacao_dia15": {
+      "resultado": 97,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 38,
+      "premio": 0
     }
   },
   {
@@ -2197,6 +2509,14 @@
     "sku": {
       "meta": 120,
       "real": 81
+    },
+    "positivacao_dia15": {
+      "resultado": 70,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 34,
+      "premio": 0
     }
   },
   {
@@ -2252,6 +2572,14 @@
     "sku": {
       "meta": 120,
       "real": 82
+    },
+    "positivacao_dia15": {
+      "resultado": 84,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 27,
+      "premio": 0
     }
   },
   {
@@ -2307,6 +2635,14 @@
     "sku": {
       "meta": 120,
       "real": 88
+    },
+    "positivacao_dia15": {
+      "resultado": 72,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 44,
+      "premio": 0
     }
   },
   {
@@ -2362,6 +2698,14 @@
     "sku": {
       "meta": 120,
       "real": 84
+    },
+    "positivacao_dia15": {
+      "resultado": 63,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 27,
+      "premio": 0
     }
   },
   {
@@ -2417,6 +2761,14 @@
     "sku": {
       "meta": 120,
       "real": 76
+    },
+    "positivacao_dia15": {
+      "resultado": 58,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 28,
+      "premio": 0
     }
   },
   {
@@ -2472,6 +2824,14 @@
     "sku": {
       "meta": 120,
       "real": 88
+    },
+    "positivacao_dia15": {
+      "resultado": 91,
+      "premio": 150
+    },
+    "positivacao_dia30": {
+      "resultado": 32,
+      "premio": 0
     }
   }
 ]

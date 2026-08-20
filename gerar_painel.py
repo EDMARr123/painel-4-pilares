@@ -729,6 +729,18 @@ function card(rca) {
       </div>
     </div>
 
+    <div class="mini-card" style="--cor-categoria:#2B7FC0;margin-bottom:10px">
+      <div class="label">Positivação Premiada</div>
+      <div class="pct-row">
+        <span class="sub-label">Dia 15 — Resultado ${fmtNum0(rca.positivacao_dia15.resultado)}</span>
+        <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.positivacao_dia15.premio)}</span>
+      </div>
+      <div class="pct-row" style="margin-bottom:0">
+        <span class="sub-label">Dia 30 — Resultado ${fmtNum0(rca.positivacao_dia30.resultado)}</span>
+        <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.positivacao_dia30.premio)}</span>
+      </div>
+    </div>
+
     <div class="mini-cards">
       <div class="mini-card" style="--cor-categoria:#7A5CC7">
         <div class="label">Industrializados</div>

@@ -26,6 +26,8 @@ Por RCA:
 - BF/BG      = SKU meta/realizado
 - BI         = prêmio R$ do industrializado
 - BK         = prêmio R$ do thermoprocessado
+- AS/AT      = positivação dia 15 (resultado / 1º prêmio R$)
+- AV/AX      = positivação dia 30 (resultado / 2º prêmio R$)
 
 Tendência "projetado R$" = REAL(S) / TRABALHADOS * DIAS_UTEIS (globais no
 topo da planilha, linhas 4-5).
@@ -224,6 +226,8 @@ def extrair():
             "recompra_pct": val(54),  # BB = "RECOMPRA" %
             "media_pedidos": val(56),  # BD = "MÉDIA PEDIDOS"
             "sku": {"meta": val(58), "real": val(59)},  # BF/BG = "SKU" meta/realizado
+            "positivacao_dia15": {"resultado": val(45), "premio": val(46)},  # AS/AT
+            "positivacao_dia30": {"resultado": val(48), "premio": val(50)},  # AV/AX
         })
 
     return rcas
