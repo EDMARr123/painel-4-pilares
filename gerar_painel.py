@@ -833,18 +833,28 @@ function agregarTime(dados, nomeSupervisor) {
       real: dados.reduce((s, r) => s + r.industrializado.real, 0),
       participacao_pct: media(dados.map(r => r.industrializado.participacao_pct)),
       margem_pct: media(dados.map(r => r.industrializado.margem_pct)),
+      premio: dados.reduce((s, r) => s + r.industrializado.premio, 0),
     },
     thermo: {
       meta: dados.reduce((s, r) => s + r.thermo.meta, 0),
       real: dados.reduce((s, r) => s + r.thermo.real, 0),
       participacao_pct: media(dados.map(r => r.thermo.participacao_pct)),
       margem_pct: media(dados.map(r => r.thermo.margem_pct)),
+      premio: dados.reduce((s, r) => s + r.thermo.premio, 0),
     },
     recompra_pct: media(dados.map(r => r.recompra_pct)),
     media_pedidos: media(dados.map(r => r.media_pedidos)),
     sku: {
       meta: dados.reduce((s, r) => s + r.sku.meta, 0),
       real: dados.reduce((s, r) => s + r.sku.real, 0),
+    },
+    positivacao_dia15: {
+      resultado: dados.reduce((s, r) => s + r.positivacao_dia15.resultado, 0),
+      premio: dados.reduce((s, r) => s + r.positivacao_dia15.premio, 0),
+    },
+    positivacao_dia30: {
+      resultado: dados.reduce((s, r) => s + r.positivacao_dia30.resultado, 0),
+      premio: dados.reduce((s, r) => s + r.positivacao_dia30.premio, 0),
     },
   };
 }
