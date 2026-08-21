@@ -1129,7 +1129,6 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
-.dv-tabela .dv-tab-meta { display: block; font-size: 9px; font-weight: 600; opacity: 0.75; margin-bottom: 1px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1358,26 +1357,35 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
             for chave, info in r["categorias"].items():
                 labels_dep.setdefault(chave, info["label"])
         supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
-        linhas_dep = ""
+        # Time padrão = maior equipe (7 RCAs, o que a maioria dos
+        # supervisores tem — só o EDMAR foge disso, com 2). A linha META usa
+        # esse tamanho como referência, igual ao mockup que o Edmar fez na
+        # planilha (linha "META" logo abaixo do cabeçalho, antes das linhas
+        # de cada supervisor).
+        tamanho_time_padrao = max(
+            (sum(1 for r in dados_dep if r["supervisor"] == sup) for sup in supervisores_dep),
+            default=0,
+        )
+        linha_meta = "".join(
+            f'<td style="font-weight:800">{_fmt_num_py(meta_por_rca * tamanho_time_padrao, 0)}</td>'
+            for chave in CATEGORIAS_DEP
+            for meta_por_rca in [next((r["categorias"][chave]["meta"] for r in dados_dep if chave in r["categorias"]), 0)]
+        )
+        linhas_dep = f'''
+      <tr style="border-bottom:2px solid var(--border)">
+        <td class="dv-tab-sup">META</td>{linha_meta}<td></td>
+      </tr>'''
         for sup in supervisores_dep:
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
             celulas = ""
             pcts_sup = []
             for chave in CATEGORIAS_DEP:
-                # Meta do TIME nessa categoria = meta por RCA × nº de RCAs
-                # do supervisor (ex: Bovino meta 15 × 7 RCAs = 105) — varia
-                # por supervisor porque o tamanho do time varia (EDMAR só
-                # tem 2 RCAs), por isso fica na célula e não no cabeçalho.
                 meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
                 real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
                 pct = real / meta if meta else 0
                 pcts_sup.append(pct)
                 classe = _classe_status(pct)
-                celulas += (
-                    f'<td class="{classe}">'
-                    f'<span class="dv-tab-meta">{_fmt_num_py(meta, 0)}</span>'
-                    f'{_fmt_pct_py(pct)}</td>'
-                )
+                celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
             media_desempenho = sum(pcts_sup) / len(pcts_sup) if pcts_sup else 0
             classe_media = _classe_status(media_desempenho)
             celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
