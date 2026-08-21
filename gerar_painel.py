@@ -1129,7 +1129,6 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
-.dv-tabela .dv-tab-meta { display: block; font-size: 9px; font-weight: 600; opacity: 0.75; margin-top: 2px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1354,20 +1353,20 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     if dados_dep:
         CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
         labels_dep = {}
-        metas_dep = {}
         for r in dados_dep:
             for chave, info in r["categorias"].items():
                 labels_dep.setdefault(chave, info["label"])
-                metas_dep.setdefault(chave, info["meta"])
         supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
         linhas_dep = ""
         for sup in supervisores_dep:
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
             celulas = ""
             pcts_sup = []
+            soma_meta_sup = 0
             for chave in CATEGORIAS_DEP:
                 meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
                 real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
+                soma_meta_sup += meta
                 pct = real / meta if meta else 0
                 pcts_sup.append(pct)
                 classe = _classe_status(pct)
@@ -1377,12 +1376,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
             celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
             linhas_dep += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>{celulas}
+        <td class="dv-tab-sup">{sup}</td>
+        <td style="font-weight:800;border-right:1px solid var(--border)">{_fmt_num_py(soma_meta_sup, 0)}</td>{celulas}
       </tr>'''
-        colunas_dep = [
-            f'{labels_dep[c]}<span class="dv-tab-meta">Meta {_fmt_num_py(metas_dep[c], 0)}</span>'
-            for c in CATEGORIAS_DEP if c in labels_dep
-        ] + ["Média"]
+        colunas_dep = ["Meta"] + [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
         tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
         secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
