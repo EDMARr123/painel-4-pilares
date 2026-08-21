@@ -1373,7 +1373,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         )
         linhas_dep = f'''
       <tr style="border-bottom:2px solid var(--border)">
-        <td class="dv-tab-sup">META</td>{linha_meta}<td></td>
+        <td class="dv-tab-sup" style="text-align:center;font-weight:900">META</td>{linha_meta}<td></td>
       </tr>'''
         for sup in supervisores_dep:
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
