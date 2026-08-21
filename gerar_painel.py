@@ -1128,6 +1128,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-good { color: var(--good); font-weight: 800; }
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
+.dv-tabela-center td { text-align: center; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1328,10 +1329,11 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_sup, 2)}</td>
       </tr>'''
 
-    def _tabela_mini(linhas, colunas):
+    def _tabela_mini(linhas, colunas, centralizado=False):
         cabecalho = "".join(f"<th>{c}</th>" for c in colunas)
+        classe_extra = " dv-tabela-center" if centralizado else ""
         return f'''
-    <table class="dv-tabela">
+    <table class="dv-tabela{classe_extra}">
       <thead><tr><th></th>{cabecalho}</tr></thead>
       <tbody>{linhas}
       </tbody>
@@ -1365,7 +1367,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         <td class="dv-tab-sup">{sup}</td>{celulas}
       </tr>'''
         colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep]
-        tabela_departamento = _tabela_mini(linhas_dep, colunas_dep)
+        tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
         secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Departamento por supervisor</h3>
