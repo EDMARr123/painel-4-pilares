@@ -1121,7 +1121,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 11.5px; }
 .dv-tabela th, .dv-tabela td { padding: 5px 6px; text-align: right; font-variant-numeric: tabular-nums; }
 .dv-tabela thead th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; color: var(--ink-faint); font-weight: 800; border-bottom: 1px solid var(--border); }
-.dv-tabela thead tr:first-child th { text-align: center; font-size: 13.5px; color: var(--ink); }
+.dv-tabela thead tr:first-child th { text-align: center; font-size: 11px; color: var(--ink); }
 .dv-tabela .dv-tab-sub th { padding-top: 2px; }
 .dv-tabela .dv-tab-sup { text-align: left; font-weight: 700; color: var(--ink-soft); }
 .dv-tabela tbody tr:nth-child(even) { background: var(--surface-2); }
