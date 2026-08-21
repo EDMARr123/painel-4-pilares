@@ -1133,7 +1133,7 @@ _CSS_DASHBOARD_GERENTE = """
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
 
 
-def gerar_html_gerente(dados, totais):
+def gerar_html_gerente(dados, totais, dados_dep=None):
     import datetime
     data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
 
@@ -1337,6 +1337,42 @@ def gerar_html_gerente(dados, totais):
       </tbody>
     </table>'''
 
+    # Departamento por supervisor — rollup das 10 categorias de produto
+    # (Bacon, Bovino, Batata, Suíno, Calabresa, Pães, Frescais, Saborizadas,
+    # Lácteos, Thermo) vindas do painel_departamentos (projeto irmão, usa a
+    # mesma normalização de nome de supervisor). Real/meta somados por
+    # supervisor, % colorido com o mesmo critério (>=100% bom, >=70% atenção).
+    secao_departamento = ""
+    if dados_dep:
+        CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
+        labels_dep = {}
+        for r in dados_dep:
+            for chave, info in r["categorias"].items():
+                labels_dep.setdefault(chave, info["label"])
+        supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
+        linhas_dep = ""
+        for sup in supervisores_dep:
+            do_sup = [r for r in dados_dep if r["supervisor"] == sup]
+            celulas = ""
+            for chave in CATEGORIAS_DEP:
+                meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
+                real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
+                pct = real / meta if meta else 0
+                classe = _classe_status(pct)
+                celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+            linhas_dep += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>{celulas}
+      </tr>'''
+        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep]
+        tabela_departamento = _tabela_mini(linhas_dep, colunas_dep)
+        secao_departamento = f'''
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Departamento por supervisor</h3>
+    {tabela_departamento}
+  </section>
+'''
+
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de pedidos"])
@@ -1443,7 +1479,7 @@ def gerar_html_gerente(dados, totais):
       <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
     </div>
   </section>
-
+  {secao_departamento}
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
 </div>
 </body>
@@ -1479,7 +1515,15 @@ def main():
             f.write(html_sup)
         print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
 
-    html_gerente = gerar_html_gerente(dados, totais)
+    # Dados do painel_departamentos (projeto irmão) são opcionais — o painel
+    # do gerente funciona sem eles, só não mostra a seção de departamento.
+    caminho_dados_dep = os.path.join(PASTA_BASE, "..", "painel_departamentos", "dados.json")
+    dados_dep = None
+    if os.path.exists(caminho_dados_dep):
+        with open(caminho_dados_dep, "r", encoding="utf-8") as f:
+            dados_dep = json.load(f)
+
+    html_gerente = gerar_html_gerente(dados, totais, dados_dep)
     caminho_gerente = os.path.join(PASTA_BASE, "painel_gerente.html")
     with open(caminho_gerente, "w", encoding="utf-8") as f:
         f.write(html_gerente)
