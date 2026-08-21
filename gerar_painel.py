@@ -1086,14 +1086,14 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-donut-wrap .dv-cat-7 { stroke: var(--dv-cat-7); }
 
 .dv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 22px; }
-.dv-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; }
+.dv-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; display: flex; flex-direction: column; }
 .dv-kpi.dv-good { border-top-color: var(--dv-good); }
 .dv-kpi.dv-warn { border-top-color: var(--dv-warn); }
 .dv-kpi.dv-bad { border-top-color: var(--dv-bad); }
 .dv-kpi .l { font-size: 11.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); margin-bottom: 6px; }
 .dv-kpi .v { font-size: 24px; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 2px; }
 .dv-kpi .m { font-size: 14px; font-weight: 700; color: var(--ink-faint); margin-bottom: 10px; }
-.dv-kpi .badge { display: inline-flex; align-items: center; gap: 5px; font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; }
+.dv-kpi .badge { display: inline-flex; align-items: center; align-self: flex-start; gap: 5px; font-size: 12px; font-weight: 800; padding: 3px 9px; border-radius: 999px; margin-top: auto; }
 .dv-kpi .badge.dv-good { background: var(--good-soft); color: var(--good); }
 .dv-kpi .badge.dv-warn { background: var(--warn-soft); color: var(--warn); }
 .dv-kpi .badge.dv-bad { background: var(--bad-soft); color: var(--bad); }
