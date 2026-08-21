@@ -1270,7 +1270,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     # (mesmos critérios de cor dos KPIs de cima: margem industrializado
     # >=18% bom, margem thermo >=15% bom; recompra >=40% ruim, 20-40%
     # atenção, <20% bom).
-    linhas_ind, linhas_thermo, linhas_recompra = "", "", ""
+    linhas_ind, linhas_thermo, linhas_recompra, linhas_media_pedidos = "", "", "", ""
     for sup in supervisores:
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
@@ -1321,6 +1321,12 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         <td>{_fmt_moeda_py(real_thermo)}</td>
         <td class="{classe_participacao_thermo}">{_fmt_pct_py(media_participacao_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
+      </tr>'''
+        linhas_media_pedidos += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{len(do_sup)}</td>
+        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_sup, 2)}</td>
       </tr>'''
         linhas_recompra += f'''
       <tr>
@@ -1384,6 +1390,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de pedidos"])
     tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"])
+    # Card próprio de Média de Pedidos por supervisor — mostra o nº de
+    # vendedores de cada um junto (EDMAR tem só 2 RCAs, os demais têm 7),
+    # pra deixar claro que a média do EDMAR pesa sobre uma base bem menor.
+    tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, ["Nº Vendedores", "Média de Pedidos"], centralizado=True)
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
@@ -1487,6 +1497,11 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     </div>
   </section>
   {secao_departamento}
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Média de pedidos por supervisor</h3>
+    {tabela_media_pedidos}
+  </section>
+
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
 </div>
 </body>
