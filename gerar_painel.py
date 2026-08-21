@@ -1332,7 +1332,6 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
-        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_sup, 2)}</td>
       </tr>'''
 
     def _tabela_mini(linhas, colunas, centralizado=False):
@@ -1388,7 +1387,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
 
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
-    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de pedidos"])
+    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"])
     tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"])
     # Card próprio de Média de Pedidos por supervisor — mostra o nº de
     # vendedores de cada um junto (EDMAR tem só 2 RCAs, os demais têm 7),
