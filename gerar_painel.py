@@ -1402,10 +1402,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
   </section>
 '''
 
-    tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"])
-    tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"])
-    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"])
-    tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"])
+    tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
+    tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
+    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"], centralizado=True)
+    tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"], centralizado=True)
     # Card próprio de Média de Pedidos por supervisor — mostra o nº de
     # vendedores de cada um junto (EDMAR tem só 2 RCAs, os demais têm 7),
     # pra deixar claro que a média do EDMAR pesa sobre uma base bem menor.
