@@ -1,14 +1,14 @@
 {
   "margem": {
     "meta": 0.1299795918367347,
-    "real": 0.11755783528044189
+    "real": 0.1177024341600664
   },
   "mix": {
     "meta": 0.025326530612244897,
-    "real": 0.026187244897959185
+    "real": 0.026189540816326535
   },
   "meta_clientes": 3672,
-  "realizado_clientes": 3379,
-  "nao_comprou": 293,
-  "recompra_pct": 0.00858242083456644
+  "realizado_clientes": 3425,
+  "nao_comprou": 247,
+  "recompra_pct": 0.0072992700729927005
 }
