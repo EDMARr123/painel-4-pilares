@@ -1129,6 +1129,7 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
+.dv-tabela .dv-tab-meta { display: block; font-size: 9px; font-weight: 600; opacity: 0.75; margin-top: 2px; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1353,9 +1354,11 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     if dados_dep:
         CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
         labels_dep = {}
+        metas_dep = {}
         for r in dados_dep:
             for chave, info in r["categorias"].items():
                 labels_dep.setdefault(chave, info["label"])
+                metas_dep.setdefault(chave, info["meta"])
         supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
         linhas_dep = ""
         for sup in supervisores_dep:
@@ -1376,7 +1379,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <tr>
         <td class="dv-tab-sup">{sup}</td>{celulas}
       </tr>'''
-        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
+        colunas_dep = [
+            f'{labels_dep[c]}<span class="dv-tab-meta">Meta {_fmt_num_py(metas_dep[c], 0)}</span>'
+            for c in CATEGORIAS_DEP if c in labels_dep
+        ] + ["Média"]
         tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
         secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
