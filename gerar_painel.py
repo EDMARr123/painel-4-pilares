@@ -1365,9 +1365,11 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
             celulas = ""
             pcts_sup = []
+            soma_meta_sup = 0
             for chave in CATEGORIAS_DEP:
                 meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
                 real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
+                soma_meta_sup += meta
                 pct = real / meta if meta else 0
                 pcts_sup.append(pct)
                 classe = _classe_status(pct)
@@ -1377,9 +1379,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
             celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
             linhas_dep += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>{celulas}
+        <td class="dv-tab-sup">{sup}</td>
+        <td style="font-weight:800;border-right:1px solid var(--border)">{_fmt_num_py(soma_meta_sup, 0)}</td>{celulas}
       </tr>'''
-        colunas_dep = [
+        colunas_dep = [""] + [
             f'{labels_dep[c]}<span class="dv-tab-meta">Meta {_fmt_num_py(metas_dep[c], 0)}</span>'
             for c in CATEGORIAS_DEP if c in labels_dep
         ] + ["Média"]
