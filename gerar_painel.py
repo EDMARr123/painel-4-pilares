@@ -1129,7 +1129,6 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
-.dv-tabela .dv-tab-meta-col { text-align: left; font-size: 9.5px; font-weight: 700; color: var(--ink-soft); line-height: 1.6; white-space: nowrap; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
@@ -1363,7 +1362,6 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
             celulas = ""
             pcts_sup = []
-            linhas_meta_sup = []
             for chave in CATEGORIAS_DEP:
                 meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
                 real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
@@ -1371,19 +1369,14 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
                 pcts_sup.append(pct)
                 classe = _classe_status(pct)
                 celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
-                # Meta do TIME nessa categoria (soma do mínimo de cada RCA,
-                # ex: Bovino mínimo 15 × 7 RCAs do Leandro = 105).
-                linhas_meta_sup.append(f'{labels_dep[chave]} {_fmt_num_py(meta, 0)}')
             media_desempenho = sum(pcts_sup) / len(pcts_sup) if pcts_sup else 0
             classe_media = _classe_status(media_desempenho)
             celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
-            coluna_meta = "<br>".join(linhas_meta_sup)
             linhas_dep += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td class="dv-tab-meta-col" style="border-right:1px solid var(--border)">{coluna_meta}</td>{celulas}
+        <td class="dv-tab-sup">{sup}</td>{celulas}
       </tr>'''
-        colunas_dep = ["Meta"] + [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
+        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
         tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
         secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
