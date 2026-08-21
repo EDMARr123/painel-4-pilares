@@ -1356,17 +1356,22 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         for sup in supervisores_dep:
             do_sup = [r for r in dados_dep if r["supervisor"] == sup]
             celulas = ""
+            pcts_sup = []
             for chave in CATEGORIAS_DEP:
                 meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
                 real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
                 pct = real / meta if meta else 0
+                pcts_sup.append(pct)
                 classe = _classe_status(pct)
                 celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+            media_desempenho = sum(pcts_sup) / len(pcts_sup) if pcts_sup else 0
+            classe_media = _classe_status(media_desempenho)
+            celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
             linhas_dep += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>{celulas}
       </tr>'''
-        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep]
+        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
         tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
         secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
