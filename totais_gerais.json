@@ -10,5 +10,11 @@
   "meta_clientes": 3672,
   "realizado_clientes": 3528,
   "nao_comprou": 144,
-  "recompra_pct": 0.00510204081632653
+  "recompra_pct": 0.00510204081632653,
+  "conta_corrente": {
+    "meta": 1945370.68,
+    "realizado": 1216578.3124070032,
+    "tendencia": 1581551.8061291042,
+    "pct": 0.8129822364389209
+  }
 }

@@ -1194,6 +1194,22 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
     </div>'''
 
+    # Conta-Corrente (bloco novo da planilha, 24/08) — mesmo formato do card
+    # de Financeiro (meta/realizado/tendência); "%" já vem pronto da
+    # planilha como tendência/meta, não realizado/meta. Exclusivo do
+    # painel do gerente.
+    cc = totais.get("conta_corrente")
+    if cc:
+        classe_cc = _classe_status(cc["pct"])
+        kpis_html += f'''
+    <div class="dv-kpi {classe_cc}">
+      <div class="l">Conta-Corrente</div>
+      <div class="v">{_fmt_moeda_py(cc["realizado"])}</div>
+      <div class="m">Meta {_fmt_moeda_py(cc["meta"])}</div>
+      <div class="m">Tendência {_fmt_moeda_py(cc["tendencia"])}</div>
+      <span class="badge {classe_cc}">{_fmt_pct_py(cc["pct"])}</span>
+    </div>'''
+
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
     # resto do site (participação/margem, critério binário definido pelo
     # Edmar) — meta/real são somáveis, participação/margem são médias.

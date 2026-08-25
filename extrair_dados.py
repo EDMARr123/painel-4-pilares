@@ -120,7 +120,10 @@ def _achar_no_cache(cache, nome_rca):
 def extrair_totais(ws):
     """Bloco de totais gerais da planilha (linhas 82-98, coluna R = rótulo,
     T/U = meta/realizado) — Margem e Mix aqui são o número final calculado
-    pelo Edmar na planilha, não uma média/soma das linhas por RCA."""
+    pelo Edmar na planilha, não uma média/soma das linhas por RCA.
+
+    Conta-Corrente (linhas 109-114, adicionado 24/08): R=meta, S=realizado,
+    T=tendência R$, V=%."""
     return {
         "margem": {"meta": _num(ws["T84"].value), "real": _num(ws["U84"].value)},
         "mix": {"meta": _num(ws["T87"].value), "real": _num(ws["U87"].value)},
@@ -128,6 +131,12 @@ def extrair_totais(ws):
         "realizado_clientes": _num(ws["T94"].value),
         "nao_comprou": _num(ws["T96"].value),
         "recompra_pct": _num(ws["T98"].value),
+        "conta_corrente": {
+            "meta": _num(ws["R114"].value),
+            "realizado": _num(ws["S114"].value),
+            "tendencia": _num(ws["T114"].value),
+            "pct": _num(ws["V114"].value),
+        },
     }
 
 
