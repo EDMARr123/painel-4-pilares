@@ -805,6 +805,16 @@ function agregarTime(dados, nomeSupervisor) {
     const real = somarReal(campo);
     return { meta, real, pct: meta ? real / meta : 0 };
   };
+  // Margem e Mix são percentuais/índices por vendedor, não quantidades
+  // somáveis — soma-los direto (ex: 7 vendedores de ~13% cada virando
+  // "92%") fica sem sentido. Meta/Realizado do time aqui são a MÉDIA
+  // entre os vendedores (o "%" batido continua sendo real/meta, que dá no
+  // mesmo de qualquer forma — só o Meta/Realizado exibidos mudam).
+  const pilarMedia = campo => {
+    const meta = somarMeta(campo) / (dados.length || 1);
+    const real = somarReal(campo) / (dados.length || 1);
+    return { meta, real, pct: meta ? real / meta : 0 };
+  };
 
   const metaFin = somarMeta("financeiro");
   const projetado = dados.reduce((s, r) => s + r.tendencia.projetado, 0);
@@ -817,8 +827,8 @@ function agregarTime(dados, nomeSupervisor) {
     supervisor: nomeSupervisor,
     pilares: {
       positivacao: pilar("positivacao"),
-      margem: pilar("margem"),
-      mix: pilar("mix"),
+      margem: pilarMedia("margem"),
+      mix: pilarMedia("mix"),
       financeiro: pilar("financeiro"),
     },
     pilares_atingidos: Math.round(media(dados.map(r => r.pilares_atingidos))),
