@@ -12,53 +12,53 @@
       },
       "margem": {
         "meta": 11.3,
-        "real": 6.387161794495974,
-        "pct": 0.5652355570350419
+        "real": 6.420671502198918,
+        "pct": 0.5682010178937095
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.23,
-        "pct": 0.9291666666666667
+        "real": 2.21,
+        "pct": 0.9208333333333334
       },
       "financeiro": {
         "meta": 1640000,
-        "real": 1017925.9884025,
-        "pct": 0.6206865782942074
+        "real": 1114724.8884025,
+        "pct": 0.6797102978064025
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.7684690969356852,
-      "projetado": 1260289.3189745238,
+      "pct": 0.8032939883166573,
+      "projetado": 1317402.140839318,
       "meta": 1640000,
-      "meta_dia": 124414.80231949998
+      "meta_dia": 131318.777899375
     },
     "industrializado": {
       "meta": 410000,
-      "real": 131924.64,
-      "participacao_pct": 0.12960140668678502,
-      "margem_pct": 0.17299278879669494,
+      "real": 144798.82,
+      "participacao_pct": 0.12989646280124742,
+      "margem_pct": 0.17089933340478883,
       "premio": 0
     },
     "thermo": {
       "meta": 49200,
       "real": 732.28,
-      "participacao_pct": 0.0007193843249342876,
+      "participacao_pct": 0.0006569154484829189,
       "margem_pct": 0,
       "premio": 0
     },
-    "recompra_pct": 0.30357142857142855,
-    "media_pedidos": 15.047619047619047,
+    "recompra_pct": 0.26785714285714285,
+    "media_pedidos": 15.136363636363637,
     "sku": {
       "meta": 120,
-      "real": 74
+      "real": 75
     },
     "positivacao_dia15": {
       "resultado": 46,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 45,
+      "resultado": 48,
       "premio": 0
     }
   },
@@ -75,53 +75,53 @@
       },
       "margem": {
         "meta": 14,
-        "real": 2.894353202408667,
-        "pct": 0.20673951445776192
+        "real": 3.026544967163269,
+        "pct": 0.21618178336880492
       },
       "mix": {
         "meta": 2.6,
-        "real": 2.93,
-        "pct": 1.126923076923077
+        "real": 2.92,
+        "pct": 1.123076923076923
       },
       "financeiro": {
         "meta": 1645000,
-        "real": 1031597.7268604,
-        "pct": 0.6271110801582979
+        "real": 1056733.0568604,
+        "pct": 0.6423909160245592
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.7764232421007499,
-      "projetado": 1277216.2332557335,
+      "pct": 0.7591892643926609,
+      "projetado": 1248866.339925927,
       "meta": 1645000,
-      "meta_dia": 122680.45462791999
+      "meta_dia": 147066.73578490003
     },
     "industrializado": {
       "meta": 411250,
-      "real": 259060.49,
-      "participacao_pct": 0.2511254951951412,
-      "margem_pct": 0.10885124857441592,
+      "real": 270568.23,
+      "participacao_pct": 0.25604217474171764,
+      "margem_pct": 0.11096053496450776,
       "premio": 0
     },
     "thermo": {
       "meta": 49350,
       "real": 90538.63,
-      "participacao_pct": 0.08776544155011701,
+      "participacao_pct": 0.08567786293067639,
       "margem_pct": 0,
       "premio": 0
     },
     "recompra_pct": 0.1702127659574468,
-    "media_pedidos": 15.333333333333334,
+    "media_pedidos": 14.954545454545455,
     "sku": {
       "meta": 120,
-      "real": 59
+      "real": 60
     },
     "positivacao_dia15": {
       "resultado": 43,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 36,
+      "resultado": 37,
       "premio": 0
     }
   },
@@ -138,43 +138,43 @@
       },
       "margem": {
         "meta": 13.7,
-        "real": 14.464324278964131,
-        "pct": 1.0557900933550461
+        "real": 14.455864376555544,
+        "pct": 1.0551725822303317
       },
       "mix": {
         "meta": 2.6,
-        "real": 2.51,
-        "pct": 0.9653846153846153
+        "real": 2.5,
+        "pct": 0.9615384615384615
       },
       "financeiro": {
         "meta": 326000,
-        "real": 223320.205632,
-        "pct": 0.6850313056196319
+        "real": 231440.315632,
+        "pct": 0.7099396185030675
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.84813399743383,
-      "projetado": 276491.68316342856,
+      "pct": 0.8390195491399889,
+      "projetado": 273520.3730196364,
       "meta": 326000,
-      "meta_dia": 20535.9588736
+      "meta_dia": 23639.921091999997
     },
     "industrializado": {
       "meta": 81500,
-      "real": 82476.43,
-      "participacao_pct": 0.36931915661903625,
-      "margem_pct": 0.23021389062547923,
-      "premio": 824.7642999999999
+      "real": 85630.03,
+      "participacao_pct": 0.3699875268756348,
+      "margem_pct": 0.23133875592242578,
+      "premio": 856.3003
     },
     "thermo": {
       "meta": 9780,
-      "real": 5871.82,
-      "participacao_pct": 0.02629327688187752,
-      "margem_pct": 0.1610947626296446,
+      "real": 5934.51,
+      "participacao_pct": 0.025641643219308966,
+      "margem_pct": 0.1624485945724247,
       "premio": 0
     },
     "recompra_pct": 0.2641509433962264,
-    "media_pedidos": 17.333333333333332,
+    "media_pedidos": 17.136363636363637,
     "sku": {
       "meta": 120,
       "real": 83
@@ -184,7 +184,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 75,
+      "resultado": 76,
       "premio": 0
     }
   },
@@ -201,53 +201,53 @@
       },
       "margem": {
         "meta": 12.9,
-        "real": 13.423620767011151,
-        "pct": 1.0405907571326474
+        "real": 13.391899634113532,
+        "pct": 1.0381317545824442
       },
       "mix": {
         "meta": 3.3,
-        "real": 3.64,
-        "pct": 1.103030303030303
+        "real": 3.6,
+        "pct": 1.090909090909091
       },
       "financeiro": {
         "meta": 367000,
-        "real": 318287.932024,
-        "pct": 0.8672695695476839
+        "real": 329244.222024,
+        "pct": 0.897123220773842
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.0737623242018943,
-      "projetado": 394070.7729820952,
+      "pct": 1.0602365336418134,
+      "projetado": 389106.8078465455,
       "meta": 367000,
-      "meta_dia": 9742.413595200003
+      "meta_dia": 9438.944493999996
     },
     "industrializado": {
       "meta": 91750,
-      "real": 76136.98,
-      "participacao_pct": 0.2392078754473764,
-      "margem_pct": 0.24242621898845992,
+      "real": 78584.81,
+      "participacao_pct": 0.2386824270351861,
+      "margem_pct": 0.2427330529882302,
       "premio": 0
     },
     "thermo": {
       "meta": 11010,
-      "real": 12226.24,
-      "participacao_pct": 0.038412515115647236,
-      "margem_pct": 0.1739839436392545,
-      "premio": 244.5248
+      "real": 12760.46,
+      "participacao_pct": 0.03875682288835986,
+      "margem_pct": 0.1742527266797591,
+      "premio": 255.20919999999998
     },
-    "recompra_pct": 0.24742268041237114,
-    "media_pedidos": 15.857142857142858,
+    "recompra_pct": 0.23711340206185566,
+    "media_pedidos": 15.636363636363637,
     "sku": {
       "meta": 120,
-      "real": 111
+      "real": 112
     },
     "positivacao_dia15": {
       "resultado": 97,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 62,
+      "resultado": 65,
       "premio": 0
     }
   },
@@ -259,58 +259,58 @@
     "pilares": {
       "positivacao": {
         "meta": 100,
-        "real": 95,
-        "pct": 0.95
+        "real": 96,
+        "pct": 0.96
       },
       "margem": {
         "meta": 13.3,
-        "real": 13.279629012865376,
-        "pct": 0.9984683468319832
+        "real": 13.183785640786368,
+        "pct": 0.9912620782546141
       },
       "mix": {
         "meta": 2.9,
-        "real": 2.7,
-        "pct": 0.9310344827586208
+        "real": 2.68,
+        "pct": 0.9241379310344828
       },
       "financeiro": {
         "meta": 331000,
-        "real": 222043.3751368,
-        "pct": 0.6708259067577039
+        "real": 229898.8251368,
+        "pct": 0.6945583840990937
       }
     },
     "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.8305463607476333,
-      "projetado": 274910.84540746664,
+      "pct": 0.8208417266625653,
+      "projetado": 271698.6115253091,
       "meta": 331000,
-      "meta_dia": 21791.324972640003
+      "meta_dia": 25275.2937158
     },
     "industrializado": {
       "meta": 82750,
-      "real": 60736.16,
-      "participacao_pct": 0.2735328624985128,
-      "margem_pct": 0.23201083314289217,
-      "premio": 607.3616000000001
+      "real": 60881.16,
+      "participacao_pct": 0.26481718627214823,
+      "margem_pct": 0.23228861019566652,
+      "premio": 608.8116
     },
     "thermo": {
       "meta": 9930,
       "real": 9129.55,
-      "participacao_pct": 0.041116065698313775,
+      "participacao_pct": 0.039711164224382235,
       "margem_pct": 0.11376330496377146,
       "premio": 0
     },
-    "recompra_pct": 0.3263157894736842,
-    "media_pedidos": 12.761904761904763,
+    "recompra_pct": 0.3333333333333333,
+    "media_pedidos": 12.636363636363637,
     "sku": {
       "meta": 120,
-      "real": 94
+      "real": 95
     },
     "positivacao_dia15": {
       "resultado": 71,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 65,
+      "resultado": 67,
       "premio": 0
     }
   },
@@ -327,53 +327,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 13.209900772821518,
-        "pct": 1.016146213293963
+        "real": 13.3925210218534,
+        "pct": 1.030193924757954
       },
       "mix": {
         "meta": 2.7,
-        "real": 2.67,
-        "pct": 0.9888888888888888
+        "real": 2.73,
+        "pct": 1.011111111111111
       },
       "financeiro": {
         "meta": 375000,
-        "real": 280045.484265,
-        "pct": 0.74678795804
+        "real": 289515.504265,
+        "pct": 0.7720413447066666
       }
     },
-    "pilares_atingidos": 1,
+    "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.9245946147161904,
-      "projetado": 346722.9805185714,
+      "pct": 0.9124124982896968,
+      "projetado": 342154.6868586363,
       "meta": 375000,
-      "meta_dia": 18990.903147000005
+      "meta_dia": 21371.12393375
     },
     "industrializado": {
       "meta": 93750,
-      "real": 32262.5,
-      "participacao_pct": 0.11520450002854112,
-      "margem_pct": 0.23563183187291753,
+      "real": 36457.19,
+      "participacao_pct": 0.12592482773091807,
+      "margem_pct": 0.23873578660341074,
       "premio": 0
     },
     "thermo": {
       "meta": 11250,
-      "real": 4658.76,
-      "participacao_pct": 0.016635726200789343,
-      "margem_pct": 0.16797605100069546,
+      "real": 5143.89,
+      "participacao_pct": 0.01776723499855014,
+      "margem_pct": 0.16712313333605514,
       "premio": 0
     },
-    "recompra_pct": 0.2653061224489796,
-    "media_pedidos": 12.428571428571429,
+    "recompra_pct": 0.25510204081632654,
+    "media_pedidos": 12.545454545454545,
     "sku": {
       "meta": 120,
-      "real": 102
+      "real": 104
     },
     "positivacao_dia15": {
       "resultado": 87,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 59,
+      "resultado": 62,
       "premio": 0
     }
   },
@@ -385,48 +385,48 @@
     "pilares": {
       "positivacao": {
         "meta": 77,
-        "real": 72,
-        "pct": 0.935064935064935
+        "real": 75,
+        "pct": 0.974025974025974
       },
       "margem": {
         "meta": 13.5,
-        "real": 14.727151715463938,
-        "pct": 1.0909001270714027
+        "real": 14.809978182422935,
+        "pct": 1.0970354209202173
       },
       "mix": {
         "meta": 2.9,
-        "real": 2.8,
-        "pct": 0.9655172413793103
+        "real": 2.78,
+        "pct": 0.9586206896551723
       },
       "financeiro": {
         "meta": 242000,
-        "real": 157324.03,
-        "pct": 0.6500992975206612
+        "real": 161779.11,
+        "pct": 0.6685087190082644
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.80488484454939,
-      "projetado": 194782.1323809524,
+      "pct": 0.7900557588279489,
+      "projetado": 191193.49363636362,
       "meta": 242000,
-      "meta_dia": 16935.194
+      "meta_dia": 20055.222500000003
     },
     "industrializado": {
       "meta": 60500,
-      "real": 42127.05,
-      "participacao_pct": 0.26777250748026227,
-      "margem_pct": 0.2370811974586401,
-      "premio": 421.2705
+      "real": 44121.58,
+      "participacao_pct": 0.2727273008239445,
+      "margem_pct": 0.23822519324103994,
+      "premio": 441.2158
     },
     "thermo": {
       "meta": 7260,
-      "real": 5632.89,
-      "participacao_pct": 0.03580438411093334,
-      "margem_pct": 0.1663546338053824,
-      "premio": 112.65780000000001
+      "real": 5815.7,
+      "participacao_pct": 0.03594839902382947,
+      "margem_pct": 0.16602937463899445,
+      "premio": 116.314
     },
-    "recompra_pct": 0.3611111111111111,
-    "media_pedidos": 11.333333333333334,
+    "recompra_pct": 0.36,
+    "media_pedidos": 11.363636363636363,
     "sku": {
       "meta": 120,
       "real": 81
@@ -436,7 +436,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 49,
+      "resultado": 55,
       "premio": 0
     }
   },
@@ -453,8 +453,8 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.181991469172996,
-        "pct": 0.9480149003247468
+        "real": 12.26631105208058,
+        "pct": 0.9545767355704732
       },
       "mix": {
         "meta": 2.4,
@@ -463,43 +463,43 @@
       },
       "financeiro": {
         "meta": 232000,
-        "real": 196580.308,
-        "pct": 0.8473289137931034
+        "real": 203322.278,
+        "pct": 0.8763891293103447
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 1.049073893267652,
-      "projetado": 243385.14323809525,
+      "pct": 1.0357326073667712,
+      "projetado": 240289.96490909092,
       "meta": 232000,
-      "meta_dia": 7083.938400000002
+      "meta_dia": 7169.430500000002
     },
     "industrializado": {
       "meta": 58000,
-      "real": 35335.29,
-      "participacao_pct": 0.17974989641383612,
-      "margem_pct": 0.24281244621453513,
+      "real": 36366.34,
+      "participacao_pct": 0.1788605771965628,
+      "margem_pct": 0.2413055878100463,
       "premio": 0
     },
     "thermo": {
       "meta": 6960,
-      "real": 8423.99,
-      "participacao_pct": 0.04285266457106172,
-      "margem_pct": 0.1584240760000902,
-      "premio": 168.4798
+      "real": 9920.96,
+      "participacao_pct": 0.04879425952526461,
+      "margem_pct": 0.15810869206044567,
+      "premio": 198.4192
     },
-    "recompra_pct": 0.35443037974683544,
-    "media_pedidos": 10.238095238095237,
+    "recompra_pct": 0.3291139240506329,
+    "media_pedidos": 10.181818181818182,
     "sku": {
       "meta": 120,
-      "real": 91
+      "real": 93
     },
     "positivacao_dia15": {
       "resultado": 71,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 48,
+      "resultado": 52,
       "premio": 0
     }
   },
@@ -511,58 +511,58 @@
     "pilares": {
       "positivacao": {
         "meta": 95,
-        "real": 73,
-        "pct": 0.7684210526315789
+        "real": 85,
+        "pct": 0.8947368421052632
       },
       "margem": {
         "meta": 13.5,
-        "real": 15.65355872517371,
-        "pct": 1.1595228685313859
+        "real": 15.238064818126004,
+        "pct": 1.1287455420834076
       },
       "mix": {
         "meta": 2.95,
-        "real": 3.52,
-        "pct": 1.1932203389830507
+        "real": 3.41,
+        "pct": 1.1559322033898305
       },
       "financeiro": {
         "meta": 247000,
-        "real": 161758.7137924,
-        "pct": 0.6548935781068825
+        "real": 190319.8837924,
+        "pct": 0.7705258453133603
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.8108206205132832,
-      "projetado": 200272.69326678096,
+      "pct": 0.9106214535521533,
+      "projetado": 224923.49902738185,
       "meta": 247000,
-      "meta_dia": 17048.25724152
+      "meta_dia": 14170.029051899997
     },
     "industrializado": {
       "meta": 61750,
-      "real": 33513.52,
-      "participacao_pct": 0.20718216171656145,
-      "margem_pct": 0.26324775068390305,
+      "real": 35316.28,
+      "participacao_pct": 0.18556274466057798,
+      "margem_pct": 0.2625978343387242,
       "premio": 0
     },
     "thermo": {
       "meta": 7410,
-      "real": 6034.66,
-      "participacao_pct": 0.03730655281881655,
-      "margem_pct": 0.19672003567790072,
-      "premio": 120.6932
+      "real": 6379.02,
+      "participacao_pct": 0.03351735968354312,
+      "margem_pct": 0.19453019147643372,
+      "premio": 127.58040000000001
     },
-    "recompra_pct": 0.2602739726027397,
-    "media_pedidos": 7.333333333333333,
+    "recompra_pct": 0.3411764705882353,
+    "media_pedidos": 8.454545454545455,
     "sku": {
       "meta": 120,
-      "real": 115
+      "real": 116
     },
     "positivacao_dia15": {
       "resultado": 64,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 50,
+      "resultado": 68,
       "premio": 0
     }
   },
@@ -574,13 +574,13 @@
     "pilares": {
       "positivacao": {
         "meta": 97,
-        "real": 97,
-        "pct": 1
+        "real": 98,
+        "pct": 1.0103092783505154
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.290095016944246,
-        "pct": 0.9564276277777624
+        "real": 12.377818414853328,
+        "pct": 0.9632543513504536
       },
       "mix": {
         "meta": 2.5,
@@ -589,33 +589,33 @@
       },
       "financeiro": {
         "meta": 260000,
-        "real": 169494.956796,
-        "pct": 0.6519036799846154
+        "real": 175457.936796,
+        "pct": 0.6748382184461538
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.8071188418857145,
-      "projetado": 209850.89889028575,
+      "pct": 0.7975360763454545,
+      "projetado": 207359.3798498182,
       "meta": 260000,
-      "meta_dia": 18101.0086408
+      "meta_dia": 21135.515801
     },
     "industrializado": {
       "meta": 65000,
-      "real": 36877.23,
-      "participacao_pct": 0.21757125224902435,
-      "margem_pct": 0.24262675248113816,
+      "real": 42639.61,
+      "participacao_pct": 0.243018986650777,
+      "margem_pct": 0.23260570353715715,
       "premio": 0
     },
     "thermo": {
       "meta": 7800,
       "real": 4352.18,
-      "participacao_pct": 0.02567734215973268,
+      "participacao_pct": 0.024804691537323603,
       "margem_pct": 0.18776277454700863,
       "premio": 0
     },
-    "recompra_pct": 0.41237113402061853,
-    "media_pedidos": 10.238095238095237,
+    "recompra_pct": 0.40816326530612246,
+    "media_pedidos": 10.136363636363637,
     "sku": {
       "meta": 120,
       "real": 77
@@ -625,7 +625,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 68,
+      "resultado": 69,
       "premio": 0
     }
   },
@@ -642,8 +642,8 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.840222772173227,
-        "pct": 0.9992391262391617
+        "real": 12.951374720845443,
+        "pct": 1.0078890833342757
       },
       "mix": {
         "meta": 2.5,
@@ -652,33 +652,33 @@
       },
       "financeiro": {
         "meta": 250000,
-        "real": 208728.1294,
-        "pct": 0.8349125176000001
+        "real": 220236.5094,
+        "pct": 0.8809460376
       }
     },
-    "pilares_atingidos": 2,
+    "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.0337012122666667,
-      "projetado": 258425.30306666667,
+      "pct": 1.0411180444363637,
+      "projetado": 260279.5111090909,
       "meta": 250000,
-      "meta_dia": 8254.374119999999
+      "meta_dia": 7440.8726499999975
     },
     "industrializado": {
       "meta": 62500,
-      "real": 23812.05,
-      "participacao_pct": 0.11408165285842876,
-      "margem_pct": 0.2601302582096039,
+      "real": 26402.91,
+      "participacao_pct": 0.11988434647793232,
+      "margem_pct": 0.2623369066212778,
       "premio": 0
     },
     "thermo": {
       "meta": 7500,
-      "real": 5388.57,
-      "participacao_pct": 0.0258162137297437,
-      "margem_pct": 0.18194414694362315,
+      "real": 5433.71,
+      "participacao_pct": 0.02467215819394929,
+      "margem_pct": 0.1819331957163706,
       "premio": 0
     },
-    "recompra_pct": 0.3402061855670103,
-    "media_pedidos": 12.714285714285714,
+    "recompra_pct": 0.31958762886597936,
+    "media_pedidos": 12.818181818181818,
     "sku": {
       "meta": 120,
       "real": 105
@@ -688,7 +688,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 68,
+      "resultado": 71,
       "premio": 0
     }
   },
@@ -705,43 +705,43 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.182820741781264,
-        "pct": 0.948079435158075
+        "real": 12.23341839910453,
+        "pct": 0.952016996039263
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.64,
-        "pct": 1.056
+        "real": 2.69,
+        "pct": 1.076
       },
       "financeiro": {
         "meta": 450000,
-        "real": 404060.40956,
-        "pct": 0.8979120212444445
+        "real": 441881.18956,
+        "pct": 0.9819581990222223
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 1.111700597731217,
-      "projetado": 500265.26897904766,
+      "pct": 1.160496053389899,
+      "projetado": 522223.22402545455,
       "meta": 450000,
-      "meta_dia": 9187.918088
+      "meta_dia": 2029.702609999993
     },
     "industrializado": {
       "meta": 112500,
-      "real": 51889.11,
-      "participacao_pct": 0.12841918874582253,
-      "margem_pct": 0.27361909748307506,
+      "real": 56086.04,
+      "participacao_pct": 0.1269256110581382,
+      "margem_pct": 0.27204384822676014,
       "premio": 0
     },
     "thermo": {
       "meta": 13500,
-      "real": 6906.56,
-      "participacao_pct": 0.017092889668455447,
-      "margem_pct": 0.1800479896318862,
+      "real": 7292.24,
+      "participacao_pct": 0.016502716504545475,
+      "margem_pct": 0.1818101468421226,
       "premio": 0
     },
-    "recompra_pct": 0.3673469387755102,
-    "media_pedidos": 13.80952380952381,
+    "recompra_pct": 0.35714285714285715,
+    "media_pedidos": 14,
     "sku": {
       "meta": 120,
       "real": 105
@@ -751,7 +751,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 48,
+      "resultado": 50,
       "premio": 0
     }
   },
@@ -768,53 +768,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 13.231948150878807,
-        "pct": 1.0178421654522158
+        "real": 13.342090940159974,
+        "pct": 1.0263146877046134
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.6,
-        "pct": 1.04
+        "real": 2.62,
+        "pct": 1.048
       },
       "financeiro": {
         "meta": 210000,
-        "real": 147400.29,
-        "pct": 0.7019061428571429
+        "real": 152515.64,
+        "pct": 0.7262649523809525
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.8690266530612245,
-      "projetado": 182495.59714285715,
+      "pct": 0.8583131255411256,
+      "projetado": 180245.75636363638,
       "meta": 210000,
-      "meta_dia": 12519.942
+      "meta_dia": 14371.089999999997
     },
     "industrializado": {
       "meta": 52500,
-      "real": 38819.56,
-      "participacao_pct": 0.2633614899943548,
-      "margem_pct": 0.22346809768065373,
-      "premio": 388.1956
+      "real": 40320.4,
+      "participacao_pct": 0.2643689525874199,
+      "margem_pct": 0.22489082874177843,
+      "premio": 403.204
     },
     "thermo": {
       "meta": 6300,
-      "real": 6754.22,
-      "participacao_pct": 0.04582229790728363,
-      "margem_pct": 0.1625407775772776,
-      "premio": 135.08440000000002
+      "real": 7236.93,
+      "participacao_pct": 0.04745041229869933,
+      "margem_pct": 0.16227845857290316,
+      "premio": 144.73860000000002
     },
     "recompra_pct": 0.3805309734513274,
-    "media_pedidos": 13.333333333333334,
+    "media_pedidos": 13.227272727272727,
     "sku": {
       "meta": 120,
-      "real": 92
+      "real": 93
     },
     "positivacao_dia15": {
       "resultado": 92,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 80,
+      "resultado": 82,
       "premio": 0
     }
   },
@@ -826,48 +826,48 @@
     "pilares": {
       "positivacao": {
         "meta": 64,
-        "real": 53,
-        "pct": 0.828125
+        "real": 55,
+        "pct": 0.859375
       },
       "margem": {
         "meta": 13,
-        "real": 13.148269589273108,
-        "pct": 1.0114053530210083
+        "real": 13.39342826687561,
+        "pct": 1.0302637128365855
       },
       "mix": {
         "meta": 2.6,
-        "real": 2.92,
-        "pct": 1.123076923076923
+        "real": 2.94,
+        "pct": 1.1307692307692307
       },
       "financeiro": {
         "meta": 260000,
-        "real": 177625.49002,
-        "pct": 0.6831749616153846
+        "real": 192055.96002,
+        "pct": 0.7386767693076923
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.8458356667619047,
-      "projetado": 219917.27335809523,
+      "pct": 0.8729816364545455,
+      "projetado": 226975.22547818185,
       "meta": 260000,
-      "meta_dia": 16474.901996
+      "meta_dia": 16986.009995
     },
     "industrializado": {
       "meta": 65000,
-      "real": 36573.36,
-      "participacao_pct": 0.20590152908730594,
-      "margem_pct": 0.24236412558758616,
+      "real": 43146.66,
+      "participacao_pct": 0.2246567094065025,
+      "margem_pct": 0.2376485581456363,
       "premio": 0
     },
     "thermo": {
       "meta": 7800,
-      "real": 4143.74,
-      "participacao_pct": 0.023328521145998975,
-      "margem_pct": 0.04991692096897965,
+      "real": 4917.28,
+      "participacao_pct": 0.02560337101482262,
+      "margem_pct": 0.06648615894478246,
       "premio": 0
     },
-    "recompra_pct": 0.3018867924528302,
-    "media_pedidos": 7.761904761904762,
+    "recompra_pct": 0.3090909090909091,
+    "media_pedidos": 7.954545454545454,
     "sku": {
       "meta": 120,
       "real": 91
@@ -877,7 +877,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 33,
+      "resultado": 39,
       "premio": 0
     }
   },
@@ -894,8 +894,8 @@
       },
       "margem": {
         "meta": 13.5,
-        "real": 13.086702599548497,
-        "pct": 0.9693853777443331
+        "real": 13.114030999240688,
+        "pct": 0.9714097036474584
       },
       "mix": {
         "meta": 2.5,
@@ -904,43 +904,43 @@
       },
       "financeiro": {
         "meta": 190000,
-        "real": 67757.092184,
-        "pct": 0.35661627465263157
+        "real": 72280.842184,
+        "pct": 0.3804254851789473
       }
     },
     "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.44152491147468664,
-      "projetado": 83889.73318019047,
+      "pct": 0.4495937552114832,
+      "projetado": 85422.81349018181,
       "meta": 190000,
-      "meta_dia": 24448.5815632
+      "meta_dia": 29429.789454
     },
     "industrializado": {
       "meta": 47500,
-      "real": 8494.41,
-      "participacao_pct": 0.12536562190320574,
-      "margem_pct": 0.24864679324402747,
+      "real": 8670.4,
+      "participacao_pct": 0.11995433005509819,
+      "margem_pct": 0.24983969004890202,
       "premio": 0
     },
     "thermo": {
       "meta": 5700,
-      "real": 1859.87,
-      "participacao_pct": 0.027449082303434288,
-      "margem_pct": 0.18810517490792364,
+      "real": 1990.96,
+      "participacao_pct": 0.027544781436438723,
+      "margem_pct": 0.18763235266203243,
       "premio": 0
     },
-    "recompra_pct": 0.38636363636363635,
-    "media_pedidos": 4.904761904761905,
+    "recompra_pct": 0.36363636363636365,
+    "media_pedidos": 5,
     "sku": {
       "meta": 120,
-      "real": 68
+      "real": 69
     },
     "positivacao_dia15": {
       "resultado": 32,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 30,
+      "resultado": 31,
       "premio": 0
     }
   },
@@ -952,13 +952,13 @@
     "pilares": {
       "positivacao": {
         "meta": 75,
-        "real": 51,
-        "pct": 0.68
+        "real": 52,
+        "pct": 0.6933333333333334
       },
       "margem": {
         "meta": 13.5,
-        "real": 14.257765350707446,
-        "pct": 1.05613076671907
+        "real": 14.318352388991338,
+        "pct": 1.0606186954808399
       },
       "mix": {
         "meta": 2.5,
@@ -967,43 +967,43 @@
       },
       "financeiro": {
         "meta": 190000,
-        "real": 69938.10994,
-        "pct": 0.3680953154736842
+        "real": 73473.30994,
+        "pct": 0.38670163126315793
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.4557370572531328,
-      "projetado": 86590.04087809523,
+      "pct": 0.45701101876555034,
+      "projetado": 86832.09356545456,
       "meta": 190000,
-      "meta_dia": 24012.378012
+      "meta_dia": 29131.672515
     },
     "industrializado": {
       "meta": 47500,
-      "real": 16558.19,
-      "participacao_pct": 0.23675489678238795,
-      "margem_pct": 0.2339258883609862,
+      "real": 17711.97,
+      "participacao_pct": 0.24106672224871867,
+      "margem_pct": 0.23349486640955253,
       "premio": 0
     },
     "thermo": {
       "meta": 5700,
       "real": 1118.05,
-      "participacao_pct": 0.015986277023488003,
+      "participacao_pct": 0.015217090408925708,
       "margem_pct": 0.2261251299530432,
       "premio": 0
     },
-    "recompra_pct": 0.37254901960784315,
-    "media_pedidos": 5.9523809523809526,
+    "recompra_pct": 0.36538461538461536,
+    "media_pedidos": 6.045454545454546,
     "sku": {
       "meta": 120,
-      "real": 69
+      "real": 70
     },
     "positivacao_dia15": {
       "resultado": 42,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 33,
+      "resultado": 34,
       "premio": 0
     }
   },
@@ -1020,53 +1020,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.024078593115798,
-        "pct": 0.924929122547369
+        "real": 12.246453598668396,
+        "pct": 0.9420348922052612
       },
       "mix": {
         "meta": 2.65,
-        "real": 2.62,
-        "pct": 0.988679245283019
+        "real": 2.65,
+        "pct": 1
       },
       "financeiro": {
         "meta": 300000,
-        "real": 224910.890024,
-        "pct": 0.7497029667466666
+        "real": 244675.360024,
+        "pct": 0.8155845334133334
       }
     },
-    "pilares_atingidos": 1,
+    "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.9282036731149206,
-      "projetado": 278461.1019344762,
+      "pct": 0.9638726303975758,
+      "projetado": 289161.7891192727,
       "meta": 300000,
-      "meta_dia": 15017.821995200002
+      "meta_dia": 13831.159994000001
     },
     "industrializado": {
       "meta": 75000,
-      "real": 52076.52,
-      "participacao_pct": 0.23154290125499466,
-      "margem_pct": 0.21632962233843575,
+      "real": 53613.95,
+      "participacao_pct": 0.21912280008391957,
+      "margem_pct": 0.2180415151709583,
       "premio": 0
     },
     "thermo": {
       "meta": 9000,
-      "real": 11500.51,
-      "participacao_pct": 0.05113362896199821,
-      "margem_pct": 0.12990283122331092,
+      "real": 12164.51,
+      "participacao_pct": 0.049716939207964356,
+      "margem_pct": 0.13266722475331938,
       "premio": 0
     },
-    "recompra_pct": 0.25555555555555554,
-    "media_pedidos": 15.619047619047619,
+    "recompra_pct": 0.23333333333333334,
+    "media_pedidos": 15.772727272727273,
     "sku": {
       "meta": 120,
-      "real": 98
+      "real": 100
     },
     "positivacao_dia15": {
       "resultado": 87,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 60,
+      "resultado": 63,
       "premio": 0
     }
   },
@@ -1083,53 +1083,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.795087594561632,
-        "pct": 0.9842375072739717
+        "real": 12.955992456264083,
+        "pct": 0.9966148043280063
       },
       "mix": {
         "meta": 3,
-        "real": 3.18,
-        "pct": 1.06
+        "real": 3.23,
+        "pct": 1.0766666666666667
       },
       "financeiro": {
         "meta": 480000,
-        "real": 405318.77366,
-        "pct": 0.8444141117916667
+        "real": 428860.15566,
+        "pct": 0.893458657625
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 1.0454650907896825,
-      "projetado": 501823.2435790476,
+      "pct": 1.055905686284091,
+      "projetado": 506834.72941636364,
       "meta": 480000,
-      "meta_dia": 14936.245267999999
+      "meta_dia": 12784.961085000003
     },
     "industrializado": {
       "meta": 120000,
-      "real": 75610.69,
-      "participacao_pct": 0.18654623203667767,
-      "margem_pct": 0.21718310401135082,
+      "real": 82944.06,
+      "participacao_pct": 0.19340584315265227,
+      "margem_pct": 0.2197796608465995,
       "premio": 0
     },
     "thermo": {
       "meta": 14400,
-      "real": 15154.48,
-      "participacao_pct": 0.0373890403919762,
-      "margem_pct": 0.1180460136587992,
+      "real": 17145.48,
+      "participacao_pct": 0.03997918616061158,
+      "margem_pct": 0.12233535264944459,
       "premio": 0
     },
-    "recompra_pct": 0.27184466019417475,
-    "media_pedidos": 18.19047619047619,
+    "recompra_pct": 0.2621359223300971,
+    "media_pedidos": 18.318181818181817,
     "sku": {
       "meta": 120,
-      "real": 113
+      "real": 114
     },
     "positivacao_dia15": {
       "resultado": 97,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 70,
+      "resultado": 76,
       "premio": 0
     }
   },
@@ -1141,58 +1141,58 @@
     "pilares": {
       "positivacao": {
         "meta": 97,
-        "real": 92,
-        "pct": 0.9484536082474226
+        "real": 97,
+        "pct": 1
       },
       "margem": {
         "meta": 13,
-        "real": 11.822993533220911,
-        "pct": 0.9094610410169932
+        "real": 12.176276271924765,
+        "pct": 0.936636636301905
       },
       "mix": {
         "meta": 2.8,
-        "real": 3.38,
-        "pct": 1.207142857142857
+        "real": 3.37,
+        "pct": 1.2035714285714287
       },
       "financeiro": {
         "meta": 380000,
-        "real": 352530.66,
-        "pct": 0.9277122631578947
+        "real": 414643,
+        "pct": 1.0911657894736841
       }
     },
-    "pilares_atingidos": 1,
+    "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 1.1485961353383458,
-      "projetado": 436466.53142857144,
+      "pct": 1.2895595693779907,
+      "projetado": 490032.6363636364,
       "meta": 380000,
-      "meta_dia": 5493.868000000005
+      "meta_dia": 8660.75
     },
     "industrializado": {
       "meta": 95000,
-      "real": 56886.26,
-      "participacao_pct": 0.16136542563418457,
-      "margem_pct": 0.23118548056490265,
+      "real": 71099.73,
+      "participacao_pct": 0.17147215797686202,
+      "margem_pct": 0.2252304854412246,
       "premio": 0
     },
     "thermo": {
       "meta": 11400,
-      "real": 9559.64,
-      "participacao_pct": 0.027117187480941374,
-      "margem_pct": 0.15669078543961898,
+      "real": 11007.63,
+      "participacao_pct": 0.026547246667615272,
+      "margem_pct": 0.16423143434726625,
       "premio": 0
     },
-    "recompra_pct": 0.5217391304347826,
-    "media_pedidos": 8.619047619047619,
+    "recompra_pct": 0.4020618556701031,
+    "media_pedidos": 10.409090909090908,
     "sku": {
       "meta": 120,
-      "real": 103
+      "real": 106
     },
     "positivacao_dia15": {
       "resultado": 63,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 61,
+      "resultado": 78,
       "premio": 0
     }
   },
@@ -1209,43 +1209,43 @@
       },
       "margem": {
         "meta": 13,
-        "real": 13.136070683733381,
-        "pct": 1.0104669756717986
+        "real": 13.112185379273114,
+        "pct": 1.0086296445594702
       },
       "mix": {
         "meta": 3,
-        "real": 3.26,
-        "pct": 1.0866666666666667
+        "real": 3.31,
+        "pct": 1.1033333333333333
       },
       "financeiro": {
         "meta": 300000,
-        "real": 266586.37,
-        "pct": 0.8886212333333333
+        "real": 271616.01,
+        "pct": 0.9053867
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.1001977174603175,
-      "projetado": 330059.31523809524,
+      "pct": 1.0700024636363639,
+      "projetado": 321000.73909090913,
       "meta": 300000,
-      "meta_dia": 6682.726000000001
+      "meta_dia": 7095.997499999998
     },
     "industrializado": {
       "meta": 75000,
-      "real": 68851.03,
-      "participacao_pct": 0.2582691305635768,
-      "margem_pct": 0.22078442601512274,
-      "premio": 688.5103
+      "real": 71114.29,
+      "participacao_pct": 0.2618192130868869,
+      "margem_pct": 0.2225425112885187,
+      "premio": 711.1428999999999
     },
     "thermo": {
       "meta": 9000,
-      "real": 9504.63,
-      "participacao_pct": 0.035653098093499674,
-      "margem_pct": 0.158540661829866,
-      "premio": 190.09259999999998
+      "real": 10436.33,
+      "participacao_pct": 0.03842310326258014,
+      "margem_pct": 0.15851491941937443,
+      "premio": 208.7266
     },
-    "recompra_pct": 0.43157894736842106,
-    "media_pedidos": 9.761904761904763,
+    "recompra_pct": 0.42105263157894735,
+    "media_pedidos": 9.454545454545455,
     "sku": {
       "meta": 120,
       "real": 106
@@ -1272,53 +1272,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.657119316186114,
-        "pct": 0.9736245627835471
+        "real": 12.690172065364349,
+        "pct": 0.9761670819511038
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.49,
-        "pct": 0.9960000000000001
+        "real": 2.53,
+        "pct": 1.012
       },
       "financeiro": {
         "meta": 330000,
-        "real": 242139.3236,
-        "pct": 0.7337555260606061
+        "real": 261159.1936,
+        "pct": 0.7913914957575757
       }
     },
-    "pilares_atingidos": 1,
+    "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.9084592227417027,
-      "projetado": 299791.5435047619,
+      "pct": 0.9352808586225895,
+      "projetado": 308642.6833454545,
       "meta": 330000,
-      "meta_dia": 17572.13528
+      "meta_dia": 17210.2016
     },
     "industrializado": {
       "meta": 82500,
-      "real": 49540.23,
-      "participacao_pct": 0.20459390595241592,
-      "margem_pct": 0.22944292186370557,
+      "real": 53941.63,
+      "participacao_pct": 0.20654693122777354,
+      "margem_pct": 0.2278544567414815,
       "premio": 0
     },
     "thermo": {
       "meta": 9900,
-      "real": 23494.5,
-      "participacao_pct": 0.09702884955114328,
-      "margem_pct": 0.1425158566367447,
+      "real": 24230.41,
+      "participacao_pct": 0.09278022981305453,
+      "margem_pct": 0.1435469520388635,
       "premio": 0
     },
-    "recompra_pct": 0.35106382978723405,
-    "media_pedidos": 15.285714285714286,
+    "recompra_pct": 0.32978723404255317,
+    "media_pedidos": 15.045454545454545,
     "sku": {
       "meta": 120,
-      "real": 84
+      "real": 89
     },
     "positivacao_dia15": {
       "resultado": 77,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 73,
+      "resultado": 74,
       "premio": 0
     }
   },
@@ -1335,53 +1335,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.108856992319032,
-        "pct": 0.9314505378706948
+        "real": 12.377710674645403,
+        "pct": 0.9521315903573387
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.44,
-        "pct": 0.976
+        "real": 2.46,
+        "pct": 0.984
       },
       "financeiro": {
         "meta": 290000,
-        "real": 217128.88,
-        "pct": 0.748720275862069
+        "real": 230395.7,
+        "pct": 0.7944679310344828
       }
     },
     "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.9269870082101807,
-      "projetado": 268826.2323809524,
+      "pct": 0.938916645768025,
+      "projetado": 272285.82727272727,
       "meta": 290000,
-      "meta_dia": 14574.223999999998
+      "meta_dia": 14901.074999999997
     },
     "industrializado": {
       "meta": 72500,
-      "real": 35506.43,
-      "participacao_pct": 0.16352697992086543,
-      "margem_pct": 0.2230557110810634,
+      "real": 40574.59,
+      "participacao_pct": 0.17610827806248117,
+      "margem_pct": 0.22419625926472694,
       "premio": 0
     },
     "thermo": {
       "meta": 8700,
-      "real": 7493.02,
-      "participacao_pct": 0.03450955027263071,
-      "margem_pct": 0.12455044192274946,
+      "real": 7651.44,
+      "participacao_pct": 0.03320999480459053,
+      "margem_pct": 0.1253620095919199,
       "premio": 0
     },
-    "recompra_pct": 0.3333333333333333,
-    "media_pedidos": 11.380952380952381,
+    "recompra_pct": 0.30666666666666664,
+    "media_pedidos": 11.454545454545455,
     "sku": {
       "meta": 120,
-      "real": 104
+      "real": 107
     },
     "positivacao_dia15": {
       "resultado": 66,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 48,
+      "resultado": 49,
       "premio": 0
     }
   },
@@ -1398,53 +1398,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 13.330378643927842,
-        "pct": 1.0254137418406033
+        "real": 13.276674038557891,
+        "pct": 1.021282618350607
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.49,
-        "pct": 0.9960000000000001
+        "real": 2.5,
+        "pct": 1
       },
       "financeiro": {
         "meta": 200000,
-        "real": 130129.093,
-        "pct": 0.650645465
+        "real": 136387.593,
+        "pct": 0.6819379649999999
       }
     },
-    "pilares_atingidos": 2,
+    "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 0.8055610519047618,
-      "projetado": 161112.21038095237,
+      "pct": 0.8059266859090909,
+      "projetado": 161185.33718181818,
       "meta": 200000,
-      "meta_dia": 13974.181400000001
+      "meta_dia": 15903.101750000002
     },
     "industrializado": {
       "meta": 50000,
-      "real": 26019.67,
-      "participacao_pct": 0.19995274999726617,
-      "margem_pct": 0.22128574908136805,
+      "real": 27087.08,
+      "participacao_pct": 0.19860369557222118,
+      "margem_pct": 0.22242673376384609,
       "premio": 0
     },
     "thermo": {
       "meta": 6000,
-      "real": 5418.52,
-      "participacao_pct": 0.04163957401900896,
-      "margem_pct": 0.1433014491159949,
+      "real": 5732.76,
+      "participacao_pct": 0.04203285558386532,
+      "margem_pct": 0.1444795061603835,
       "premio": 0
     },
-    "recompra_pct": 0.3333333333333333,
-    "media_pedidos": 11.761904761904763,
+    "recompra_pct": 0.3225806451612903,
+    "media_pedidos": 11.727272727272727,
     "sku": {
       "meta": 120,
-      "real": 93
+      "real": 96
     },
     "positivacao_dia15": {
       "resultado": 85,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 61,
+      "resultado": 64,
       "premio": 0
     }
   },
@@ -1461,43 +1461,43 @@
       },
       "margem": {
         "meta": 13.3,
-        "real": 12.092313220884732,
-        "pct": 0.909196482773288
+        "real": 12.02657676485177,
+        "pct": 0.904253892094118
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.35,
-        "pct": 0.9791666666666667
+        "real": 2.34,
+        "pct": 0.975
       },
       "financeiro": {
         "meta": 265000,
-        "real": 157717.38536,
-        "pct": 0.5951599447547169
+        "real": 160246.12536,
+        "pct": 0.6047023598490566
       }
     },
     "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.7368646935058399,
-      "projetado": 195269.1437790476,
+      "pct": 0.714648243457976,
+      "projetado": 189381.78451636364,
       "meta": 265000,
-      "meta_dia": 21456.522928000002
+      "meta_dia": 26188.46866
     },
     "industrializado": {
       "meta": 66250,
-      "real": 36938.48,
-      "participacao_pct": 0.23420677381688498,
-      "margem_pct": 0.2506396363846049,
+      "real": 37256.36,
+      "participacao_pct": 0.23249460738162586,
+      "margem_pct": 0.2503408609536734,
       "premio": 0
     },
     "thermo": {
       "meta": 7950,
       "real": 2989.22,
-      "participacao_pct": 0.018953015187114057,
+      "participacao_pct": 0.018653929967321112,
       "margem_pct": 0.15625615650637958,
       "premio": 0
     },
     "recompra_pct": 0.4050632911392405,
-    "media_pedidos": 10.857142857142858,
+    "media_pedidos": 10.636363636363637,
     "sku": {
       "meta": 120,
       "real": 72
@@ -1524,8 +1524,8 @@
       },
       "margem": {
         "meta": 13.5,
-        "real": 13.81937992520822,
-        "pct": 1.023657772237646
+        "real": 13.62171392422541,
+        "pct": 1.0090158462389194
       },
       "mix": {
         "meta": 2.4,
@@ -1534,36 +1534,36 @@
       },
       "financeiro": {
         "meta": 265000,
-        "real": 185375.675985824,
-        "pct": 0.6995308527766944
+        "real": 195975.755985824,
+        "pct": 0.7395311546634868
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.8660858177235263,
-      "projetado": 229512.74169673448,
+      "pct": 0.8739913646023026,
+      "projetado": 231607.7116196102,
       "meta": 265000,
-      "meta_dia": 15924.8648028352
+      "meta_dia": 17256.061003543997
     },
     "industrializado": {
       "meta": 66250,
-      "real": 16247.29,
-      "participacao_pct": 0.08764520972666587,
-      "margem_pct": 0.19144367077832677,
+      "real": 16488.18,
+      "participacao_pct": 0.08413377418578592,
+      "margem_pct": 0.19120769796302567,
       "premio": 0
     },
     "thermo": {
       "meta": 7950,
       "real": 1318.8,
-      "participacao_pct": 0.007114201973838525,
+      "participacao_pct": 0.00672940381510964,
       "margem_pct": 0.15237264933575967,
       "premio": 0
     },
     "recompra_pct": 0.5142857142857142,
-    "media_pedidos": 11.095238095238095,
+    "media_pedidos": 11.090909090909092,
     "sku": {
       "meta": 120,
-      "real": 66
+      "real": 67
     },
     "positivacao_dia15": {
       "resultado": 54,
@@ -1587,53 +1587,53 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 14.121944186222445,
-        "pct": 1.0989839833636144
+        "real": 14.168961093130516,
+        "pct": 1.102642886624943
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.38,
-        "pct": 0.9916666666666667
+        "real": 2.44,
+        "pct": 1.0166666666666666
       },
       "financeiro": {
         "meta": 225000,
-        "real": 194328.48038112,
-        "pct": 0.8636821350272
+        "real": 201746.93038112,
+        "pct": 0.8966530239160889
       }
     },
-    "pilares_atingidos": 2,
+    "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.0693207386051047,
-      "projetado": 240597.16618614856,
+      "pct": 1.059680846446287,
+      "projetado": 238428.19045041458,
       "meta": 225000,
-      "meta_dia": 6134.303923776
+      "meta_dia": 5813.267404719998
     },
     "industrializado": {
       "meta": 56250,
-      "real": 42128.52,
-      "participacao_pct": 0.21679025080305725,
-      "margem_pct": 0.2606362031137101,
+      "real": 43622.5,
+      "participacao_pct": 0.21622385985052045,
+      "margem_pct": 0.26048774656198065,
       "premio": 0
     },
     "thermo": {
       "meta": 6750,
-      "real": 3296.45,
-      "participacao_pct": 0.016963288106483166,
-      "margem_pct": 0.2156944374657585,
+      "real": 3580.56,
+      "participacao_pct": 0.0177477793254944,
+      "margem_pct": 0.21575076520544267,
       "premio": 0
     },
-    "recompra_pct": 0.4411764705882353,
-    "media_pedidos": 7.904761904761905,
+    "recompra_pct": 0.4117647058823529,
+    "media_pedidos": 8,
     "sku": {
       "meta": 120,
-      "real": 69
+      "real": 76
     },
     "positivacao_dia15": {
       "resultado": 50,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 45,
+      "resultado": 47,
       "premio": 0
     }
   },
@@ -1650,53 +1650,53 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.624604108228658,
-        "pct": 0.982459463675382
+        "real": 12.675706081717465,
+        "pct": 0.9864362709507755
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.45,
-        "pct": 1.0208333333333335
+        "real": 2.46,
+        "pct": 1.0250000000000001
       },
       "financeiro": {
         "meta": 245000,
-        "real": 183156.48,
-        "pct": 0.7475774693877552
+        "real": 189898.94,
+        "pct": 0.7750977142857143
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.9255721049562683,
-      "projetado": 226765.16571428574,
+      "pct": 0.9160245714285715,
+      "projetado": 224426.02000000002,
       "meta": 245000,
-      "meta_dia": 12368.703999999998
+      "meta_dia": 13775.265
     },
     "industrializado": {
       "meta": 61250,
-      "real": 18488.25,
-      "participacao_pct": 0.10094237452041008,
-      "margem_pct": 0.20541639041012538,
+      "real": 19894.52,
+      "participacao_pct": 0.1047637232730209,
+      "margem_pct": 0.20078747429945537,
       "premio": 0
     },
     "thermo": {
       "meta": 7350,
-      "real": 2646.16,
-      "participacao_pct": 0.014447536882123961,
-      "margem_pct": 0.2126472968074492,
+      "real": 2815.52,
+      "participacao_pct": 0.01482641240651475,
+      "margem_pct": 0.2093409882082173,
       "premio": 0
     },
-    "recompra_pct": 0.32894736842105265,
-    "media_pedidos": 11.80952380952381,
+    "recompra_pct": 0.3157894736842105,
+    "media_pedidos": 11.772727272727273,
     "sku": {
       "meta": 120,
-      "real": 71
+      "real": 72
     },
     "positivacao_dia15": {
       "resultado": 74,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 43,
+      "resultado": 45,
       "premio": 0
     }
   },
@@ -1713,53 +1713,53 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 13.040369790842876,
-        "pct": 1.0148147697153989
+        "real": 12.790729722757574,
+        "pct": 0.9953875270628462
       },
       "mix": {
         "meta": 2.45,
-        "real": 2.34,
-        "pct": 0.9551020408163264
+        "real": 2.35,
+        "pct": 0.9591836734693877
       },
       "financeiro": {
         "meta": 270000,
-        "real": 184220.3129376,
-        "pct": 0.6822974553244445
+        "real": 194720.7329376,
+        "pct": 0.7211878997688889
       }
     },
-    "pilares_atingidos": 2,
+    "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.8447492304016931,
-      "projetado": 228082.29220845716,
+      "pct": 0.8523129724541415,
+      "projetado": 230124.5025626182,
       "meta": 270000,
-      "meta_dia": 17155.937412479998
+      "meta_dia": 18819.8167656
     },
     "industrializado": {
       "meta": 67500,
-      "real": 29421.78,
-      "participacao_pct": 0.15970974932588397,
-      "margem_pct": 0.2645894729278786,
+      "real": 30292.41,
+      "participacao_pct": 0.15556848797250303,
+      "margem_pct": 0.26348432927588133,
       "premio": 0
     },
     "thermo": {
       "meta": 8100,
-      "real": 3695.13,
-      "participacao_pct": 0.02005821150272192,
-      "margem_pct": 0.19024995484543175,
+      "real": 3869.09,
+      "participacao_pct": 0.01986994369644184,
+      "margem_pct": 0.18899122626354006,
       "premio": 0
     },
-    "recompra_pct": 0.39473684210526316,
-    "media_pedidos": 9.523809523809524,
+    "recompra_pct": 0.3815789473684211,
+    "media_pedidos": 9.454545454545455,
     "sku": {
       "meta": 120,
-      "real": 82
+      "real": 85
     },
     "positivacao_dia15": {
       "resultado": 75,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 37,
+      "resultado": 40,
       "premio": 0
     }
   },
@@ -1771,48 +1771,48 @@
     "pilares": {
       "positivacao": {
         "meta": 82,
-        "real": 78,
-        "pct": 0.9512195121951219
+        "real": 81,
+        "pct": 0.9878048780487805
       },
       "margem": {
         "meta": 12.85,
-        "real": 11.697202341325513,
-        "pct": 0.9102881199475107
+        "real": 11.758137932740615,
+        "pct": 0.9150301893183358
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.59,
-        "pct": 1.0791666666666666
+        "real": 2.58,
+        "pct": 1.0750000000000002
       },
       "financeiro": {
         "meta": 310000,
-        "real": 295511.518592,
-        "pct": 0.9532629632
+        "real": 300997.128592,
+        "pct": 0.9709584793290322
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 1.1802303353904762,
-      "projetado": 365871.4039710476,
+      "pct": 1.1474963846615835,
+      "projetado": 355723.8792450909,
       "meta": 310000,
-      "meta_dia": 2897.6962815999987
+      "meta_dia": 2250.7178520000016
     },
     "industrializado": {
       "meta": 77500,
-      "real": 49059.72,
-      "participacao_pct": 0.16601626980143078,
-      "margem_pct": 0.2255439158641754,
+      "real": 51018.07,
+      "participacao_pct": 0.16949686609520692,
+      "margem_pct": 0.22556835176242454,
       "premio": 0
     },
     "thermo": {
       "meta": 9300,
-      "real": 6128.96,
-      "participacao_pct": 0.020740172935397455,
-      "margem_pct": 0.12346329967498558,
+      "real": 6196.95,
+      "participacao_pct": 0.02058807015531345,
+      "margem_pct": 0.12362648866168033,
       "premio": 0
     },
-    "recompra_pct": 0.32051282051282054,
-    "media_pedidos": 13.095238095238095,
+    "recompra_pct": 0.3333333333333333,
+    "media_pedidos": 13.136363636363637,
     "sku": {
       "meta": 120,
       "real": 84
@@ -1822,7 +1822,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 49,
+      "resultado": 53,
       "premio": 0
     }
   },
@@ -1839,43 +1839,43 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 11.420074574017049,
-        "pct": 0.8887217567328443
+        "real": 11.425982788854942,
+        "pct": 0.8891815399887114
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.33,
-        "pct": 0.9708333333333334
+        "real": 2.34,
+        "pct": 0.975
       },
       "financeiro": {
         "meta": 215000,
-        "real": 148089.9318688,
-        "pct": 0.6887903807851162
+        "real": 156639.1718688,
+        "pct": 0.7285542877618605
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.8527880904958582,
-      "projetado": 183349.4394566095,
+      "pct": 0.8610187037185625,
+      "projetado": 185119.02129949094,
       "meta": 215000,
-      "meta_dia": 13382.013626240001
+      "meta_dia": 14590.207032799997
     },
     "industrializado": {
       "meta": 53750,
-      "real": 15533.49,
-      "participacao_pct": 0.1048922759567603,
-      "margem_pct": 0.22558310043654065,
+      "real": 16388.2,
+      "participacao_pct": 0.10462389327317598,
+      "margem_pct": 0.2254270830719665,
       "premio": 0
     },
     "thermo": {
       "meta": 6450,
-      "real": 3740.01,
-      "participacao_pct": 0.025254991698648734,
-      "margem_pct": 0.16959670736495355,
+      "real": 4529.27,
+      "participacao_pct": 0.028915308641912947,
+      "margem_pct": 0.16940914972876434,
       "premio": 0
     },
-    "recompra_pct": 0.3448275862068966,
-    "media_pedidos": 11.952380952380953,
+    "recompra_pct": 0.3333333333333333,
+    "media_pedidos": 11.818181818181818,
     "sku": {
       "meta": 120,
       "real": 80
@@ -1885,7 +1885,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 53,
+      "resultado": 54,
       "premio": 0
     }
   },
@@ -1902,43 +1902,43 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.664611364850687,
-        "pct": 0.9742008742192836
+        "real": 12.727607028411072,
+        "pct": 0.9790466944931594
       },
       "mix": {
         "meta": 2.15,
-        "real": 2.11,
-        "pct": 0.9813953488372092
+        "real": 2.1,
+        "pct": 0.9767441860465117
       },
       "financeiro": {
         "meta": 306000,
-        "real": 258698.225,
-        "pct": 0.8454190359477124
+        "real": 268336.055,
+        "pct": 0.8769152124183006
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 1.0467092826019297,
-      "projetado": 320293.0404761905,
+      "pct": 1.0363543419489007,
+      "projetado": 317124.42863636365,
       "meta": 306000,
-      "meta_dia": 9460.355
+      "meta_dia": 9415.986250000002
     },
     "industrializado": {
       "meta": 76500,
-      "real": 23579.47,
-      "participacao_pct": 0.09114662460478808,
-      "margem_pct": 0.19979721759649396,
+      "real": 24705.8,
+      "participacao_pct": 0.0920703704912111,
+      "margem_pct": 0.2004412979300407,
       "premio": 0
     },
     "thermo": {
       "meta": 9180,
-      "real": 9028.32,
-      "participacao_pct": 0.03489904115113275,
-      "margem_pct": 0.17826341327378736,
-      "premio": 180.5664
+      "real": 9641.52,
+      "participacao_pct": 0.0359307659941561,
+      "margem_pct": 0.17915638751234247,
+      "premio": 192.83040000000003
     },
     "recompra_pct": 0.10666666666666667,
-    "media_pedidos": 15.904761904761905,
+    "media_pedidos": 16,
     "sku": {
       "meta": 120,
       "real": 57
@@ -1965,8 +1965,8 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.91406309639349,
-        "pct": 0.9933894689533453
+        "real": 12.852116422426969,
+        "pct": 0.9886243401866899
       },
       "mix": {
         "meta": 2.15,
@@ -1975,33 +1975,33 @@
       },
       "financeiro": {
         "meta": 216000,
-        "real": 192038.1135765,
-        "pct": 0.8890653406319444
+        "real": 198882.6785765,
+        "pct": 0.9207531415578705
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 1.1007475645919311,
-      "projetado": 237761.47395185713,
+      "pct": 1.0881628036593014,
+      "projetado": 235043.1655904091,
       "meta": 216000,
-      "meta_dia": 4792.377284699998
+      "meta_dia": 4279.330355874998
     },
     "industrializado": {
       "meta": 54000,
-      "real": 9251.64,
-      "participacao_pct": 0.04817606165619061,
-      "margem_pct": 0.19432503776627713,
+      "real": 9660.7,
+      "participacao_pct": 0.04857486870725156,
+      "margem_pct": 0.19357505959195506,
       "premio": 0
     },
     "thermo": {
       "meta": 6480,
-      "real": 23990.81,
-      "participacao_pct": 0.12492733631463766,
-      "margem_pct": 0.16708709595716031,
-      "premio": 479.81620000000004
+      "real": 24852.27,
+      "participacao_pct": 0.12495944934913274,
+      "margem_pct": 0.1673186132518277,
+      "premio": 497.04540000000003
     },
-    "recompra_pct": 0.3939393939393939,
-    "media_pedidos": 8.904761904761905,
+    "recompra_pct": 0.3484848484848485,
+    "media_pedidos": 8.863636363636363,
     "sku": {
       "meta": 120,
       "real": 58
@@ -2011,7 +2011,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 33,
+      "resultado": 38,
       "premio": 0
     }
   },
@@ -2023,48 +2023,48 @@
     "pilares": {
       "positivacao": {
         "meta": 59,
-        "real": 55,
-        "pct": 0.9322033898305084
+        "real": 56,
+        "pct": 0.9491525423728814
       },
       "margem": {
         "meta": 13,
-        "real": 13.163255986338779,
-        "pct": 1.0125581527952907
+        "real": 12.88346394764142,
+        "pct": 0.9910356882801092
       },
       "mix": {
         "meta": 2.15,
-        "real": 1.87,
-        "pct": 0.8697674418604652
+        "real": 1.91,
+        "pct": 0.8883720930232558
       },
       "financeiro": {
         "meta": 180000,
-        "real": 113434.083,
-        "pct": 0.63018935
+        "real": 119887.743,
+        "pct": 0.6660430166666667
       }
     },
-    "pilares_atingidos": 1,
+    "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.7802344333333332,
-      "projetado": 140442.19799999997,
+      "pct": 0.787141746969697,
+      "projetado": 141685.51445454545,
       "meta": 180000,
-      "meta_dia": 13313.1834
+      "meta_dia": 15028.06425
     },
     "industrializado": {
       "meta": 45000,
-      "real": 10652.03,
-      "participacao_pct": 0.09390502147401325,
-      "margem_pct": 0.22664357911121166,
+      "real": 11598.41,
+      "participacao_pct": 0.0967439181835294,
+      "margem_pct": 0.22407926069176717,
       "premio": 0
     },
     "thermo": {
       "meta": 5400,
-      "real": 2377.02,
-      "participacao_pct": 0.020955077496417018,
-      "margem_pct": 0.20983974517673393,
+      "real": 2484.52,
+      "participacao_pct": 0.020723719855164843,
+      "margem_pct": 0.20916552536506047,
       "premio": 0
     },
-    "recompra_pct": 0.2,
-    "media_pedidos": 8.380952380952381,
+    "recompra_pct": 0.17857142857142858,
+    "media_pedidos": 8.409090909090908,
     "sku": {
       "meta": 120,
       "real": 68
@@ -2074,7 +2074,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 48,
+      "resultado": 50,
       "premio": 0
     }
   },
@@ -2086,48 +2086,48 @@
     "pilares": {
       "positivacao": {
         "meta": 42,
-        "real": 27,
-        "pct": 0.6428571428571429
+        "real": 28,
+        "pct": 0.6666666666666666
       },
       "margem": {
         "meta": 13,
-        "real": 15.050938223423545,
-        "pct": 1.157764478724888
+        "real": 15.070510558983884,
+        "pct": 1.1592700429987604
       },
       "mix": {
         "meta": 2.15,
-        "real": 2.43,
-        "pct": 1.130232558139535
+        "real": 2.4,
+        "pct": 1.1162790697674418
       },
       "financeiro": {
         "meta": 175000,
-        "real": 95496.65,
-        "pct": 0.5456951428571428
+        "real": 95726.91,
+        "pct": 0.5470109142857144
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.6756225578231292,
-      "projetado": 118233.94761904761,
+      "pct": 0.6464674441558441,
+      "projetado": 113131.80272727272,
       "meta": 175000,
-      "meta_dia": 15900.670000000002
+      "meta_dia": 19818.2725
     },
     "industrializado": {
       "meta": 43750,
-      "real": 5330.69,
-      "participacao_pct": 0.05582070156387685,
-      "margem_pct": 0.2312514560404,
+      "real": 5460.69,
+      "participacao_pct": 0.057044461165622076,
+      "margem_pct": 0.23247662551802054,
       "premio": 0
     },
     "thermo": {
       "meta": 5250,
       "real": 482.08,
-      "participacao_pct": 0.005048135196365527,
+      "participacao_pct": 0.005035992491557494,
       "margem_pct": 0.14596475066379017,
       "premio": 0
     },
-    "recompra_pct": 0.3333333333333333,
-    "media_pedidos": 3.619047619047619,
+    "recompra_pct": 0.35714285714285715,
+    "media_pedidos": 3.5454545454545454,
     "sku": {
       "meta": 120,
       "real": 59
@@ -2137,7 +2137,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 20,
+      "resultado": 21,
       "premio": 0
     }
   },
@@ -2154,8 +2154,8 @@
       },
       "margem": {
         "meta": 13,
-        "real": 13.945862880801878,
-        "pct": 1.072758683138606
+        "real": 13.938057855092268,
+        "pct": 1.0721582965455592
       },
       "mix": {
         "meta": 2.15,
@@ -2164,43 +2164,43 @@
       },
       "financeiro": {
         "meta": 206000,
-        "real": 201639.9993995,
-        "pct": 0.9788349485412621
+        "real": 209115.7993995,
+        "pct": 1.015125239803398
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.211890888670134,
-      "projetado": 249649.52306604764,
+      "pct": 1.1996934652221978,
+      "projetado": 247136.85383577275,
       "meta": 206000,
-      "meta_dia": 872.0001201000007
+      "meta_dia": 778.9498498750036
     },
     "industrializado": {
       "meta": 51500,
-      "real": 24594.42,
-      "participacao_pct": 0.12197193053582693,
-      "margem_pct": 0.2229687201405847,
+      "real": 25678.21,
+      "participacao_pct": 0.12279421293722388,
+      "margem_pct": 0.22485087928636774,
       "premio": 0
     },
     "thermo": {
       "meta": 6180,
-      "real": 4091.26,
-      "participacao_pct": 0.020289922694822948,
-      "margem_pct": 0.21161209015706656,
+      "real": 4442.38,
+      "participacao_pct": 0.021243636362038656,
+      "margem_pct": 0.2104642362247264,
       "premio": 0
     },
-    "recompra_pct": 0.3563218390804598,
-    "media_pedidos": 14.619047619047619,
+    "recompra_pct": 0.3448275862068966,
+    "media_pedidos": 14.545454545454545,
     "sku": {
       "meta": 120,
-      "real": 77
+      "real": 78
     },
     "positivacao_dia15": {
       "resultado": 87,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 49,
+      "resultado": 50,
       "premio": 0
     }
   },
@@ -2217,43 +2217,43 @@
       },
       "margem": {
         "meta": 13,
-        "real": 12.682195943998453,
-        "pct": 0.9755535341537271
+        "real": 12.70834165011497,
+        "pct": 0.9775647423165362
       },
       "mix": {
         "meta": 2.15,
-        "real": 2.1,
-        "pct": 0.9767441860465117
+        "real": 2.12,
+        "pct": 0.986046511627907
       },
       "financeiro": {
         "meta": 165000,
-        "real": 128668.59,
-        "pct": 0.7798096363636363
+        "real": 133599.6,
+        "pct": 0.8096945454545454
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.9654785974025973,
-      "projetado": 159303.96857142856,
+      "pct": 0.9569117355371901,
+      "projetado": 157890.43636363637,
       "meta": 165000,
-      "meta_dia": 7266.282000000001
+      "meta_dia": 7850.0999999999985
     },
     "industrializado": {
       "meta": 41250,
-      "real": 19427.22,
-      "participacao_pct": 0.1509864995023261,
-      "margem_pct": 0.21115332827857003,
+      "real": 20230.74,
+      "participacao_pct": 0.15142814798846704,
+      "margem_pct": 0.21270942685240385,
       "premio": 0
     },
     "thermo": {
       "meta": 4950,
-      "real": 10982.16,
-      "participacao_pct": 0.08535229926744359,
-      "margem_pct": 0.19302436226607508,
-      "premio": 219.6432
+      "real": 11501.16,
+      "participacao_pct": 0.08608678469097213,
+      "margem_pct": 0.19218812209411923,
+      "premio": 230.0232
     },
     "recompra_pct": 0.09433962264150944,
-    "media_pedidos": 11.904761904761905,
+    "media_pedidos": 11.727272727272727,
     "sku": {
       "meta": 120,
       "real": 58
@@ -2263,7 +2263,7 @@
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 41,
+      "resultado": 42,
       "premio": 0
     }
   },
@@ -2275,58 +2275,58 @@
     "pilares": {
       "positivacao": {
         "meta": 61,
-        "real": 64,
-        "pct": 1.0491803278688525
+        "real": 65,
+        "pct": 1.0655737704918034
       },
       "margem": {
         "meta": 13,
-        "real": 13.343626302627404,
-        "pct": 1.0264327925098002
+        "real": 13.044164825808004,
+        "pct": 1.0033972942929235
       },
       "mix": {
         "meta": 2.15,
-        "real": 2.3,
-        "pct": 1.069767441860465
+        "real": 2.29,
+        "pct": 1.0651162790697675
       },
       "financeiro": {
         "meta": 216000,
-        "real": 171848.68,
-        "pct": 0.7955957407407407
+        "real": 183207.04,
+        "pct": 0.8481807407407408
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 0.9850232980599647,
-      "projetado": 212765.03238095238,
+      "pct": 1.0023954208754209,
+      "projetado": 216517.41090909092,
       "meta": 216000,
-      "meta_dia": 8830.264000000001
+      "meta_dia": 8198.239999999998
     },
     "industrializado": {
       "meta": 54000,
-      "real": 15663.17,
-      "participacao_pct": 0.0911451283768953,
-      "margem_pct": 0.2361074056145723,
+      "real": 16524.91,
+      "participacao_pct": 0.09019800767481424,
+      "margem_pct": 0.23494702786278407,
       "premio": 0
     },
     "thermo": {
       "meta": 6480,
-      "real": 19325.24,
-      "participacao_pct": 0.1124549807423601,
-      "margem_pct": 0.1644021834810849,
-      "premio": 386.50480000000005
+      "real": 19574.28,
+      "participacao_pct": 0.1068424008160385,
+      "margem_pct": 0.16503408984810672,
+      "premio": 391.4856
     },
-    "recompra_pct": 0.265625,
-    "media_pedidos": 11.571428571428571,
+    "recompra_pct": 0.26153846153846155,
+    "media_pedidos": 11.772727272727273,
     "sku": {
       "meta": 120,
-      "real": 71
+      "real": 74
     },
     "positivacao_dia15": {
       "resultado": 61,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 45,
+      "resultado": 48,
       "premio": 0
     }
   },
@@ -2343,53 +2343,53 @@
       },
       "margem": {
         "meta": 13,
-        "real": 14.376666231980975,
-        "pct": 1.105897402460075
+        "real": 14.352062401003082,
+        "pct": 1.10400480007716
       },
       "mix": {
         "meta": 2.15,
-        "real": 2.22,
-        "pct": 1.032558139534884
+        "real": 2.23,
+        "pct": 1.0372093023255815
       },
       "financeiro": {
         "meta": 216000,
-        "real": 221611.54282,
-        "pct": 1.0259793649074074
+        "real": 226960.51282,
+        "pct": 1.0507431149074073
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 1.270260166075838,
-      "projetado": 274376.195872381,
+      "pct": 1.241787317617845,
+      "projetado": 268226.06060545455,
       "meta": 216000,
-      "meta_dia": 1122.3085640000004
+      "meta_dia": 2740.128205000001
     },
     "industrializado": {
       "meta": 54000,
-      "real": 21169.26,
-      "participacao_pct": 0.09552417590989089,
-      "margem_pct": 0.21786280654118276,
+      "real": 22163.43,
+      "participacao_pct": 0.09765324251614457,
+      "margem_pct": 0.21645964785234054,
       "premio": 0
     },
     "thermo": {
       "meta": 6480,
       "real": 7149.97,
-      "participacao_pct": 0.0322635270212772,
+      "participacao_pct": 0.03150314524390666,
       "margem_pct": 0.20394713138320866,
       "premio": 142.9994
     },
-    "recompra_pct": 0.21021611001964635,
-    "media_pedidos": 13.476190476190476,
+    "recompra_pct": 0.201171875,
+    "media_pedidos": 13.181818181818182,
     "sku": {
       "meta": 120,
-      "real": 79
+      "real": 80
     },
     "positivacao_dia15": {
       "resultado": 75,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 56,
+      "resultado": 58,
       "premio": 0
     }
   },
@@ -2406,43 +2406,43 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 13.076326721436224,
-        "pct": 1.0176129744308346
+        "real": 13.149461065605651,
+        "pct": 1.023304363082152
       },
       "mix": {
         "meta": 3,
-        "real": 3.7,
-        "pct": 1.2333333333333334
+        "real": 3.75,
+        "pct": 1.25
       },
       "financeiro": {
         "meta": 405000,
-        "real": 278190.22232,
-        "pct": 0.6868894378271605
+        "real": 296409.23232,
+        "pct": 0.7318746477037037
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 0.8504345420717225,
-      "projetado": 344425.98953904764,
+      "pct": 0.8649427654680135,
+      "projetado": 350301.82001454546,
       "meta": 405000,
-      "meta_dia": 25361.955536
+      "meta_dia": 27147.691919999997
     },
     "industrializado": {
       "meta": 101250,
-      "real": 62941.9,
-      "participacao_pct": 0.22625489664981263,
-      "margem_pct": 0.25204571655129576,
+      "real": 66033.58,
+      "participacao_pct": 0.22277841848296717,
+      "margem_pct": 0.25321502626391007,
       "premio": 0
     },
     "thermo": {
       "meta": 12150,
-      "real": 16346.52,
-      "participacao_pct": 0.05876022479753702,
-      "margem_pct": 0.16454727927167376,
-      "premio": 326.9304
+      "real": 17094.31,
+      "participacao_pct": 0.05767131430489716,
+      "margem_pct": 0.1646010315427766,
+      "premio": 341.88620000000003
     },
-    "recompra_pct": 0.26851851851851855,
-    "media_pedidos": 13.523809523809524,
+    "recompra_pct": 0.25,
+    "media_pedidos": 13.818181818181818,
     "sku": {
       "meta": 120,
       "real": 102
@@ -2452,7 +2452,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 71,
+      "resultado": 76,
       "premio": 0
     }
   },
@@ -2469,53 +2469,53 @@
       },
       "margem": {
         "meta": 12.9,
-        "real": 12.11364987509674,
-        "pct": 0.9390426259764915
+        "real": 12.035773217571565,
+        "pct": 0.9330056757807415
       },
       "mix": {
         "meta": 3,
-        "real": 2.93,
-        "pct": 0.9766666666666667
+        "real": 2.91,
+        "pct": 0.9700000000000001
       },
       "financeiro": {
         "meta": 335000,
-        "real": 236650.35,
-        "pct": 0.7064189552238807
+        "real": 250599.43,
+        "pct": 0.748058
       }
     },
     "pilares_atingidos": 1,
     "tendencia": {
-      "pct": 0.8746139445628999,
-      "projetado": 292995.67142857146,
+      "pct": 0.8840685454545454,
+      "projetado": 296162.9627272727,
       "meta": 335000,
-      "meta_dia": 19669.93
+      "meta_dia": 21100.1425
     },
     "industrializado": {
       "meta": 83750,
-      "real": 45568.31,
-      "participacao_pct": 0.1925554304060822,
-      "margem_pct": 0.22942736623763316,
+      "real": 50992.75,
+      "participacao_pct": 0.20348310449070056,
+      "margem_pct": 0.22792446241475506,
       "premio": 0
     },
     "thermo": {
       "meta": 10050,
-      "real": 22119.47,
-      "participacao_pct": 0.0934689933904598,
-      "margem_pct": 0.155749670915985,
-      "premio": 442.3894
+      "real": 22993.09,
+      "participacao_pct": 0.0917523635229338,
+      "margem_pct": 0.15602944269221752,
+      "premio": 459.8618
     },
-    "recompra_pct": 0.2631578947368421,
-    "media_pedidos": 12.714285714285714,
+    "recompra_pct": 0.25,
+    "media_pedidos": 12.590909090909092,
     "sku": {
       "meta": 120,
-      "real": 90
+      "real": 92
     },
     "positivacao_dia15": {
       "resultado": 70,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 52,
+      "resultado": 55,
       "premio": 0
     }
   },
@@ -2532,53 +2532,53 @@
       },
       "margem": {
         "meta": 13.4,
-        "real": 13.505658937562337,
-        "pct": 1.007884995340473
+        "real": 13.665252699839137,
+        "pct": 1.0197949775999355
       },
       "mix": {
         "meta": 2.65,
-        "real": 2.85,
-        "pct": 1.0754716981132075
+        "real": 2.87,
+        "pct": 1.0830188679245283
       },
       "financeiro": {
         "meta": 205000,
-        "real": 150238.65,
-        "pct": 0.7328714634146342
+        "real": 156188.75,
+        "pct": 0.7618963414634147
       }
     },
     "pilares_atingidos": 3,
     "tendencia": {
-      "pct": 0.9073646689895469,
-      "projetado": 186009.75714285712,
+      "pct": 0.9004229490022172,
+      "projetado": 184586.70454545453,
       "meta": 205000,
-      "meta_dia": 10952.27
+      "meta_dia": 12202.8125
     },
     "industrializado": {
       "meta": 51250,
-      "real": 32851.88,
-      "participacao_pct": 0.21866463789444326,
-      "margem_pct": 0.23118419367780466,
+      "real": 34788.61,
+      "participacao_pct": 0.2227344158910293,
+      "margem_pct": 0.23312076653249444,
       "premio": 0
     },
     "thermo": {
       "meta": 6150,
-      "real": 11741.45,
-      "participacao_pct": 0.07815199351165629,
-      "margem_pct": 0.16094591626962595,
-      "premio": 234.829
+      "real": 12478.89,
+      "participacao_pct": 0.07989621531640402,
+      "margem_pct": 0.16178595641567473,
+      "premio": 249.5778
     },
-    "recompra_pct": 0.36363636363636365,
-    "media_pedidos": 10.476190476190476,
+    "recompra_pct": 0.3068181818181818,
+    "media_pedidos": 10.5,
     "sku": {
       "meta": 120,
-      "real": 82
+      "real": 84
     },
     "positivacao_dia15": {
       "resultado": 84,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 51,
+      "resultado": 58,
       "premio": 0
     }
   },
@@ -2590,13 +2590,13 @@
     "pilares": {
       "positivacao": {
         "meta": 110,
-        "real": 101,
-        "pct": 0.9181818181818182
+        "real": 102,
+        "pct": 0.9272727272727272
       },
       "margem": {
         "meta": 13.3,
-        "real": 11.96460596454387,
-        "pct": 0.8995944334243511
+        "real": 12.036150670637763,
+        "pct": 0.9049737346344182
       },
       "mix": {
         "meta": 2.35,
@@ -2605,43 +2605,43 @@
       },
       "financeiro": {
         "meta": 445000,
-        "real": 299729.256257,
-        "pct": 0.6735488904651685
+        "real": 307540.256257,
+        "pct": 0.6911016994539325
       }
     },
     "pilares_atingidos": 0,
     "tendencia": {
-      "pct": 0.8339176739092563,
-      "projetado": 371093.36488961906,
+      "pct": 0.816756553900102,
+      "projetado": 363456.6664855454,
       "meta": 445000,
-      "meta_dia": 29054.148748600004
+      "meta_dia": 34364.93593575001
     },
     "industrializado": {
       "meta": 111250,
-      "real": 64010.73,
-      "participacao_pct": 0.21356183510199156,
-      "margem_pct": 0.169552331893731,
+      "real": 65013.59,
+      "participacao_pct": 0.21139863376347892,
+      "margem_pct": 0.169841253838159,
       "premio": 0
     },
     "thermo": {
       "meta": 13350,
-      "real": 19582.72,
-      "participacao_pct": 0.06533469653429155,
+      "real": 19846.72,
+      "participacao_pct": 0.06453373045060752,
       "margem_pct": 0,
       "premio": 0
     },
-    "recompra_pct": 0.45544554455445546,
-    "media_pedidos": 13.285714285714286,
+    "recompra_pct": 0.45098039215686275,
+    "media_pedidos": 13.136363636363637,
     "sku": {
       "meta": 120,
-      "real": 96
+      "real": 98
     },
     "positivacao_dia15": {
       "resultado": 72,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 71,
+      "resultado": 72,
       "premio": 0
     }
   },
@@ -2658,43 +2658,43 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 13.297566827840711,
-        "pct": 1.0348301033339076
+        "real": 13.238221948684254,
+        "pct": 1.0302118248003311
       },
       "mix": {
         "meta": 2.5,
-        "real": 2.67,
-        "pct": 1.068
+        "real": 2.64,
+        "pct": 1.056
       },
       "financeiro": {
         "meta": 230000,
-        "real": 139183.6389,
-        "pct": 0.6051462560869565
+        "real": 144433.1689,
+        "pct": 0.6279702995652173
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.7492286980124223,
-      "projetado": 172322.60054285714,
+      "pct": 0.742146717667984,
+      "projetado": 170693.74506363634,
       "meta": 230000,
-      "meta_dia": 18163.272220000003
+      "meta_dia": 21391.707775000003
     },
     "industrializado": {
       "meta": 57500,
-      "real": 32230.95,
-      "participacao_pct": 0.2315713991581808,
-      "margem_pct": 0.2229505533904524,
+      "real": 34820.93,
+      "participacao_pct": 0.2410867965107702,
+      "margem_pct": 0.2192276633852111,
       "premio": 0
     },
     "thermo": {
       "meta": 6900,
-      "real": 6686.03,
-      "participacao_pct": 0.048037470875465095,
-      "margem_pct": 0.1483238103161368,
-      "premio": 0
+      "real": 7156.14,
+      "participacao_pct": 0.049546375354781826,
+      "margem_pct": 0.15013489895614116,
+      "premio": 143.1228
     },
-    "recompra_pct": 0.34285714285714286,
-    "media_pedidos": 10.285714285714286,
+    "recompra_pct": 0.2857142857142857,
+    "media_pedidos": 10.272727272727273,
     "sku": {
       "meta": 120,
       "real": 88
@@ -2704,7 +2704,7 @@
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 43,
+      "resultado": 45,
       "premio": 0
     }
   },
@@ -2721,8 +2721,8 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 12.986732846543374,
-        "pct": 1.0106406884469552
+        "real": 13.043740957565495,
+        "pct": 1.015077117320272
       },
       "mix": {
         "meta": 2.5,
@@ -2731,43 +2731,43 @@
       },
       "financeiro": {
         "meta": 170000,
-        "real": 118852.15,
-        "pct": 0.699130294117647
+        "real": 121856.73,
+        "pct": 0.716804294117647
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.865589887955182,
-      "projetado": 147150.28095238094,
+      "pct": 0.8471323475935828,
+      "projetado": 144012.49909090908,
       "meta": 170000,
-      "meta_dia": 10229.570000000002
+      "meta_dia": 12035.817500000001
     },
     "industrializado": {
       "meta": 42500,
-      "real": 26817.39,
-      "participacao_pct": 0.22563655768953275,
-      "margem_pct": 0.2227092947076505,
+      "real": 27212.24,
+      "participacao_pct": 0.2233133943443255,
+      "margem_pct": 0.22283231464958422,
       "premio": 0
     },
     "thermo": {
       "meta": 5100,
-      "real": 4992.55,
-      "participacao_pct": 0.04200639197523983,
-      "margem_pct": 0.16598605078527004,
-      "premio": 99.851
+      "real": 5180.19,
+      "participacao_pct": 0.0425104957272364,
+      "margem_pct": 0.16633686654736593,
+      "premio": 103.60379999999999
     },
-    "recompra_pct": 0.3333333333333333,
-    "media_pedidos": 8.285714285714286,
+    "recompra_pct": 0.2753623188405797,
+    "media_pedidos": 8.227272727272727,
     "sku": {
       "meta": 120,
-      "real": 85
+      "real": 86
     },
     "positivacao_dia15": {
       "resultado": 58,
       "premio": 0
     },
     "positivacao_dia30": {
-      "resultado": 51,
+      "resultado": 54,
       "premio": 0
     }
   },
@@ -2784,53 +2784,53 @@
       },
       "margem": {
         "meta": 12.85,
-        "real": 11.8497772293202,
-        "pct": 0.9221616520871752
+        "real": 11.877465263718785,
+        "pct": 0.924316362935314
       },
       "mix": {
         "meta": 2.4,
-        "real": 2.44,
-        "pct": 1.0166666666666666
+        "real": 2.42,
+        "pct": 1.0083333333333333
       },
       "financeiro": {
         "meta": 240000,
-        "real": 185991.49016,
-        "pct": 0.7749645423333332
+        "real": 194109.44016,
+        "pct": 0.808789334
       }
     },
     "pilares_atingidos": 2,
     "tendencia": {
-      "pct": 0.9594799095555554,
-      "projetado": 230275.1782933333,
+      "pct": 0.9558419401818183,
+      "projetado": 229402.0656436364,
       "meta": 240000,
-      "meta_dia": 10801.701968000003
+      "meta_dia": 11472.63996
     },
     "industrializado": {
       "meta": 60000,
-      "real": 28004.56,
-      "participacao_pct": 0.15056903934641824,
-      "margem_pct": 0.24388811114332806,
+      "real": 28382.42,
+      "participacao_pct": 0.14621864849337063,
+      "margem_pct": 0.24401704209859482,
       "premio": 0
     },
     "thermo": {
       "meta": 7200,
-      "real": 4293.1,
-      "participacao_pct": 0.02308223885031967,
-      "margem_pct": 0.1470832021802428,
+      "real": 4422.9,
+      "participacao_pct": 0.02278559969239159,
+      "margem_pct": 0.14738932064482577,
       "premio": 0
     },
     "recompra_pct": 0.18478260869565216,
-    "media_pedidos": 15.19047619047619,
+    "media_pedidos": 15.136363636363637,
     "sku": {
       "meta": 120,
-      "real": 98
+      "real": 103
     },
     "positivacao_dia15": {
       "resultado": 91,
       "premio": 150
     },
     "positivacao_dia30": {
-      "resultado": 57,
+      "resultado": 58,
       "premio": 0
     }
   }
