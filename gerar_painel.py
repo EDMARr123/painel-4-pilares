@@ -1220,6 +1220,30 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <span class="badge {classe_cc}">{_fmt_pct_py(cc["pct"])}</span>
     </div>'''
 
+    # Peso e Preço Médio (bloco novo da planilha, 30/08) — mesmo formato de
+    # card com meta/realizado/%; exclusivos do painel do gerente.
+    peso = totais.get("peso")
+    if peso:
+        classe_peso = _classe_status(peso["pct"])
+        kpis_html += f'''
+    <div class="dv-kpi {classe_peso}">
+      <div class="l">Peso</div>
+      <div class="v">{_fmt_num_py(peso["real"], 0)}</div>
+      <div class="m">Meta {_fmt_num_py(peso["meta"], 0)}</div>
+      <span class="badge {classe_peso}">{_fmt_pct_py(peso["pct"])}</span>
+    </div>'''
+
+    preco_medio = totais.get("preco_medio")
+    if preco_medio:
+        classe_preco = _classe_status(preco_medio["pct"])
+        kpis_html += f'''
+    <div class="dv-kpi {classe_preco}">
+      <div class="l">Preço Médio</div>
+      <div class="v">{_fmt_moeda_py(preco_medio["real"])}</div>
+      <div class="m">Meta {_fmt_moeda_py(preco_medio["meta"])}</div>
+      <span class="badge {classe_preco}">{_fmt_pct_py(preco_medio["pct"])}</span>
+    </div>'''
+
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
     # resto do site (participação/margem, critério binário definido pelo
     # Edmar) — meta/real são somáveis, participação/margem são médias.

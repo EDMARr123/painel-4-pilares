@@ -11,10 +11,20 @@
   "realizado_clientes": 3653,
   "nao_comprou": 19,
   "recompra_pct": 0.0043799616753353405,
+  "peso": {
+    "meta": 1382995.6945615115,
+    "real": 1105007.179,
+    "pct": 0.7989953861355659
+  },
+  "preco_medio": {
+    "meta": 12,
+    "real": 11.351080443976011,
+    "pct": 0.9459233703313342
+  },
   "conta_corrente": {
-    "meta": 1945370.68,
-    "realizado": 1490981.3786905294,
-    "tendencia": 1550620.6338381504,
-    "pct": 0.797082350309788
+    "meta": 0,
+    "realizado": 0,
+    "tendencia": 0,
+    "pct": 0
   }
 }

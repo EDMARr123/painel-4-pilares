@@ -131,6 +131,8 @@ def extrair_totais(ws):
         "realizado_clientes": _num(ws["T94"].value),
         "nao_comprou": _num(ws["T96"].value),
         "recompra_pct": _num(ws["T98"].value),
+        "peso": {"meta": _num(ws["S102"].value), "real": _num(ws["T102"].value), "pct": _num(ws["U102"].value)},
+        "preco_medio": {"meta": _num(ws["S104"].value), "real": _num(ws["T104"].value), "pct": _num(ws["U104"].value)},
         "conta_corrente": {
             "meta": _num(ws["R114"].value),
             "realizado": _num(ws["S114"].value),
