@@ -1,20 +1,20 @@
 {
   "margem": {
     "meta": 0.1299795918367347,
-    "real": 0.11879982735292517
+    "real": 0.11901278060218756
   },
   "mix": {
     "meta": 0.025326530612244897,
-    "real": 0.02592755102040816
+    "real": 0.025910714285714283
   },
   "meta_clientes": 3672,
-  "realizado_clientes": 3629,
-  "nao_comprou": 43,
-  "recompra_pct": 0.004408928079360706,
+  "realizado_clientes": 3653,
+  "nao_comprou": 19,
+  "recompra_pct": 0.0043799616753353405,
   "conta_corrente": {
     "meta": 1945370.68,
-    "realizado": 1420553.746101276,
-    "tendencia": 1538933.224943049,
-    "pct": 0.7910745446945099
+    "realizado": 1490981.3786905294,
+    "tendencia": 1550620.6338381504,
+    "pct": 0.797082350309788
   }
 }
