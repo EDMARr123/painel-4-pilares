@@ -199,21 +199,23 @@ def extrair():
         # coluna fixa.
         financeiro_pct = (real_financeiro / meta_financeiro) if meta_financeiro else 0
 
-        # Layout confirmado em 19/08: AC/AD/AE/AF = meta/real/participação/
-        # margem (industrializado); AJ/AK/AL/AM = idem (thermo); Z = pilar;
-        # BA/BB = recompra; BD = média pedidos; BF/BG = SKU meta/real;
-        # BI/BK = prêmio industrializado/thermo.
-        industrializado_real = val(30)
+        # Layout confirmado em 30/08 (após o Edmar inserir a coluna "VENDEDOR
+        # DESTAQUE" em X — tudo que vinha depois dela na linha andou +1
+        # coluna): AD/AE/AF/AG = meta/real/participação/margem
+        # (industrializado); AK/AL/AM/AN = idem (thermo); AA = pilar;
+        # BB/BC = recompra (contagem/%); BE = média pedidos; BG/BH = SKU
+        # meta/real; BJ/BL = prêmio industrializado/thermo.
+        industrializado_real = val(31)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
-        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(37)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(38)
         thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
         # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
         # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
         # mesmo significado de margem que tem no arquivo de Industrializado —
         # em vez de arriscar mostrar um número inventado, mantém 0 até o
         # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
-        thermo_margem_pct = val(39) if thermo_real else 0
+        thermo_margem_pct = val(40) if thermo_real else 0
         if thermo_margem_pct < 0:
             thermo_margem_pct = 0
 
@@ -228,15 +230,15 @@ def extrair():
                 "mix": {"meta": val(14), "real": val(15), "pct": val(16)},
                 "financeiro": {"meta": meta_financeiro, "real": real_financeiro, "pct": financeiro_pct},
             },
-            "pilares_atingidos": int(val(26)),
+            "pilares_atingidos": int(val(27)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(61)},
-            "thermo": {"meta": val(36), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(63)},
-            "recompra_pct": val(54),  # BB = "RECOMPRA" %
-            "media_pedidos": val(56),  # BD = "MÉDIA PEDIDOS"
-            "sku": {"meta": val(58), "real": val(59)},  # BF/BG = "SKU" meta/realizado
-            "positivacao_dia15": {"resultado": val(45), "premio": val(46)},  # AS/AT
-            "positivacao_dia30": {"resultado": val(48), "premio": val(50)},  # AV/AX
+            "industrializado": {"meta": val(30), "real": industrializado_real, "participacao_pct": val(32), "margem_pct": val(33), "premio": val(62)},
+            "thermo": {"meta": val(37), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(64)},
+            "recompra_pct": val(55),  # BC = "RECOMPRA" %
+            "media_pedidos": val(57),  # BE = "MÉDIA PEDIDOS"
+            "sku": {"meta": val(59), "real": val(60)},  # BG/BH = "SKU" meta/realizado
+            "positivacao_dia15": {"resultado": val(46), "premio": val(47)},  # AT/AU
+            "positivacao_dia30": {"resultado": val(49), "premio": val(51)},  # AW/AY
         })
 
     return rcas
