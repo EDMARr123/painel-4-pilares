@@ -1406,6 +1406,12 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         for r in dados_dep:
             for chave, info in r["categorias"].items():
                 labels_dep.setdefault(chave, info["label"])
+        # Nem toda categoria de CATEGORIAS_DEP existe nos dados (ex:
+        # "saborizadas" ainda não tem bloco no painel_departamentos) — usa a
+        # MESMA lista filtrada nas linhas de dados e no cabeçalho, senão eles
+        # saem com números de coluna diferentes e tudo desalinha em cascata
+        # (rótulo de uma categoria mostrando o valor da categoria seguinte).
+        CATEGORIAS_DEP = [c for c in CATEGORIAS_DEP if c in labels_dep]
         supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
         # Time padrão = maior equipe (7 RCAs, o que a maioria dos
         # supervisores tem — só o EDMAR foge disso, com 2). A linha META usa
