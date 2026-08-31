@@ -122,8 +122,10 @@ def extrair_totais(ws):
     T/U = meta/realizado) — Margem e Mix aqui são o número final calculado
     pelo Edmar na planilha, não uma média/soma das linhas por RCA.
 
-    Conta-Corrente (linhas 109-114, adicionado 24/08): R=meta, S=realizado,
-    T=tendência R$, V=%."""
+    Conta-Corrente (linha de dados na 119 desde 30/08 — a inserção do bloco
+    de Peso/Preço Médio, linhas 101-104, empurrou o bloco 5 linhas pra
+    baixo; rótulo "CONTA-CORRENTE" continua na 114, cabeçalho na 117):
+    R=meta, S=realizado, T=tendência R$, V=%."""
     return {
         "margem": {"meta": _num(ws["T84"].value), "real": _num(ws["U84"].value)},
         "mix": {"meta": _num(ws["T87"].value), "real": _num(ws["U87"].value)},
@@ -134,10 +136,10 @@ def extrair_totais(ws):
         "peso": {"meta": _num(ws["S102"].value), "real": _num(ws["T102"].value), "pct": _num(ws["U102"].value)},
         "preco_medio": {"meta": _num(ws["S104"].value), "real": _num(ws["T104"].value), "pct": _num(ws["U104"].value)},
         "conta_corrente": {
-            "meta": _num(ws["R114"].value),
-            "realizado": _num(ws["S114"].value),
-            "tendencia": _num(ws["T114"].value),
-            "pct": _num(ws["V114"].value),
+            "meta": _num(ws["R119"].value),
+            "realizado": _num(ws["S119"].value),
+            "tendencia": _num(ws["T119"].value),
+            "pct": _num(ws["V119"].value),
         },
     }
 
