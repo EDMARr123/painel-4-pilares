@@ -210,9 +210,9 @@ def extrair():
         # célula a célula contra os cabeçalhos atuais):
         # AC/AD/AE/AF = meta/real/participação/margem (industrializado);
         # AH/AI/AJ/AK = idem (thermo); Z = pilar; AM/AN = Dia 15
-        # resultado/prêmio; AP/AQ = Dia 30 resultado/prêmio; AS = recompra;
-        # AV = média pedidos; AX/AY = SKU meta/real; BA = prêmio
-        # industrializado; BC = prêmio thermo.
+        # resultado/prêmio; AP/AQ = Dia 30 resultado/prêmio; AS/AT =
+        # recompra (contagem/%); AV = média pedidos; AX/AY = SKU meta/real;
+        # BA = prêmio industrializado; BC = prêmio thermo.
         industrializado_real = val(30)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
@@ -242,7 +242,7 @@ def extrair():
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
             "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(53)},
             "thermo": {"meta": val(34), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(55)},
-            "recompra_pct": val(45),  # AS = "RECOMPRA"
+            "recompra_pct": val(46),  # AT = "RECOMPRA" % (AS = contagem)
             "media_pedidos": val(48),  # AV = "MÉDIA PEDIDOS"
             "sku": {"meta": val(50), "real": val(51)},  # AX/AY = "SKU" meta/realizado
             "positivacao_dia15": {"resultado": val(39), "premio": val(40)},  # AM/AN
