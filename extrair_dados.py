@@ -118,28 +118,29 @@ def _achar_no_cache(cache, nome_rca):
 
 
 def extrair_totais(ws):
-    """Bloco de totais gerais da planilha (linhas 82-98, coluna R = rótulo,
-    T/U = meta/realizado) — Margem e Mix aqui são o número final calculado
-    pelo Edmar na planilha, não uma média/soma das linhas por RCA.
+    """Bloco de totais gerais da planilha (coluna R = rótulo, T/U =
+    meta/realizado) — Margem e Mix aqui são o número final calculado pelo
+    Edmar na planilha, não uma média/soma das linhas por RCA.
 
-    Conta-Corrente (linha de dados na 119 desde 30/08 — a inserção do bloco
-    de Peso/Preço Médio, linhas 101-104, empurrou o bloco 5 linhas pra
-    baixo; rótulo "CONTA-CORRENTE" continua na 114, cabeçalho na 117):
-    R=meta, S=realizado, T=tendência R$, V=%."""
+    Layout confirmado em 01/09 (Edmar excluiu 6 linhas ao reorganizar a
+    planilha pro mês novo — todo o bloco de totais andou 6 linhas pra
+    cima: Margem 84->78, Mix 87->81, Clientes 92->86/94->88, Não comprou
+    96->90, Recompra 98->92, Peso 102->96, Preço Médio 104->98,
+    Conta-Corrente 119->113)."""
     return {
-        "margem": {"meta": _num(ws["T84"].value), "real": _num(ws["U84"].value)},
-        "mix": {"meta": _num(ws["T87"].value), "real": _num(ws["U87"].value)},
-        "meta_clientes": _num(ws["T92"].value),
-        "realizado_clientes": _num(ws["T94"].value),
-        "nao_comprou": _num(ws["T96"].value),
-        "recompra_pct": _num(ws["T98"].value),
-        "peso": {"meta": _num(ws["S102"].value), "real": _num(ws["T102"].value), "pct": _num(ws["U102"].value)},
-        "preco_medio": {"meta": _num(ws["S104"].value), "real": _num(ws["T104"].value), "pct": _num(ws["U104"].value)},
+        "margem": {"meta": _num(ws["T78"].value), "real": _num(ws["U78"].value)},
+        "mix": {"meta": _num(ws["T81"].value), "real": _num(ws["U81"].value)},
+        "meta_clientes": _num(ws["T86"].value),
+        "realizado_clientes": _num(ws["T88"].value),
+        "nao_comprou": _num(ws["T90"].value),
+        "recompra_pct": _num(ws["T92"].value),
+        "peso": {"meta": _num(ws["S96"].value), "real": _num(ws["T96"].value), "pct": _num(ws["U96"].value)},
+        "preco_medio": {"meta": _num(ws["S98"].value), "real": _num(ws["T98"].value), "pct": _num(ws["U98"].value)},
         "conta_corrente": {
-            "meta": _num(ws["R119"].value),
-            "realizado": _num(ws["S119"].value),
-            "tendencia": _num(ws["T119"].value),
-            "pct": _num(ws["V119"].value),
+            "meta": _num(ws["R113"].value),
+            "realizado": _num(ws["S113"].value),
+            "tendencia": _num(ws["T113"].value),
+            "pct": _num(ws["V113"].value),
         },
     }
 
@@ -203,23 +204,26 @@ def extrair():
         # coluna fixa.
         financeiro_pct = (real_financeiro / meta_financeiro) if meta_financeiro else 0
 
-        # Layout confirmado em 30/08 (após o Edmar inserir a coluna "VENDEDOR
-        # DESTAQUE" em X — tudo que vinha depois dela na linha andou +1
-        # coluna): AD/AE/AF/AG = meta/real/participação/margem
-        # (industrializado); AK/AL/AM/AN = idem (thermo); AA = pilar;
-        # BB/BC = recompra (contagem/%); BE = média pedidos; BG/BH = SKU
-        # meta/real; BJ/BL = prêmio industrializado/thermo.
-        industrializado_real = val(31)
+        # Layout confirmado em 01/09 (Edmar excluiu a equipe EDMAR e algumas
+        # linhas/colunas ao reorganizar a planilha pro mês novo — tudo que
+        # vinha depois de "BENDEDOR DESTAQUE" andou pra trás. Conferido
+        # célula a célula contra os cabeçalhos atuais):
+        # AC/AD/AE/AF = meta/real/participação/margem (industrializado);
+        # AH/AI/AJ/AK = idem (thermo); Z = pilar; AM/AN = Dia 15
+        # resultado/prêmio; AP/AQ = Dia 30 resultado/prêmio; AS = recompra;
+        # AV = média pedidos; AX/AY = SKU meta/real; BA = prêmio
+        # industrializado; BC = prêmio thermo.
+        industrializado_real = val(30)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
-        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(38)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(35)
         thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
         # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
         # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
         # mesmo significado de margem que tem no arquivo de Industrializado —
         # em vez de arriscar mostrar um número inventado, mantém 0 até o
         # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
-        thermo_margem_pct = val(40) if thermo_real else 0
+        thermo_margem_pct = val(37) if thermo_real else 0
         if thermo_margem_pct < 0:
             thermo_margem_pct = 0
 
@@ -234,15 +238,15 @@ def extrair():
                 "mix": {"meta": val(14), "real": val(15), "pct": val(16)},
                 "financeiro": {"meta": meta_financeiro, "real": real_financeiro, "pct": financeiro_pct},
             },
-            "pilares_atingidos": int(val(27)),
+            "pilares_atingidos": int(val(26)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(30), "real": industrializado_real, "participacao_pct": val(32), "margem_pct": val(33), "premio": val(62)},
-            "thermo": {"meta": val(37), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(64)},
-            "recompra_pct": val(55),  # BC = "RECOMPRA" %
-            "media_pedidos": val(57),  # BE = "MÉDIA PEDIDOS"
-            "sku": {"meta": val(59), "real": val(60)},  # BG/BH = "SKU" meta/realizado
-            "positivacao_dia15": {"resultado": val(46), "premio": val(47)},  # AT/AU
-            "positivacao_dia30": {"resultado": val(49), "premio": val(51)},  # AW/AY
+            "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(53)},
+            "thermo": {"meta": val(34), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(55)},
+            "recompra_pct": val(45),  # AS = "RECOMPRA"
+            "media_pedidos": val(48),  # AV = "MÉDIA PEDIDOS"
+            "sku": {"meta": val(50), "real": val(51)},  # AX/AY = "SKU" meta/realizado
+            "positivacao_dia15": {"resultado": val(39), "premio": val(40)},  # AM/AN
+            "positivacao_dia30": {"resultado": val(42), "premio": val(43)},  # AP/AQ
         })
 
     return rcas
