@@ -1321,6 +1321,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     # >=18% bom, margem thermo >=15% bom; recompra >=40% ruim, 20-40%
     # atenção, <20% bom).
     linhas_ind, linhas_thermo, linhas_recompra, linhas_media_pedidos = "", "", "", ""
+    linhas_margem, linhas_mix, linhas_lucro = "", "", ""
     for sup in supervisores:
         do_sup = [r for r in dados if r["supervisor"] == sup]
         meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
@@ -1382,6 +1383,46 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <tr>
         <td class="dv-tab-sup">{sup}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
+      </tr>'''
+        margens_meta = [r["pilares"]["margem"]["meta"] for r in do_sup]
+        margens_real = [r["pilares"]["margem"]["real"] for r in do_sup]
+        meta_margem_sup = sum(margens_meta) / len(margens_meta) if margens_meta else 0
+        real_margem_sup = sum(margens_real) / len(margens_real) if margens_real else 0
+        pct_margem_sup = real_margem_sup / meta_margem_sup if meta_margem_sup else 0
+        classe_margem_sup = _classe_status(pct_margem_sup)
+        linhas_margem += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_num_py(meta_margem_sup, 2)}%</td>
+        <td>{_fmt_num_py(real_margem_sup, 2)}%</td>
+        <td class="{classe_margem_sup}">{_fmt_pct_py(pct_margem_sup)}</td>
+      </tr>'''
+        mixes_meta = [r["pilares"]["mix"]["meta"] for r in do_sup]
+        mixes_real = [r["pilares"]["mix"]["real"] for r in do_sup]
+        meta_mix_sup = sum(mixes_meta) / len(mixes_meta) if mixes_meta else 0
+        real_mix_sup = sum(mixes_real) / len(mixes_real) if mixes_real else 0
+        pct_mix_sup = real_mix_sup / meta_mix_sup if meta_mix_sup else 0
+        classe_mix_sup = _classe_status(pct_mix_sup)
+        linhas_mix += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_num_py(meta_mix_sup, 2)}</td>
+        <td>{_fmt_num_py(real_mix_sup, 2)}</td>
+        <td class="{classe_mix_sup}">{_fmt_pct_py(pct_mix_sup)}</td>
+      </tr>'''
+        # Lucro = margem de cada linha de produto (industrializado/thermo)
+        # aplicada sobre o faturamento realizado dela — não existe uma
+        # coluna "lucro" pronta na planilha, então é derivado das duas
+        # margens que já temos (real × margem_pct), somado por equipe.
+        lucro_sup = sum(
+            r["industrializado"]["real"] * r["industrializado"]["margem_pct"]
+            + r["thermo"]["real"] * r["thermo"]["margem_pct"]
+            for r in do_sup
+        )
+        linhas_lucro += f'''
+      <tr>
+        <td class="dv-tab-sup">{sup}</td>
+        <td>{_fmt_moeda_py(lucro_sup)}</td>
       </tr>'''
 
     def _tabela_mini(linhas, colunas, centralizado=False):
@@ -1466,6 +1507,9 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     # vendedores de cada um junto (EDMAR tem só 2 RCAs, os demais têm 7),
     # pra deixar claro que a média do EDMAR pesa sobre uma base bem menor.
     tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, ["Nº Vendedores", "Média de Pedidos"], centralizado=True)
+    tabela_margem = _tabela_mini(linhas_margem, ["Meta", "Realizado", "%"], centralizado=True)
+    tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
+    tabela_lucro = _tabela_mini(linhas_lucro, ["Lucro"], centralizado=True)
 
     # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
     linhas_pilares = []
@@ -1572,6 +1616,21 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Média de pedidos por supervisor</h3>
     {tabela_media_pedidos}
+  </section>
+
+  <section class="dv-row-3">
+    <div class="dv-panel">
+      <h3>Margem por supervisor</h3>
+      {tabela_margem}
+    </div>
+    <div class="dv-panel">
+      <h3>Mix por supervisor</h3>
+      {tabela_mix}
+    </div>
+    <div class="dv-panel">
+      <h3>Lucro por supervisor</h3>
+      {tabela_lucro}
+    </div>
   </section>
 
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
