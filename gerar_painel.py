@@ -953,6 +953,20 @@ import math
 # reaproveitado pra manter a mesma identidade visual do resto do painel.
 _CSS_COMPARTILHADO = TEMPLATE.split("<style>")[1].split("</style>")[0]
 
+# Miolo de JS (funções de card + tabs/resumo/grid + montar()) do template
+# padrão, com os placeholders __DADOS_JSON__/__FOTOS_*_JSON__ ainda por
+# preencher — reaproveitado pelo painel do supervisor (que combina esse
+# miolo com o dashboard tipo painel do gerente na mesma página).
+_JS_CARDS_TEMPLATE = TEMPLATE.split("<script>")[1].split("</script>")[0]
+_CORPO_TABS_GRID = '''
+  <nav class="tabs" id="tabs"></nav>
+
+  <section class="resumo-time" id="resumoTime"></section>
+
+  <main class="grid" id="grid"></main>
+  <div class="empty-state" id="empty" style="display:none;">Nenhum RCA encontrado pra esse filtro.</div>
+'''
+
 
 def _fmt_moeda_py(v):
     return "R$ " + f"{v:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
@@ -970,6 +984,16 @@ def _classe_status(pct):
     if pct >= 1:
         return "dv-good"
     if pct >= 0.7:
+        return "dv-warn"
+    return "dv-bad"
+
+
+def _classe_badge_pilares(qtd):
+    """Mesmo corte binário do badge de pilares nos cards de vendedor
+    (corBadge no JS): 3-4 bom, 1-2 atenção, 0 ruim."""
+    if qtd >= 3:
+        return "dv-good"
+    if qtd >= 1:
         return "dv-warn"
     return "dv-bad"
 
@@ -1144,28 +1168,60 @@ _CSS_DASHBOARD_GERENTE = """
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
 
 
-def gerar_html_gerente(dados, totais, dados_dep=None):
-    import datetime
-    data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+def _tabela_mini(linhas, colunas, centralizado=False):
+    cabecalho = "".join(f"<th>{c}</th>" for c in colunas)
+    classe_extra = " dv-tabela-center" if centralizado else ""
+    return f'''
+    <table class="dv-tabela{classe_extra}">
+      <thead><tr><th></th>{cabecalho}</tr></thead>
+      <tbody>{linhas}
+      </tbody>
+    </table>'''
+
+
+def _media(valores):
+    return sum(valores) / len(valores) if valores else 0
+
+
+def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor"):
+    """KPIs + gráficos/tabelas do dashboard tipo "painel do gerente" —
+    reaproveitado tanto pelo painel do gerente (agrupando por supervisor,
+    `totais` = bloco de totais_gerais.json) quanto pelo painel de cada
+    supervisor (agrupando por RCA do time dele, `totais=None` — Margem/Mix
+    e Conta-Corrente/Peso/Preço Médio só existem prontos por *empresa*
+    inteira na planilha, sem recorte por equipe, então: Margem/Mix viram
+    média do grupo, e Conta-Corrente/Peso/Preço Médio somem por não terem
+    como ser quebrados por supervisor sem inventar dado). Retorna só o
+    HTML das <section>, sem <html>/<head>/CSS/rodapé — quem chama decide
+    como envelopar.
+    """
+    agrupar_por_rca = chave_grupo != "supervisor"
 
     def soma(pilar, campo):
         return sum(r["pilares"][pilar][campo] for r in dados)
 
-    supervisores = sorted({r["supervisor"] for r in dados})
+    grupos = sorted({r[chave_grupo] for r in dados})
 
-    # ---- KPIs (somatória geral) ----
-    # Financeiro/Positivação: soma direta das linhas por RCA (bate com o
-    # total da planilha). Margem/Mix: vêm prontos do bloco de totais da
-    # planilha (T84/U84, T87/U87) — não são soma/média das linhas por RCA.
+    # ---- KPIs (somatória do escopo recebido) ----
     fmt_pct_2casas = lambda v: _fmt_num_py(v * 100, 2) + "%"
     meta_financeiro = soma("financeiro", "meta")
     tendencia_projetado = sum(r["tendencia"]["projetado"] for r in dados)
     tendencia_pct = tendencia_projetado / meta_financeiro if meta_financeiro else 0
+
+    if totais:
+        meta_margem, real_margem = totais["margem"]["meta"], totais["margem"]["real"]
+        meta_mix, real_mix = totais["mix"]["meta"], totais["mix"]["real"]
+    else:
+        meta_margem = _media([r["pilares"]["margem"]["meta"] for r in dados])
+        real_margem = _media([r["pilares"]["margem"]["real"] for r in dados])
+        meta_mix = _media([r["pilares"]["mix"]["meta"] for r in dados])
+        real_mix = _media([r["pilares"]["mix"]["real"] for r in dados])
+
     kpis_fonte = [
         ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
         ("Positivação", *[soma("positivacao", c) for c in ("meta", "real")], lambda v: _fmt_num_py(v, 0)),
-        ("Margem", totais["margem"]["meta"], totais["margem"]["real"], fmt_pct_2casas),
-        ("Mix", totais["mix"]["meta"], totais["mix"]["real"], fmt_pct_2casas),
+        ("Margem", meta_margem, real_margem, fmt_pct_2casas),
+        ("Mix", meta_mix, real_mix, fmt_pct_2casas),
     ]
     kpis_html = ""
     for label, meta, real, fmt in kpis_fonte:
@@ -1186,10 +1242,9 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       {badge_pct}{extra}
     </div>'''
 
-    # Recompra da equipe (média entre RCAs) — mesmo critério invertido usado
-    # nos cards de vendedor/supervisor: quanto maior, pior.
-    recompras_gerais = [r["recompra_pct"] for r in dados]
-    media_recompra_geral = sum(recompras_gerais) / len(recompras_gerais) if recompras_gerais else 0
+    # Recompra (média entre RCAs do escopo) — mesmo critério invertido
+    # usado nos cards de vendedor/supervisor: quanto maior, pior.
+    media_recompra_geral = _media([r["recompra_pct"] for r in dados])
     if media_recompra_geral >= 0.40:
         classe_recompra_geral = "dv-bad"
     elif media_recompra_geral >= 0.20:
@@ -1200,18 +1255,18 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     <div class="dv-kpi {classe_recompra_geral}">
       <div class="l">Recompra</div>
       <div class="v">{_fmt_pct_py(media_recompra_geral)}</div>
-      <div class="m">Média da equipe</div>
+      <div class="m">Média {"do time" if agrupar_por_rca else "da equipe"}</div>
       <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
     </div>'''
 
-    # Conta-Corrente (bloco novo da planilha, 24/08) — mesmo formato do card
-    # de Financeiro (meta/realizado/tendência); "%" já vem pronto da
-    # planilha como tendência/meta, não realizado/meta. Exclusivo do
-    # painel do gerente.
-    cc = totais.get("conta_corrente")
-    if cc:
-        classe_cc = _classe_status(cc["pct"])
-        kpis_html += f'''
+    # Conta-Corrente/Peso/Preço Médio: blocos exclusivos da planilha, só
+    # existem em `totais` (empresa inteira) — sem recorte por supervisor,
+    # então só aparecem no painel do gerente.
+    if totais:
+        cc = totais.get("conta_corrente")
+        if cc:
+            classe_cc = _classe_status(cc["pct"])
+            kpis_html += f'''
     <div class="dv-kpi {classe_cc}">
       <div class="l">Conta-Corrente</div>
       <div class="v">{_fmt_moeda_py(cc["realizado"])}</div>
@@ -1220,12 +1275,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <span class="badge {classe_cc}">{_fmt_pct_py(cc["pct"])}</span>
     </div>'''
 
-    # Peso e Preço Médio (bloco novo da planilha, 30/08) — mesmo formato de
-    # card com meta/realizado/%; exclusivos do painel do gerente.
-    peso = totais.get("peso")
-    if peso:
-        classe_peso = _classe_status(peso["pct"])
-        kpis_html += f'''
+        peso = totais.get("peso")
+        if peso:
+            classe_peso = _classe_status(peso["pct"])
+            kpis_html += f'''
     <div class="dv-kpi {classe_peso}">
       <div class="l">Peso</div>
       <div class="v">{_fmt_num_py(peso["real"], 0)}</div>
@@ -1233,10 +1286,10 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <span class="badge {classe_peso}">{_fmt_pct_py(peso["pct"])}</span>
     </div>'''
 
-    preco_medio = totais.get("preco_medio")
-    if preco_medio:
-        classe_preco = _classe_status(preco_medio["pct"])
-        kpis_html += f'''
+        preco_medio = totais.get("preco_medio")
+        if preco_medio:
+            classe_preco = _classe_status(preco_medio["pct"])
+            kpis_html += f'''
     <div class="dv-kpi {classe_preco}">
       <div class="l">Preço Médio</div>
       <div class="v">{_fmt_moeda_py(preco_medio["real"])}</div>
@@ -1247,7 +1300,6 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     # Industrializados/Thermoprocessados: mesmos cortes de cor já usados no
     # resto do site (participação/margem, critério binário definido pelo
     # Edmar) — meta/real são somáveis, participação/margem são médias.
-    # Ficam numa segunda fileira própria, separados dos 4 pilares principais.
     kpis_html_industrializados = ""
     for label, chave, limite_participacao, limite_margem in [
         ("Industrializados", "industrializado", 0.25, 0.18),
@@ -1255,10 +1307,8 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     ]:
         meta = sum(r[chave]["meta"] for r in dados)
         real = sum(r[chave]["real"] for r in dados)
-        participacoes = [r[chave]["participacao_pct"] for r in dados]
-        margens = [r[chave]["margem_pct"] for r in dados]
-        media_participacao = sum(participacoes) / len(participacoes) if participacoes else 0
-        media_margem = sum(margens) / len(margens) if margens else 0
+        media_participacao = _media([r[chave]["participacao_pct"] for r in dados])
+        media_margem = _media([r[chave]["margem_pct"] for r in dados])
         classe_participacao = "dv-good" if media_participacao >= limite_participacao else "dv-bad"
         classe_margem = "dv-good" if media_margem >= limite_margem else "dv-bad"
         kpis_html_industrializados += f'''
@@ -1270,96 +1320,85 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       <span class="badge {classe_margem}" style="margin-left:6px;">Margem {_fmt_pct_py(media_margem)}</span>
     </div>'''
 
-    # ---- Gráfico 1: tendência de fechamento por supervisor (barras) ----
+    # ---- Gráfico 1: tendência de fechamento (barras) ----
     linhas_tendencia = []
-    for sup in supervisores:
-        do_sup = [r for r in dados if r["supervisor"] == sup]
-        meta_sup = sum(r["pilares"]["financeiro"]["meta"] for r in do_sup)
-        real_sup = sum(r["pilares"]["financeiro"]["real"] for r in do_sup)
-        meta_posit_sup = sum(r["pilares"]["positivacao"]["meta"] for r in do_sup)
-        real_posit_sup = sum(r["pilares"]["positivacao"]["real"] for r in do_sup)
-        projetado_sup = sum(r["tendencia"]["projetado"] for r in do_sup)
-        pct = projetado_sup / meta_sup if meta_sup else 0
-        subtitulo = [_fmt_moeda_py(real_sup)]
-        linhas_tendencia.append((sup, subtitulo, pct, _fmt_pct_py(pct), _classe_status(pct)))
+    for grp in grupos:
+        do_grp = [r for r in dados if r[chave_grupo] == grp]
+        meta_grp = sum(r["pilares"]["financeiro"]["meta"] for r in do_grp)
+        real_grp = sum(r["pilares"]["financeiro"]["real"] for r in do_grp)
+        projetado_grp = sum(r["tendencia"]["projetado"] for r in do_grp)
+        pct = projetado_grp / meta_grp if meta_grp else 0
+        subtitulo = [_fmt_moeda_py(real_grp)]
+        linhas_tendencia.append((grp, subtitulo, pct, _fmt_pct_py(pct), _classe_status(pct)))
     linhas_tendencia.sort(key=lambda x: x[2], reverse=True)
     svg_tendencia = _svg_barras(linhas_tendencia, sublabel=True)
 
-    # Positivação por supervisor — card próprio (retirado do gráfico de
-    # tendência a pedido do Edmar, pra não poluir aquele gráfico), com
-    # tabela + gráfico de barras lado a lado.
+    # Positivação — card próprio (retirado do gráfico de tendência a
+    # pedido do Edmar, pra não poluir aquele gráfico), tabela + barras.
     linhas_positivacao = ""
     linhas_positivacao_grafico = []
-    for sup in supervisores:
-        do_sup = [r for r in dados if r["supervisor"] == sup]
-        meta_posit_sup = sum(r["pilares"]["positivacao"]["meta"] for r in do_sup)
-        real_posit_sup = sum(r["pilares"]["positivacao"]["real"] for r in do_sup)
-        pct_posit_sup = real_posit_sup / meta_posit_sup if meta_posit_sup else 0
-        classe_posit_sup = _classe_status(pct_posit_sup)
+    for grp in grupos:
+        do_grp = [r for r in dados if r[chave_grupo] == grp]
+        meta_posit = sum(r["pilares"]["positivacao"]["meta"] for r in do_grp)
+        real_posit = sum(r["pilares"]["positivacao"]["real"] for r in do_grp)
+        pct_posit = real_posit / meta_posit if meta_posit else 0
+        classe_posit = _classe_status(pct_posit)
         linhas_positivacao += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td>{_fmt_num_py(meta_posit_sup, 0)}</td>
-        <td>{_fmt_num_py(real_posit_sup, 0)}</td>
-        <td class="{classe_posit_sup}">{_fmt_pct_py(pct_posit_sup)}</td>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_num_py(meta_posit, 0)}</td>
+        <td>{_fmt_num_py(real_posit, 0)}</td>
+        <td class="{classe_posit}">{_fmt_pct_py(pct_posit)}</td>
       </tr>'''
-        linhas_positivacao_grafico.append((sup, pct_posit_sup, _fmt_pct_py(pct_posit_sup), classe_posit_sup))
+        linhas_positivacao_grafico.append((grp, pct_posit, _fmt_pct_py(pct_posit), classe_posit))
     linhas_positivacao_grafico.sort(key=lambda x: x[1], reverse=True)
     svg_positivacao = _svg_barras(linhas_positivacao_grafico)
 
-    # ---- Gráfico 2: participação no faturamento realizado por supervisor (rosca) ----
+    # ---- Gráfico 2: participação no faturamento realizado (rosca) ----
     fatias_faturamento = []
-    for i, sup in enumerate(supervisores):
-        do_sup = [r for r in dados if r["supervisor"] == sup]
-        real_sup = sum(r["pilares"]["financeiro"]["real"] for r in do_sup)
-        fatias_faturamento.append((sup, real_sup, _CORES_CATEGORICAS[i % len(_CORES_CATEGORICAS)]))
+    for i, grp in enumerate(grupos):
+        do_grp = [r for r in dados if r[chave_grupo] == grp]
+        real_grp = sum(r["pilares"]["financeiro"]["real"] for r in do_grp)
+        fatias_faturamento.append((grp, real_grp, _CORES_CATEGORICAS[i % len(_CORES_CATEGORICAS)]))
     fatias_faturamento.sort(key=lambda x: x[1], reverse=True)
     svg_faturamento, legenda_faturamento = _svg_donut(fatias_faturamento)
 
-    # Industrializado/Thermo/Recompra por supervisor — 3 cards separados
-    # (mesmos critérios de cor dos KPIs de cima: margem industrializado
-    # >=18% bom, margem thermo >=15% bom; recompra >=40% ruim, 20-40%
-    # atenção, <20% bom).
+    # Industrializado/Thermo/Recompra — 3 tabelas separadas (mesmos
+    # critérios de cor dos KPIs de cima).
     linhas_ind, linhas_thermo, linhas_recompra, linhas_media_pedidos = "", "", "", ""
     linhas_margem, linhas_mix, linhas_lucro = "", "", ""
-    for sup in supervisores:
-        do_sup = [r for r in dados if r["supervisor"] == sup]
-        meta_ind = sum(r["industrializado"]["meta"] for r in do_sup)
-        real_ind = sum(r["industrializado"]["real"] for r in do_sup)
-        margens_ind = [r["industrializado"]["margem_pct"] for r in do_sup]
-        media_margem_ind = sum(margens_ind) / len(margens_ind) if margens_ind else 0
-        participacoes_ind = [r["industrializado"]["participacao_pct"] for r in do_sup]
-        media_participacao_ind = sum(participacoes_ind) / len(participacoes_ind) if participacoes_ind else 0
-        meta_thermo = sum(r["thermo"]["meta"] for r in do_sup)
-        real_thermo = sum(r["thermo"]["real"] for r in do_sup)
-        margens_thermo = [r["thermo"]["margem_pct"] for r in do_sup]
-        media_margem_thermo = sum(margens_thermo) / len(margens_thermo) if margens_thermo else 0
-        participacoes_thermo = [r["thermo"]["participacao_pct"] for r in do_sup]
-        media_participacao_thermo = sum(participacoes_thermo) / len(participacoes_thermo) if participacoes_thermo else 0
+    for grp in grupos:
+        do_grp = [r for r in dados if r[chave_grupo] == grp]
+        meta_ind = sum(r["industrializado"]["meta"] for r in do_grp)
+        real_ind = sum(r["industrializado"]["real"] for r in do_grp)
+        media_margem_ind = _media([r["industrializado"]["margem_pct"] for r in do_grp])
+        media_participacao_ind = _media([r["industrializado"]["participacao_pct"] for r in do_grp])
+        meta_thermo = sum(r["thermo"]["meta"] for r in do_grp)
+        real_thermo = sum(r["thermo"]["real"] for r in do_grp)
+        media_margem_thermo = _media([r["thermo"]["margem_pct"] for r in do_grp])
+        media_participacao_thermo = _media([r["thermo"]["participacao_pct"] for r in do_grp])
         classe_ind = "dv-good" if media_margem_ind >= 0.18 else "dv-bad"
         classe_thermo = "dv-good" if media_margem_thermo >= 0.15 else "dv-bad"
         classe_participacao_ind = "dv-good" if media_participacao_ind >= 0.25 else "dv-bad"
         classe_participacao_thermo = "dv-good" if media_participacao_thermo >= 0.03 else "dv-bad"
-        recompras = [r["recompra_pct"] for r in do_sup]
-        media_recompra = sum(recompras) / len(recompras) if recompras else 0
+        media_recompra = _media([r["recompra_pct"] for r in do_grp])
         if media_recompra >= 0.40:
             classe_recompra = "dv-bad"
         elif media_recompra >= 0.20:
             classe_recompra = "dv-warn"
         else:
             classe_recompra = "dv-good"
-        pedidos = [r["media_pedidos"] for r in do_sup]
-        media_pedidos_sup = sum(pedidos) / len(pedidos) if pedidos else 0
+        media_pedidos_grp = _media([r["media_pedidos"] for r in do_grp])
         # Escala de cor da média de pedidos: <10 ruim, 10-14,99 atenção, >=15 bom.
-        if media_pedidos_sup < 10:
+        if media_pedidos_grp < 10:
             classe_pedidos = "dv-bad"
-        elif media_pedidos_sup < 15:
+        elif media_pedidos_grp < 15:
             classe_pedidos = "dv-warn"
         else:
             classe_pedidos = "dv-good"
         linhas_ind += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
+        <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_moeda_py(meta_ind)}</td>
         <td>{_fmt_moeda_py(real_ind)}</td>
         <td class="{classe_participacao_ind}">{_fmt_pct_py(media_participacao_ind)}</td>
@@ -1367,79 +1406,74 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
       </tr>'''
         linhas_thermo += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
+        <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_moeda_py(meta_thermo)}</td>
         <td>{_fmt_moeda_py(real_thermo)}</td>
         <td class="{classe_participacao_thermo}">{_fmt_pct_py(media_participacao_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
-        linhas_media_pedidos += f'''
+        if agrupar_por_rca:
+            linhas_media_pedidos += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td>{len(do_sup)}</td>
-        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_sup, 2)}</td>
+        <td class="dv-tab-sup">{grp}</td>
+        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>
+      </tr>'''
+        else:
+            linhas_media_pedidos += f'''
+      <tr>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{len(do_grp)}</td>
+        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>
       </tr>'''
         linhas_recompra += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
+        <td class="dv-tab-sup">{grp}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
       </tr>'''
-        margens_meta = [r["pilares"]["margem"]["meta"] for r in do_sup]
-        margens_real = [r["pilares"]["margem"]["real"] for r in do_sup]
-        meta_margem_sup = sum(margens_meta) / len(margens_meta) if margens_meta else 0
-        real_margem_sup = sum(margens_real) / len(margens_real) if margens_real else 0
-        pct_margem_sup = real_margem_sup / meta_margem_sup if meta_margem_sup else 0
-        classe_margem_sup = _classe_status(pct_margem_sup)
+        meta_margem_grp = _media([r["pilares"]["margem"]["meta"] for r in do_grp])
+        real_margem_grp = _media([r["pilares"]["margem"]["real"] for r in do_grp])
+        pct_margem_grp = real_margem_grp / meta_margem_grp if meta_margem_grp else 0
+        classe_margem_grp = _classe_status(pct_margem_grp)
         linhas_margem += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td>{_fmt_num_py(meta_margem_sup, 2)}%</td>
-        <td>{_fmt_num_py(real_margem_sup, 2)}%</td>
-        <td class="{classe_margem_sup}">{_fmt_pct_py(pct_margem_sup)}</td>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_num_py(meta_margem_grp, 2)}%</td>
+        <td>{_fmt_num_py(real_margem_grp, 2)}%</td>
+        <td class="{classe_margem_grp}">{_fmt_pct_py(pct_margem_grp)}</td>
       </tr>'''
-        mixes_meta = [r["pilares"]["mix"]["meta"] for r in do_sup]
-        mixes_real = [r["pilares"]["mix"]["real"] for r in do_sup]
-        meta_mix_sup = sum(mixes_meta) / len(mixes_meta) if mixes_meta else 0
-        real_mix_sup = sum(mixes_real) / len(mixes_real) if mixes_real else 0
-        pct_mix_sup = real_mix_sup / meta_mix_sup if meta_mix_sup else 0
-        classe_mix_sup = _classe_status(pct_mix_sup)
+        meta_mix_grp = _media([r["pilares"]["mix"]["meta"] for r in do_grp])
+        real_mix_grp = _media([r["pilares"]["mix"]["real"] for r in do_grp])
+        pct_mix_grp = real_mix_grp / meta_mix_grp if meta_mix_grp else 0
+        classe_mix_grp = _classe_status(pct_mix_grp)
         linhas_mix += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td>{_fmt_num_py(meta_mix_sup, 2)}</td>
-        <td>{_fmt_num_py(real_mix_sup, 2)}</td>
-        <td class="{classe_mix_sup}">{_fmt_pct_py(pct_mix_sup)}</td>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_num_py(meta_mix_grp, 2)}</td>
+        <td>{_fmt_num_py(real_mix_grp, 2)}</td>
+        <td class="{classe_mix_grp}">{_fmt_pct_py(pct_mix_grp)}</td>
       </tr>'''
         # Lucro = margem de cada linha de produto (industrializado/thermo)
         # aplicada sobre o faturamento realizado dela — não existe uma
         # coluna "lucro" pronta na planilha, então é derivado das duas
-        # margens que já temos (real × margem_pct), somado por equipe.
-        lucro_sup = sum(
+        # margens que já temos (real × margem_pct), somado por grupo.
+        lucro_grp = sum(
             r["industrializado"]["real"] * r["industrializado"]["margem_pct"]
             + r["thermo"]["real"] * r["thermo"]["margem_pct"]
-            for r in do_sup
+            for r in do_grp
         )
         linhas_lucro += f'''
       <tr>
-        <td class="dv-tab-sup">{sup}</td>
-        <td>{_fmt_moeda_py(lucro_sup)}</td>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_moeda_py(lucro_grp)}</td>
       </tr>'''
 
-    def _tabela_mini(linhas, colunas, centralizado=False):
-        cabecalho = "".join(f"<th>{c}</th>" for c in colunas)
-        classe_extra = " dv-tabela-center" if centralizado else ""
-        return f'''
-    <table class="dv-tabela{classe_extra}">
-      <thead><tr><th></th>{cabecalho}</tr></thead>
-      <tbody>{linhas}
-      </tbody>
-    </table>'''
-
-    # Departamento por supervisor — rollup das 10 categorias de produto
-    # (Bacon, Bovino, Batata, Suíno, Calabresa, Pães, Frescais, Saborizadas,
-    # Lácteos, Thermo) vindas do painel_departamentos (projeto irmão, usa a
-    # mesma normalização de nome de supervisor). Real/meta somados por
-    # supervisor, % colorido com o mesmo critério (>=100% bom, >=70% atenção).
+    # Departamento — rollup das categorias de produto vindas do
+    # painel_departamentos (projeto irmão). No painel do gerente, agrupa
+    # por supervisor com uma linha META (tamanho de time padrão × meta por
+    # RCA). No painel do supervisor, junta pelo código do RCA (mais
+    # confiável que nome — pode haver pequenas diferenças de grafia entre
+    # os dois projetos) e mostra uma linha por RCA do time, sem META (o
+    # próprio % de cada linha já compara contra a meta individual).
     secao_departamento = ""
     if dados_dep:
         CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
@@ -1447,54 +1481,78 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         for r in dados_dep:
             for chave, info in r["categorias"].items():
                 labels_dep.setdefault(chave, info["label"])
-        # Nem toda categoria de CATEGORIAS_DEP existe nos dados (ex:
-        # "saborizadas" ainda não tem bloco no painel_departamentos) — usa a
-        # MESMA lista filtrada nas linhas de dados e no cabeçalho, senão eles
-        # saem com números de coluna diferentes e tudo desalinha em cascata
-        # (rótulo de uma categoria mostrando o valor da categoria seguinte).
         CATEGORIAS_DEP = [c for c in CATEGORIAS_DEP if c in labels_dep]
-        supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
-        # Time padrão = maior equipe (7 RCAs, o que a maioria dos
-        # supervisores tem — só o EDMAR foge disso, com 2). A linha META usa
-        # esse tamanho como referência, igual ao mockup que o Edmar fez na
-        # planilha (linha "META" logo abaixo do cabeçalho, antes das linhas
-        # de cada supervisor).
-        tamanho_time_padrao = max(
-            (sum(1 for r in dados_dep if r["supervisor"] == sup) for sup in supervisores_dep),
-            default=0,
-        )
-        linha_meta = "".join(
-            f'<td style="font-weight:800">{_fmt_num_py(meta_por_rca * tamanho_time_padrao, 0)}</td>'
-            for chave in CATEGORIAS_DEP
-            for meta_por_rca in [next((r["categorias"][chave]["meta"] for r in dados_dep if chave in r["categorias"]), 0)]
-        )
-        linhas_dep = f'''
+
+        if agrupar_por_rca:
+            mapa_dep_por_codigo = {r["codigo"]: r for r in dados_dep}
+            linhas_dep = ""
+            for rca in dados:
+                row_dep = mapa_dep_por_codigo.get(rca["codigo"])
+                if not row_dep:
+                    continue
+                celulas = ""
+                pcts_grp = []
+                for chave in CATEGORIAS_DEP:
+                    if chave not in row_dep["categorias"]:
+                        celulas += "<td>—</td>"
+                        continue
+                    meta = row_dep["categorias"][chave]["meta"]
+                    real = row_dep["categorias"][chave]["real"]
+                    pct = real / meta if meta else 0
+                    pcts_grp.append(pct)
+                    classe = _classe_status(pct)
+                    celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+                media_desempenho = _media(pcts_grp)
+                classe_media = _classe_status(media_desempenho)
+                celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
+                linhas_dep += f'''
+      <tr>
+        <td class="dv-tab-sup">{rca["nome"]}</td>{celulas}
+      </tr>'''
+        else:
+            supervisores_dep = sorted({r["supervisor"] for r in dados_dep})
+            # Time padrão = maior equipe (7 RCAs, o que a maioria dos
+            # supervisores tem — só o EDMAR foge disso, com 2). A linha
+            # META usa esse tamanho como referência, igual ao mockup que o
+            # Edmar fez na planilha.
+            tamanho_time_padrao = max(
+                (sum(1 for r in dados_dep if r["supervisor"] == sup) for sup in supervisores_dep),
+                default=0,
+            )
+            linha_meta = "".join(
+                f'<td style="font-weight:800">{_fmt_num_py(meta_por_rca * tamanho_time_padrao, 0)}</td>'
+                for chave in CATEGORIAS_DEP
+                for meta_por_rca in [next((r["categorias"][chave]["meta"] for r in dados_dep if chave in r["categorias"]), 0)]
+            )
+            linhas_dep = f'''
       <tr style="border-bottom:2px solid var(--border)">
         <td class="dv-tab-sup" style="text-align:center;font-weight:900">META</td>{linha_meta}<td></td>
       </tr>'''
-        for sup in supervisores_dep:
-            do_sup = [r for r in dados_dep if r["supervisor"] == sup]
-            celulas = ""
-            pcts_sup = []
-            for chave in CATEGORIAS_DEP:
-                meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
-                real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
-                pct = real / meta if meta else 0
-                pcts_sup.append(pct)
-                classe = _classe_status(pct)
-                celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
-            media_desempenho = sum(pcts_sup) / len(pcts_sup) if pcts_sup else 0
-            classe_media = _classe_status(media_desempenho)
-            celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
-            linhas_dep += f'''
+            for sup in supervisores_dep:
+                do_sup = [r for r in dados_dep if r["supervisor"] == sup]
+                celulas = ""
+                pcts_sup = []
+                for chave in CATEGORIAS_DEP:
+                    meta = sum(r["categorias"][chave]["meta"] for r in do_sup if chave in r["categorias"])
+                    real = sum(r["categorias"][chave]["real"] for r in do_sup if chave in r["categorias"])
+                    pct = real / meta if meta else 0
+                    pcts_sup.append(pct)
+                    classe = _classe_status(pct)
+                    celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+                media_desempenho = _media(pcts_sup)
+                classe_media = _classe_status(media_desempenho)
+                celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
+                linhas_dep += f'''
       <tr>
         <td class="dv-tab-sup">{sup}</td>{celulas}
       </tr>'''
-        colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
-        tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
-        secao_departamento = f'''
+
+        if linhas_dep.strip():
+            colunas_dep = [labels_dep[c] for c in CATEGORIAS_DEP if c in labels_dep] + ["Média"]
+            tabela_departamento = _tabela_mini(linhas_dep, colunas_dep, centralizado=True)
+            secao_departamento = f'''
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
-    <h3>Departamento por supervisor</h3>
+    <h3>Departamento por {rotulo_grupo}</h3>
     {tabela_departamento}
   </section>
 '''
@@ -1503,25 +1561,42 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"], centralizado=True)
     tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"], centralizado=True)
-    # Card próprio de Média de Pedidos por supervisor — mostra o nº de
-    # vendedores de cada um junto (EDMAR tem só 2 RCAs, os demais têm 7),
-    # pra deixar claro que a média do EDMAR pesa sobre uma base bem menor.
-    tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, ["Nº Vendedores", "Média de Pedidos"], centralizado=True)
+    # Card próprio de Média de Pedidos — no painel do gerente mostra o nº
+    # de vendedores de cada supervisor junto (EDMAR tem só 2 RCAs, os
+    # demais têm 7); no painel do supervisor cada linha já é 1 RCA, então
+    # essa coluna some (seria sempre "1").
+    colunas_media_pedidos = ["Média de Pedidos"] if agrupar_por_rca else ["Nº Vendedores", "Média de Pedidos"]
+    tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, colunas_media_pedidos, centralizado=True)
     tabela_margem = _tabela_mini(linhas_margem, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_lucro = _tabela_mini(linhas_lucro, ["Lucro"], centralizado=True)
 
-    # ---- Gráfico 3: RCAs com 3-4 pilares por supervisor (barras) ----
-    linhas_pilares = []
-    maior_qtd = max(
-        (sum(1 for r in dados if r["supervisor"] == sup and r["pilares_atingidos"] >= 3) for sup in supervisores),
-        default=0,
-    ) or 1
-    for sup in supervisores:
-        qtd = sum(1 for r in dados if r["supervisor"] == sup and r["pilares_atingidos"] >= 3)
-        total_sup = sum(1 for r in dados if r["supervisor"] == sup)
-        linhas_pilares.append((sup, qtd / maior_qtd, f"{qtd}/{total_sup}", "dv-cat-1"))
-    linhas_pilares.sort(key=lambda x: x[1], reverse=True)
+    # ---- Gráfico 3: pilares atingidos ----
+    # Por supervisor: quantos RCAs do time bateram 3-4 pilares (fração do
+    # maior time). Por RCA: cada vendedor já é o próprio "grupo" de 1, não
+    # faz sentido mostrar "1/1 bateu 3-4" — mostra direto os pilares
+    # atingidos dele (0-4), com o mesmo corte de cor do badge do card
+    # (3-4 bom, 1-2 atenção, 0 ruim).
+    if agrupar_por_rca:
+        titulo_pilares = "Pilares atingidos por RCA"
+        linhas_pilares = []
+        for grp in grupos:
+            rca = next(r for r in dados if r[chave_grupo] == grp)
+            qtd = rca["pilares_atingidos"]
+            linhas_pilares.append((grp, qtd / 4, f"{qtd}/4", _classe_badge_pilares(qtd)))
+        linhas_pilares.sort(key=lambda x: x[1], reverse=True)
+    else:
+        titulo_pilares = f"RCAs com 3-4 pilares por {rotulo_grupo}"
+        maior_qtd = max(
+            (sum(1 for r in dados if r[chave_grupo] == grp and r["pilares_atingidos"] >= 3) for grp in grupos),
+            default=0,
+        ) or 1
+        linhas_pilares = []
+        for grp in grupos:
+            qtd = sum(1 for r in dados if r[chave_grupo] == grp and r["pilares_atingidos"] >= 3)
+            total_grp = sum(1 for r in dados if r[chave_grupo] == grp)
+            linhas_pilares.append((grp, qtd / maior_qtd, f"{qtd}/{total_grp}", "dv-cat-1"))
+        linhas_pilares.sort(key=lambda x: x[1], reverse=True)
     svg_pilares = _svg_barras(linhas_pilares)
 
     # ---- Gráfico 4: RCAs por faixa de pilares atingidos (rosca, status) ----
@@ -1535,9 +1610,95 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     ]
     svg_faixa, legenda_faixa = _svg_donut(fatias_faixa)
 
+    return f"""
+  <section class="dv-kpis">{kpis_html}
+  </section>
+
+  <section class="dv-kpis">{kpis_html_industrializados}
+  </section>
+
+  <section class="dv-row dv-row-inv">
+    <div class="dv-panel">
+      <h3>Participação no faturamento realizado</h3>
+      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+    </div>
+    <div class="dv-panel">
+      <h3>Tendência de fechamento por {rotulo_grupo}</h3>
+      {svg_tendencia}
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel">
+      <h3>Positivação por {rotulo_grupo}</h3>
+      {tabela_positivacao}
+    </div>
+    <div class="dv-panel">
+      <h3>Positivação — realizado / meta</h3>
+      {svg_positivacao}
+    </div>
+  </section>
+
+  <section class="dv-row-3">
+    <div class="dv-panel">
+      <h3>Industrializado por {rotulo_grupo}</h3>
+      {tabela_industrializado}
+    </div>
+    <div class="dv-panel">
+      <h3>Thermo por {rotulo_grupo}</h3>
+      {tabela_thermo}
+    </div>
+    <div class="dv-panel">
+      <h3>Recompra por {rotulo_grupo}</h3>
+      {tabela_recompra}
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel">
+      <h3>{titulo_pilares}</h3>
+      {svg_pilares}
+    </div>
+    <div class="dv-panel">
+      <h3>RCAs por faixa de pilares atingidos</h3>
+      <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
+    </div>
+  </section>
+  {secao_departamento}
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Média de pedidos por {rotulo_grupo}</h3>
+    {tabela_media_pedidos}
+  </section>
+
+  <section class="dv-row-3">
+    <div class="dv-panel">
+      <h3>Margem por {rotulo_grupo}</h3>
+      {tabela_margem}
+    </div>
+    <div class="dv-panel">
+      <h3>Mix por {rotulo_grupo}</h3>
+      {tabela_mix}
+    </div>
+    <div class="dv-panel">
+      <h3>Lucro por {rotulo_grupo}</h3>
+      {tabela_lucro}
+    </div>
+  </section>
+"""
+
+
+def gerar_html_gerente(dados, totais, dados_dep=None):
+    import datetime
+    data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    supervisores = sorted({r["supervisor"] for r in dados})
     total_rcas = len(dados)
 
-    corpo = f"""<!doctype html>
+    secoes = _construir_secoes_dashboard(
+        dados, dados_dep=dados_dep, totais=totais,
+        chave_grupo="supervisor", rotulo_grupo="supervisor",
+    )
+
+    return f"""<!doctype html>
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
@@ -1558,87 +1719,70 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     </div>
     {_LOGO_TAG}
   </header>
-
-  <section class="dv-kpis">{kpis_html}
-  </section>
-
-  <section class="dv-kpis">{kpis_html_industrializados}
-  </section>
-
-  <section class="dv-row dv-row-inv">
-    <div class="dv-panel">
-      <h3>Participação no faturamento realizado</h3>
-      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
-    </div>
-    <div class="dv-panel">
-      <h3>Tendência de fechamento por supervisor</h3>
-      {svg_tendencia}
-    </div>
-  </section>
-
-  <section class="dv-row">
-    <div class="dv-panel">
-      <h3>Positivação por supervisor</h3>
-      {tabela_positivacao}
-    </div>
-    <div class="dv-panel">
-      <h3>Positivação — realizado / meta</h3>
-      {svg_positivacao}
-    </div>
-  </section>
-
-  <section class="dv-row-3">
-    <div class="dv-panel">
-      <h3>Industrializado por supervisor</h3>
-      {tabela_industrializado}
-    </div>
-    <div class="dv-panel">
-      <h3>Thermo por supervisor</h3>
-      {tabela_thermo}
-    </div>
-    <div class="dv-panel">
-      <h3>Recompra por supervisor</h3>
-      {tabela_recompra}
-    </div>
-  </section>
-
-  <section class="dv-row">
-    <div class="dv-panel">
-      <h3>RCAs com 3-4 pilares por supervisor</h3>
-      {svg_pilares}
-    </div>
-    <div class="dv-panel">
-      <h3>RCAs por faixa de pilares atingidos</h3>
-      <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
-    </div>
-  </section>
-  {secao_departamento}
-  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
-    <h3>Média de pedidos por supervisor</h3>
-    {tabela_media_pedidos}
-  </section>
-
-  <section class="dv-row-3">
-    <div class="dv-panel">
-      <h3>Margem por supervisor</h3>
-      {tabela_margem}
-    </div>
-    <div class="dv-panel">
-      <h3>Mix por supervisor</h3>
-      {tabela_mix}
-    </div>
-    <div class="dv-panel">
-      <h3>Lucro por supervisor</h3>
-      {tabela_lucro}
-    </div>
-  </section>
-
+  {secoes}
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
 </div>
 </body>
 </html>
 """
-    return corpo
+
+
+def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
+    """Painel de um supervisor: o mesmo dashboard do painel do gerente
+    (KPIs + gráficos/tabelas), recalculado só com o time dele e quebrado
+    por RCA em vez de por supervisor — seguido da grade de cards
+    individuais (um por RCA, com todo o detalhe) que já existia."""
+    import datetime
+    data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+    total_rcas = len(dados_sup)
+
+    dados_dep_sup = [r for r in dados_dep if r["supervisor"] == nome_supervisor] if dados_dep else None
+
+    secoes = _construir_secoes_dashboard(
+        dados_sup, dados_dep=dados_dep_sup, totais=None,
+        chave_grupo="nome", rotulo_grupo="RCA",
+    )
+
+    js = (_JS_CARDS_TEMPLATE
+          .replace("__DADOS_JSON__", json.dumps(dados_sup, ensure_ascii=False))
+          .replace("__FOTOS_SUPERVISORES_JSON__", _FOTOS_SUPERVISORES_JSON)
+          .replace("__FOTOS_RCAS_JSON__", _FOTOS_RCAS_JSON))
+
+    return f"""<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel 4 Pilares — {nome_supervisor}</title>
+<style>
+{_CSS_COMPARTILHADO}
+{_CSS_DASHBOARD_GERENTE}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <div class="title-block">
+      <h1>Painel do Supervisor — {nome_supervisor}</h1>
+      <p>{total_rcas} RCAs — atualizado em {data_extracao}</p>
+    </div>
+    {_LOGO_TAG}
+  </header>
+  {secoes}
+  <section class="dv-panel" style="margin-bottom:18px">
+    <h3>Detalhe por RCA</h3>
+  </section>
+  {_CORPO_TABS_GRID}
+  <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
+</div>
+
+<script>
+{js}
+</script>
+</body>
+</html>
+"""
 
 
 CAMINHO_TOTAIS = os.path.join(PASTA_BASE, "totais_gerais.json")
@@ -1655,26 +1799,30 @@ def main():
         f.write(html)
     print(f"Painel gerado em: {CAMINHO_SAIDA}")
 
-    # Um painel filtrado por supervisor, além do geral — cada supervisor
-    # tem seu próprio arquivo/link, só com o time dele.
-    supervisores = sorted({r["supervisor"] for r in dados})
-    pasta_supervisores = os.path.join(PASTA_BASE, "supervisores")
-    os.makedirs(pasta_supervisores, exist_ok=True)
-    for sup in supervisores:
-        dados_sup = [r for r in dados if r["supervisor"] == sup]
-        html_sup = gerar_html(dados_sup, titulo=f"Painel 4 Pilares — {sup}")
-        caminho_sup = os.path.join(pasta_supervisores, f"painel_{sup}.html")
-        with open(caminho_sup, "w", encoding="utf-8") as f:
-            f.write(html_sup)
-        print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
-
-    # Dados do painel_departamentos (projeto irmão) são opcionais — o painel
-    # do gerente funciona sem eles, só não mostra a seção de departamento.
+    # Dados do painel_departamentos (projeto irmão) são opcionais — os
+    # dashboards (gerente e supervisor) funcionam sem eles, só não mostram
+    # a seção de departamento. Carregado antes do loop de supervisores
+    # porque agora o painel de cada um também usa esse dado.
     caminho_dados_dep = os.path.join(PASTA_BASE, "..", "painel_departamentos", "dados.json")
     dados_dep = None
     if os.path.exists(caminho_dados_dep):
         with open(caminho_dados_dep, "r", encoding="utf-8") as f:
             dados_dep = json.load(f)
+
+    # Um painel filtrado por supervisor, além do geral — cada supervisor
+    # tem seu próprio arquivo/link, só com o time dele: o mesmo dashboard
+    # do painel do gerente (KPIs + gráficos/tabelas), quebrado por RCA em
+    # vez de por supervisor, seguido da grade de cards individuais.
+    supervisores = sorted({r["supervisor"] for r in dados})
+    pasta_supervisores = os.path.join(PASTA_BASE, "supervisores")
+    os.makedirs(pasta_supervisores, exist_ok=True)
+    for sup in supervisores:
+        dados_sup = [r for r in dados if r["supervisor"] == sup]
+        html_sup = gerar_html_supervisor(dados_sup, sup, dados_dep)
+        caminho_sup = os.path.join(pasta_supervisores, f"painel_{sup}.html")
+        with open(caminho_sup, "w", encoding="utf-8") as f:
+            f.write(html_sup)
+        print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
 
     html_gerente = gerar_html_gerente(dados, totais, dados_dep)
     caminho_gerente = os.path.join(PASTA_BASE, "painel_gerente.html")
