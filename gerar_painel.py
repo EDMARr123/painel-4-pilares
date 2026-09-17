@@ -546,7 +546,7 @@ footer.foot {
       __LOGO_TAG__
     </div>
   </header>
-
+  __DASHBOARD_SECOES__
   <nav class="tabs" id="tabs"></nav>
 
   <section class="resumo-time" id="resumoTime"></section>
@@ -925,15 +925,28 @@ montar();
 """
 
 
-def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN"):
+def gerar_html(dados, titulo="Painel 4 Pilares — Equipe GYN", totais=None, dados_dep=None):
     import datetime
     data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    # Mesmo dashboard do painel do gerente (KPIs + gráficos/tabelas por
+    # supervisor) no topo do painel geral, seguido da grade de cards que já
+    # existia. `_construir_secoes_dashboard`/`_CSS_DASHBOARD_GERENTE` só
+    # existem depois deste ponto no arquivo, mas Python resolve nomes de
+    # módulo em tempo de chamada, não de definição — funciona porque
+    # gerar_html só é chamada de main(), no fim do arquivo.
+    secoes = _construir_secoes_dashboard(
+        dados, dados_dep=dados_dep, totais=totais,
+        chave_grupo="supervisor", rotulo_grupo="supervisor",
+    )
 
     html = TEMPLATE.replace("__DADOS_JSON__", json.dumps(dados, ensure_ascii=False))
     html = html.replace("__FOTOS_SUPERVISORES_JSON__", _FOTOS_SUPERVISORES_JSON)
     html = html.replace("__FOTOS_RCAS_JSON__", _FOTOS_RCAS_JSON)
     html = html.replace("__DATA_EXTRACAO__", data_extracao)
     html = html.replace("__LOGO_TAG__", _LOGO_TAG)
+    html = html.replace("__DASHBOARD_SECOES__", secoes)
+    html = html.replace("</style>", _CSS_DASHBOARD_GERENTE + "\n</style>", 1)
     html = html.replace("<title>Painel 4 Pilares — Equipe GYN</title>", f"<title>{titulo}</title>")
     return html
 
@@ -1794,20 +1807,20 @@ def main():
     with open(CAMINHO_TOTAIS, "r", encoding="utf-8") as f:
         totais = json.load(f)
 
-    html = gerar_html(dados)
-    with open(CAMINHO_SAIDA, "w", encoding="utf-8") as f:
-        f.write(html)
-    print(f"Painel gerado em: {CAMINHO_SAIDA}")
-
     # Dados do painel_departamentos (projeto irmão) são opcionais — os
-    # dashboards (gerente e supervisor) funcionam sem eles, só não mostram
-    # a seção de departamento. Carregado antes do loop de supervisores
-    # porque agora o painel de cada um também usa esse dado.
+    # dashboards (geral, gerente e supervisor) funcionam sem eles, só não
+    # mostram a seção de departamento. Carregado antes do painel geral
+    # porque agora ele também usa esse dado.
     caminho_dados_dep = os.path.join(PASTA_BASE, "..", "painel_departamentos", "dados.json")
     dados_dep = None
     if os.path.exists(caminho_dados_dep):
         with open(caminho_dados_dep, "r", encoding="utf-8") as f:
             dados_dep = json.load(f)
+
+    html = gerar_html(dados, totais=totais, dados_dep=dados_dep)
+    with open(CAMINHO_SAIDA, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"Painel gerado em: {CAMINHO_SAIDA}")
 
     # Um painel filtrado por supervisor, além do geral — cada supervisor
     # tem seu próprio arquivo/link, só com o time dele: o mesmo dashboard
