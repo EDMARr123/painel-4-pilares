@@ -1856,6 +1856,7 @@ def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
     secoes = _construir_secoes_dashboard(
         dados_sup, dados_dep=dados_dep_sup, totais=None,
         chave_grupo="nome", rotulo_grupo="RCA",
+        mostrar_resumo_4_pilares=True,
     )
 
     foto_sup = _FOTOS_SUPERVISORES.get(nome_supervisor)
