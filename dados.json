@@ -48,6 +48,7 @@
       "premio": 81.3128
     },
     "recompra_pct": 0.29213483146067415,
+    "recompra_contagem": 26,
     "media_pedidos": 15.928571428571429,
     "sku": {
       "meta": 120,
@@ -111,6 +112,7 @@
       "premio": 166.2902
     },
     "recompra_pct": 0.4175824175824176,
+    "recompra_contagem": 38,
     "media_pedidos": 15.714285714285714,
     "sku": {
       "meta": 120,
@@ -174,6 +176,7 @@
       "premio": 159.2118
     },
     "recompra_pct": 0.46153846153846156,
+    "recompra_contagem": 36,
     "media_pedidos": 13.357142857142858,
     "sku": {
       "meta": 120,
@@ -237,6 +240,7 @@
       "premio": 0
     },
     "recompra_pct": 0.38461538461538464,
+    "recompra_contagem": 30,
     "media_pedidos": 12.5,
     "sku": {
       "meta": 120,
@@ -300,6 +304,7 @@
       "premio": 99.7124
     },
     "recompra_pct": 0.42857142857142855,
+    "recompra_contagem": 30,
     "media_pedidos": 13.214285714285714,
     "sku": {
       "meta": 120,
@@ -363,6 +368,7 @@
       "premio": 105.4094
     },
     "recompra_pct": 0.40789473684210525,
+    "recompra_contagem": 31,
     "media_pedidos": 10.928571428571429,
     "sku": {
       "meta": 120,
@@ -426,6 +432,7 @@
       "premio": 108.67399999999999
     },
     "recompra_pct": 0.43478260869565216,
+    "recompra_contagem": 30,
     "media_pedidos": 9.214285714285714,
     "sku": {
       "meta": 120,
@@ -489,6 +496,7 @@
       "premio": 65.31
     },
     "recompra_pct": 0.4520547945205479,
+    "recompra_contagem": 33,
     "media_pedidos": 9.785714285714286,
     "sku": {
       "meta": 120,
@@ -552,6 +560,7 @@
       "premio": 82.40299999999999
     },
     "recompra_pct": 0.3411764705882353,
+    "recompra_contagem": 29,
     "media_pedidos": 13.785714285714286,
     "sku": {
       "meta": 120,
@@ -615,6 +624,7 @@
       "premio": 0
     },
     "recompra_pct": 0.43333333333333335,
+    "recompra_contagem": 39,
     "media_pedidos": 14.857142857142858,
     "sku": {
       "meta": 120,
@@ -678,6 +688,7 @@
       "premio": 98.5016
     },
     "recompra_pct": 0.45544554455445546,
+    "recompra_contagem": 46,
     "media_pedidos": 14.571428571428571,
     "sku": {
       "meta": 120,
@@ -741,6 +752,7 @@
       "premio": 0
     },
     "recompra_pct": 0.45652173913043476,
+    "recompra_contagem": 21,
     "media_pedidos": 8.428571428571429,
     "sku": {
       "meta": 120,
@@ -804,6 +816,7 @@
       "premio": 0
     },
     "recompra_pct": 0.425,
+    "recompra_contagem": 17,
     "media_pedidos": 6.428571428571429,
     "sku": {
       "meta": 120,
@@ -867,6 +880,7 @@
       "premio": 0
     },
     "recompra_pct": 0.375,
+    "recompra_contagem": 18,
     "media_pedidos": 8.928571428571429,
     "sku": {
       "meta": 120,
@@ -930,6 +944,7 @@
       "premio": 0
     },
     "recompra_pct": 0.5555555555555556,
+    "recompra_contagem": 50,
     "media_pedidos": 15.285714285714286,
     "sku": {
       "meta": 120,
@@ -993,6 +1008,7 @@
       "premio": 0
     },
     "recompra_pct": 0.4752475247524752,
+    "recompra_contagem": 48,
     "media_pedidos": 20.285714285714285,
     "sku": {
       "meta": 120,
@@ -1056,6 +1072,7 @@
       "premio": 185.89560000000003
     },
     "recompra_pct": 0.5764705882352941,
+    "recompra_contagem": 49,
     "media_pedidos": 11,
     "sku": {
       "meta": 120,
@@ -1119,6 +1136,7 @@
       "premio": 0
     },
     "recompra_pct": 0.5806451612903226,
+    "recompra_contagem": 54,
     "media_pedidos": 11.642857142857142,
     "sku": {
       "meta": 120,
@@ -1182,6 +1200,7 @@
       "premio": 235.5832
     },
     "recompra_pct": 0.4479166666666667,
+    "recompra_contagem": 43,
     "media_pedidos": 17.285714285714285,
     "sku": {
       "meta": 120,
@@ -1245,6 +1264,7 @@
       "premio": 0
     },
     "recompra_pct": 0.4852941176470588,
+    "recompra_contagem": 33,
     "media_pedidos": 12.285714285714286,
     "sku": {
       "meta": 120,
@@ -1308,6 +1328,7 @@
       "premio": 0
     },
     "recompra_pct": 0.5294117647058824,
+    "recompra_contagem": 36,
     "media_pedidos": 10.571428571428571,
     "sku": {
       "meta": 120,
@@ -1371,6 +1392,7 @@
       "premio": 0
     },
     "recompra_pct": 0.4126984126984127,
+    "recompra_contagem": 26,
     "media_pedidos": 11.428571428571429,
     "sku": {
       "meta": 120,
@@ -1434,6 +1456,7 @@
       "premio": 0
     },
     "recompra_pct": 0.41025641025641024,
+    "recompra_contagem": 16,
     "media_pedidos": 9.928571428571429,
     "sku": {
       "meta": 120,
@@ -1497,6 +1520,7 @@
       "premio": 0
     },
     "recompra_pct": 0.38461538461538464,
+    "recompra_contagem": 15,
     "media_pedidos": 6.428571428571429,
     "sku": {
       "meta": 120,
@@ -1560,6 +1584,7 @@
       "premio": 0
     },
     "recompra_pct": 0.2653061224489796,
+    "recompra_contagem": 13,
     "media_pedidos": 10.5,
     "sku": {
       "meta": 120,
@@ -1623,6 +1648,7 @@
       "premio": 0
     },
     "recompra_pct": 0.5087719298245614,
+    "recompra_contagem": 29,
     "media_pedidos": 8.285714285714286,
     "sku": {
       "meta": 120,
@@ -1686,6 +1712,7 @@
       "premio": 0
     },
     "recompra_pct": 0.4605263157894737,
+    "recompra_contagem": 35,
     "media_pedidos": 13.928571428571429,
     "sku": {
       "meta": 120,
@@ -1749,6 +1776,7 @@
       "premio": 76.2638
     },
     "recompra_pct": 0.40625,
+    "recompra_contagem": 26,
     "media_pedidos": 10.785714285714286,
     "sku": {
       "meta": 120,
@@ -1812,6 +1840,7 @@
       "premio": 0
     },
     "recompra_pct": 0.3157894736842105,
+    "recompra_contagem": 24,
     "media_pedidos": 17.357142857142858,
     "sku": {
       "meta": 120,
@@ -1875,6 +1904,7 @@
       "premio": 250.5336
     },
     "recompra_pct": 0.45454545454545453,
+    "recompra_contagem": 25,
     "media_pedidos": 9.857142857142858,
     "sku": {
       "meta": 120,
@@ -1938,6 +1968,7 @@
       "premio": 53.1188
     },
     "recompra_pct": 0.5161290322580645,
+    "recompra_contagem": 32,
     "media_pedidos": 10.285714285714286,
     "sku": {
       "meta": 120,
@@ -2001,6 +2032,7 @@
       "premio": 0
     },
     "recompra_pct": 0.47560975609756095,
+    "recompra_contagem": 39,
     "media_pedidos": 15,
     "sku": {
       "meta": 120,
@@ -2064,6 +2096,7 @@
       "premio": 185.7568
     },
     "recompra_pct": 0.34545454545454546,
+    "recompra_contagem": 19,
     "media_pedidos": 13.285714285714286,
     "sku": {
       "meta": 120,
@@ -2127,6 +2160,7 @@
       "premio": 310.4936
     },
     "recompra_pct": 0.4126984126984127,
+    "recompra_contagem": 26,
     "media_pedidos": 13.5,
     "sku": {
       "meta": 120,
@@ -2190,6 +2224,7 @@
       "premio": 104.224
     },
     "recompra_pct": 0.0574468085106383,
+    "recompra_contagem": 27,
     "media_pedidos": 14.571428571428571,
     "sku": {
       "meta": 120,
@@ -2253,6 +2288,7 @@
       "premio": 0
     },
     "recompra_pct": 0.30303030303030304,
+    "recompra_contagem": 30,
     "media_pedidos": 16.571428571428573,
     "sku": {
       "meta": 120,
@@ -2316,6 +2352,7 @@
       "premio": 1
     },
     "recompra_pct": 0.3492063492063492,
+    "recompra_contagem": 22,
     "media_pedidos": 12.714285714285714,
     "sku": {
       "meta": 120,
@@ -2379,6 +2416,7 @@
       "premio": 2
     },
     "recompra_pct": 0.43243243243243246,
+    "recompra_contagem": 32,
     "media_pedidos": 12.571428571428571,
     "sku": {
       "meta": 120,
@@ -2442,6 +2480,7 @@
       "premio": 3
     },
     "recompra_pct": 0.5301204819277109,
+    "recompra_contagem": 44,
     "media_pedidos": 14.142857142857142,
     "sku": {
       "meta": 120,
@@ -2505,6 +2544,7 @@
       "premio": 4
     },
     "recompra_pct": 0.3392857142857143,
+    "recompra_contagem": 19,
     "media_pedidos": 10.071428571428571,
     "sku": {
       "meta": 120,
@@ -2568,6 +2608,7 @@
       "premio": 5
     },
     "recompra_pct": 0.5,
+    "recompra_contagem": 32,
     "media_pedidos": 10.142857142857142,
     "sku": {
       "meta": 120,
@@ -2631,6 +2672,7 @@
       "premio": 78.6926
     },
     "recompra_pct": 0.4772727272727273,
+    "recompra_contagem": 42,
     "media_pedidos": 16.142857142857142,
     "sku": {
       "meta": 120,

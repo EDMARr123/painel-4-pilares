@@ -242,7 +242,8 @@ def extrair():
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
             "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(53)},
             "thermo": {"meta": val(34), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(55)},
-            "recompra_pct": val(46),  # AT = "RECOMPRA" % (AS = contagem)
+            "recompra_pct": val(46),  # AT = "RECOMPRA" %
+            "recompra_contagem": val(45),  # AS = "RECOMPRA" contagem (clientes com 1 pedido)
             "media_pedidos": val(48),  # AV = "MÉDIA PEDIDOS"
             "sku": {"meta": val(50), "real": val(51)},  # AX/AY = "SKU" meta/realizado
             "positivacao_dia15": {"resultado": val(39), "premio": val(40)},  # AM/AN
