@@ -1288,20 +1288,19 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     </div>'''
 
     # Card resumo "Vendedores 4 Pilares" — só no painel do gerente. Critério
-    # próprio (não usa o `pilares_atingidos` já pronto na planilha):
-    # Positivação, Mix e Margem contam só a partir de 100% da meta; o pilar
-    # Financeiro usa a Tendência (projetado/meta) também a partir de 100%.
+    # próprio (não usa o `pilares_atingidos` já pronto na planilha): Mix e
+    # Margem contam só a partir de 100% da meta; Financeiro usa a Tendência
+    # (projetado/meta) também a partir de 100%. Positivação nunca trava a
+    # contagem — sempre considerada OK, mesmo abaixo de 100% da meta cheia.
     if mostrar_resumo_4_pilares:
         def bateu_4_pilares(r):
-            pos = r["pilares"]["positivacao"]
             mix = r["pilares"]["mix"]
             mar = r["pilares"]["margem"]
             fin = r["pilares"]["financeiro"]
-            pct_pos = pos["real"] / pos["meta"] if pos["meta"] else 0
             pct_mix = mix["real"] / mix["meta"] if mix["meta"] else 0
             pct_margem = mar["real"] / mar["meta"] if mar["meta"] else 0
             pct_tendencia = r["tendencia"]["projetado"] / fin["meta"] if fin["meta"] else 0
-            return pct_pos >= 1 and pct_mix >= 1 and pct_margem >= 1 and pct_tendencia >= 1
+            return pct_mix >= 1 and pct_margem >= 1 and pct_tendencia >= 1
 
         total_vendedores = len(dados)
         qtd_4_pilares = sum(1 for r in dados if bateu_4_pilares(r))
@@ -1311,7 +1310,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-kpi {classe_4_pilares}">
       <div class="l">Vendedores 4 Pilares</div>
       <div class="v">{qtd_4_pilares}/{total_vendedores}</div>
-      <div class="m">Positivação, Mix, Margem e Tendência ≥ 100%</div>
+      <div class="m">Mix, Margem e Tendência ≥ 100%</div>
       <span class="badge {classe_4_pilares}">{_fmt_pct_py(pct_4_pilares)}</span>
     </div>'''
 
