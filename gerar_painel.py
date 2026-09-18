@@ -1305,7 +1305,14 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         total_vendedores = len(dados)
         qtd_4_pilares = sum(1 for r in dados if bateu_4_pilares(r))
         pct_4_pilares = qtd_4_pilares / total_vendedores if total_vendedores else 0
-        classe_4_pilares = _classe_status(pct_4_pilares)
+        # Corte próprio deste card — bem mais baixo que o padrão (100%/70%)
+        # dos outros KPIs, já que bater os 3 pilares ao mesmo tempo é raro.
+        if pct_4_pilares >= 0.40:
+            classe_4_pilares = "dv-good"
+        elif pct_4_pilares >= 0.20:
+            classe_4_pilares = "dv-warn"
+        else:
+            classe_4_pilares = "dv-bad"
         kpis_html += f'''
     <div class="dv-kpi {classe_4_pilares}">
       <div class="l">Vendedores 4 Pilares</div>
