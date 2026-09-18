@@ -1239,8 +1239,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     kpis_fonte = [
         ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
         ("Positivação", *[soma("positivacao", c) for c in ("meta", "real")], lambda v: _fmt_num_py(v, 0)),
-        ("Margem", meta_margem, real_margem, fmt_pct_2casas),
-        ("Mix", meta_mix, real_mix, fmt_pct_2casas),
     ]
     kpis_html = ""
     for label, meta, real, fmt in kpis_fonte:
@@ -1276,6 +1274,17 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="v">{_fmt_pct_py(media_recompra_geral)}</div>
       <div class="m">Média {"do time" if agrupar_por_rca else "da equipe"}</div>
       <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
+    </div>'''
+
+    for label, meta, real, fmt in [("Mix", meta_mix, real_mix, fmt_pct_2casas), ("Margem", meta_margem, real_margem, fmt_pct_2casas)]:
+        pct = real / meta if meta else 0
+        classe = _classe_status(pct)
+        kpis_html += f'''
+    <div class="dv-kpi {classe}">
+      <div class="l">{label}</div>
+      <div class="v">{fmt(real)}</div>
+      <div class="m">Meta {fmt(meta)}</div>
+      <span class="badge {classe}">{_fmt_pct_py(pct)}</span>
     </div>'''
 
     # Conta-Corrente/Peso/Preço Médio: blocos exclusivos da planilha, só
