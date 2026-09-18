@@ -1630,10 +1630,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     svg_faixa, legenda_faixa = _svg_donut(fatias_faixa)
 
     return f"""
-  <section class="dv-kpis">{kpis_html}
-  </section>
-
-  <section class="dv-kpis">{kpis_html_industrializados}
+  <section class="dv-kpis">{kpis_html}{kpis_html_industrializados}
   </section>
 
   <section class="dv-row dv-row-inv">
