@@ -1700,7 +1700,52 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 """
 
 
-def gerar_html_gerente(dados, totais, dados_dep=None):
+_CSS_BOTOES_ACESSO = """
+.botoes-acesso {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+.botao-acesso {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: border-color .15s, color .15s;
+}
+.botao-acesso:hover { border-color: var(--accent); color: var(--accent); }
+"""
+
+
+def _construir_botoes_acesso(supervisores, links_supervisores):
+    """Linha de botões de acesso rápido ao painel individual de cada
+    supervisor. Só gera o botão se o link existir em links_supervisores.json
+    — nunca inventa uma URL."""
+    if not links_supervisores:
+        return ""
+    botoes = []
+    for sup in supervisores:
+        url = links_supervisores.get(sup)
+        if not url:
+            continue
+        botoes.append(
+            f'<a class="botao-acesso" href="{url}" target="_blank" rel="noopener">👤 {sup}</a>'
+        )
+    if not botoes:
+        return ""
+    return f'<div class="botoes-acesso">{"".join(botoes)}</div>'
+
+
+def gerar_html_gerente(dados, totais, dados_dep=None, links_supervisores=None):
     import datetime
     data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     supervisores = sorted({r["supervisor"] for r in dados})
@@ -1710,6 +1755,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
         dados, dados_dep=dados_dep, totais=totais,
         chave_grupo="supervisor", rotulo_grupo="supervisor",
     )
+    botoes_acesso = _construir_botoes_acesso(supervisores, links_supervisores)
 
     return f"""<!doctype html>
 <html lang="pt-BR">
@@ -1720,6 +1766,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
 <style>
 {_CSS_COMPARTILHADO}
 {_CSS_DASHBOARD_GERENTE}
+{_CSS_BOTOES_ACESSO}
 </style>
 </head>
 <body>
@@ -1732,6 +1779,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     </div>
     {_LOGO_TAG}
   </header>
+  {botoes_acesso}
   {secoes}
   <footer class="foot">Dados extraídos de CONTAR 4 PILARES · gerado automaticamente</footer>
 </div>
@@ -1837,7 +1885,13 @@ def main():
             f.write(html_sup)
         print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
 
-    html_gerente = gerar_html_gerente(dados, totais, dados_dep)
+    caminho_links = os.path.join(PASTA_BASE, "links_supervisores.json")
+    links_supervisores = None
+    if os.path.exists(caminho_links):
+        with open(caminho_links, "r", encoding="utf-8") as f:
+            links_supervisores = json.load(f)
+
+    html_gerente = gerar_html_gerente(dados, totais, dados_dep, links_supervisores)
     caminho_gerente = os.path.join(PASTA_BASE, "painel_gerente.html")
     with open(caminho_gerente, "w", encoding="utf-8") as f:
         f.write(html_gerente)
