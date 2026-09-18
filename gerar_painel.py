@@ -25,10 +25,11 @@ def _logo_data_uri():
 _LOGO_TAG = '<img src="{}" alt="T&amp;T Alimentos" style="height:52px;width:auto;flex:none;" />'.format(_logo_data_uri())
 
 
-def _fotos_supervisores_json():
+def _fotos_supervisores_dict():
     """Fotos dos supervisores (uma por supervisor, se existir em
     fotos_supervisores/{NOME}.jpg) embutidas como base64 — usadas no card
-    de resumo do time no lugar do avatar de iniciais."""
+    de resumo do time no lugar do avatar de iniciais, e nos botões de
+    acesso rápido do painel do gerente."""
     fotos = {}
     if os.path.isdir(PASTA_FOTOS_SUPERVISORES):
         for nome_arquivo in os.listdir(PASTA_FOTOS_SUPERVISORES):
@@ -39,10 +40,11 @@ def _fotos_supervisores_json():
             with open(os.path.join(PASTA_FOTOS_SUPERVISORES, nome_arquivo), "rb") as f:
                 b64 = base64.b64encode(f.read()).decode("ascii")
             fotos[nome.upper()] = f"data:{tipo_mime};base64,{b64}"
-    return json.dumps(fotos, ensure_ascii=False)
+    return fotos
 
 
-_FOTOS_SUPERVISORES_JSON = _fotos_supervisores_json()
+_FOTOS_SUPERVISORES = _fotos_supervisores_dict()
+_FOTOS_SUPERVISORES_JSON = json.dumps(_FOTOS_SUPERVISORES, ensure_ascii=False)
 
 
 def _fotos_rcas_json():
@@ -1714,9 +1716,9 @@ _CSS_BOTOES_ACESSO = """
 .botao-acesso {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 10px;
+  gap: 8px;
+  padding: 6px 16px 6px 6px;
+  border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--ink);
@@ -1727,6 +1729,26 @@ _CSS_BOTOES_ACESSO = """
   transition: border-color .15s, color .15s;
 }
 .botao-acesso:hover { border-color: var(--accent); color: var(--accent); }
+.botao-acesso .avatar-foto {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+.botao-acesso .avatar-inicial {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-deep);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+}
 """
 
 
@@ -1736,11 +1758,19 @@ GITHUB_PAGES_BASE = "https://edmarr123.github.io/painel-4-pilares/"
 def _construir_botoes_acesso(supervisores):
     """Linha de botões de acesso rápido ao painel individual de cada
     supervisor, publicado no GitHub Pages (não no link do artifact do
-    Claude — o gerente abre o painel pelo GitHub)."""
-    botoes = [
-        f'<a class="botao-acesso" href="{GITHUB_PAGES_BASE}supervisores/painel_{sup}.html" target="_blank" rel="noopener">👤 {sup}</a>'
-        for sup in supervisores
-    ]
+    Claude — o gerente abre o painel pelo GitHub). Mostra a foto real do
+    supervisor quando existe em fotos_supervisores/, senão cai pra um
+    avatar com a inicial do nome."""
+    botoes = []
+    for sup in supervisores:
+        foto = _FOTOS_SUPERVISORES.get(sup)
+        if foto:
+            avatar = f'<img class="avatar-foto" src="{foto}" alt="{sup}" />'
+        else:
+            avatar = f'<span class="avatar-inicial">{sup[0]}</span>'
+        botoes.append(
+            f'<a class="botao-acesso" href="{GITHUB_PAGES_BASE}supervisores/painel_{sup}.html" target="_blank" rel="noopener">{avatar}{sup}</a>'
+        )
     if not botoes:
         return ""
     return f'<div class="botoes-acesso">{"".join(botoes)}</div>'
