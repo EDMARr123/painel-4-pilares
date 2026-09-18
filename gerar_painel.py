@@ -1273,6 +1273,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-kpi {classe_recompra_geral}">
       <div class="l">Recompra</div>
       <div class="v">{_fmt_num_py(qtd_1_pedido, 0)}</div>
+      <div class="m">Clientes com 01 pedido</div>
       <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
     </div>'''
 
