@@ -1726,26 +1726,23 @@ _CSS_BOTOES_ACESSO = """
 """
 
 
-def _construir_botoes_acesso(supervisores, links_supervisores):
+GITHUB_PAGES_BASE = "https://edmarr123.github.io/painel-4-pilares/"
+
+
+def _construir_botoes_acesso(supervisores):
     """Linha de botões de acesso rápido ao painel individual de cada
-    supervisor. Só gera o botão se o link existir em links_supervisores.json
-    — nunca inventa uma URL."""
-    if not links_supervisores:
-        return ""
-    botoes = []
-    for sup in supervisores:
-        url = links_supervisores.get(sup)
-        if not url:
-            continue
-        botoes.append(
-            f'<a class="botao-acesso" href="{url}" target="_blank" rel="noopener">👤 {sup}</a>'
-        )
+    supervisor, publicado no GitHub Pages (não no link do artifact do
+    Claude — o gerente abre o painel pelo GitHub)."""
+    botoes = [
+        f'<a class="botao-acesso" href="{GITHUB_PAGES_BASE}supervisores/painel_{sup}.html" target="_blank" rel="noopener">👤 {sup}</a>'
+        for sup in supervisores
+    ]
     if not botoes:
         return ""
     return f'<div class="botoes-acesso">{"".join(botoes)}</div>'
 
 
-def gerar_html_gerente(dados, totais, dados_dep=None, links_supervisores=None):
+def gerar_html_gerente(dados, totais, dados_dep=None):
     import datetime
     data_extracao = datetime.datetime.now().strftime("%d/%m/%Y %H:%M")
     supervisores = sorted({r["supervisor"] for r in dados})
@@ -1755,7 +1752,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None, links_supervisores=None):
         dados, dados_dep=dados_dep, totais=totais,
         chave_grupo="supervisor", rotulo_grupo="supervisor",
     )
-    botoes_acesso = _construir_botoes_acesso(supervisores, links_supervisores)
+    botoes_acesso = _construir_botoes_acesso(supervisores)
 
     return f"""<!doctype html>
 <html lang="pt-BR">
@@ -1885,13 +1882,7 @@ def main():
             f.write(html_sup)
         print(f"  -> Painel de {sup} gerado em: {caminho_sup}")
 
-    caminho_links = os.path.join(PASTA_BASE, "links_supervisores.json")
-    links_supervisores = None
-    if os.path.exists(caminho_links):
-        with open(caminho_links, "r", encoding="utf-8") as f:
-            links_supervisores = json.load(f)
-
-    html_gerente = gerar_html_gerente(dados, totais, dados_dep, links_supervisores)
+    html_gerente = gerar_html_gerente(dados, totais, dados_dep)
     caminho_gerente = os.path.join(PASTA_BASE, "painel_gerente.html")
     with open(caminho_gerente, "w", encoding="utf-8") as f:
         f.write(html_gerente)
