@@ -1655,6 +1655,11 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     </div>
   </section>
 
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Recompra por {rotulo_grupo}</h3>
+    {tabela_recompra}
+  </section>
+
   <section class="dv-row">
     <div class="dv-panel">
       <h3>Positivação — realizado / meta</h3>
@@ -1666,7 +1671,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     </div>
   </section>
 
-  <section class="dv-row-3">
+  <section class="dv-row">
     <div class="dv-panel">
       <h3>Industrializado por {rotulo_grupo}</h3>
       {tabela_industrializado}
@@ -1674,10 +1679,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-panel">
       <h3>Thermo por {rotulo_grupo}</h3>
       {tabela_thermo}
-    </div>
-    <div class="dv-panel">
-      <h3>Recompra por {rotulo_grupo}</h3>
-      {tabela_recompra}
     </div>
   </section>
 
