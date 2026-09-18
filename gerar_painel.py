@@ -1384,7 +1384,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 
     # Industrializado/Thermo/Recompra — 3 tabelas separadas (mesmos
     # critérios de cor dos KPIs de cima).
-    linhas_ind, linhas_thermo, linhas_recompra, linhas_media_pedidos = "", "", "", ""
+    linhas_ind, linhas_thermo, linhas_recompra = "", "", ""
     linhas_margem, linhas_mix, linhas_lucro = "", "", ""
     for grp in grupos:
         do_grp = [r for r in dados if r[chave_grupo] == grp]
@@ -1431,23 +1431,14 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="{classe_participacao_thermo}">{_fmt_pct_py(media_participacao_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
-        if agrupar_por_rca:
-            linhas_media_pedidos += f'''
-      <tr>
-        <td class="dv-tab-sup">{grp}</td>
-        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>
-      </tr>'''
-        else:
-            linhas_media_pedidos += f'''
-      <tr>
-        <td class="dv-tab-sup">{grp}</td>
-        <td>{len(do_grp)}</td>
-        <td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>
-      </tr>'''
+        celulas_pedidos = (
+            f'<td>{len(do_grp)}</td>' if not agrupar_por_rca else ""
+        ) + f'<td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>'
         linhas_recompra += f'''
       <tr>
         <td class="dv-tab-sup">{grp}</td>
         <td class="{classe_recompra}">{_fmt_pct_py(media_recompra)}</td>
+        {celulas_pedidos}
       </tr>'''
         meta_margem_grp = _media([r["pilares"]["margem"]["meta"] for r in do_grp])
         real_margem_grp = _media([r["pilares"]["margem"]["real"] for r in do_grp])
@@ -1578,14 +1569,13 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
-    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"], centralizado=True)
+    # Recompra e Média de Pedidos dividem o mesmo card — no painel do
+    # gerente mostra o nº de vendedores de cada supervisor junto (EDMAR
+    # tem só 2 RCAs, os demais têm 7); no painel do supervisor cada linha
+    # já é 1 RCA, então essa coluna some (seria sempre "1").
+    colunas_recompra = ["Recompra"] + (["Nº Vendedores", "Média de Pedidos"] if not agrupar_por_rca else ["Média de Pedidos"])
+    tabela_recompra = _tabela_mini(linhas_recompra, colunas_recompra, centralizado=True)
     tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"], centralizado=True)
-    # Card próprio de Média de Pedidos — no painel do gerente mostra o nº
-    # de vendedores de cada supervisor junto (EDMAR tem só 2 RCAs, os
-    # demais têm 7); no painel do supervisor cada linha já é 1 RCA, então
-    # essa coluna some (seria sempre "1").
-    colunas_media_pedidos = ["Média de Pedidos"] if agrupar_por_rca else ["Nº Vendedores", "Média de Pedidos"]
-    tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, colunas_media_pedidos, centralizado=True)
     tabela_margem = _tabela_mini(linhas_margem, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_lucro = _tabela_mini(linhas_lucro, ["Lucro"], centralizado=True)
@@ -1643,7 +1633,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       {tabela_mix}
     </div>
     <div class="dv-panel">
-      <h3>Recompra por {rotulo_grupo}</h3>
+      <h3>Recompra / Média de Pedidos por {rotulo_grupo}</h3>
       {tabela_recompra}
     </div>
   </section>
@@ -1692,11 +1682,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     </div>
   </section>
   {secao_departamento}
-  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
-    <h3>Média de pedidos por {rotulo_grupo}</h3>
-    {tabela_media_pedidos}
-  </section>
-
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Lucro por {rotulo_grupo}</h3>
     {tabela_lucro}
