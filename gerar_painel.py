@@ -1225,10 +1225,14 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         meta_margem, real_margem = totais["margem"]["meta"], totais["margem"]["real"]
         meta_mix, real_mix = totais["mix"]["meta"], totais["mix"]["real"]
     else:
-        meta_margem = _media([r["pilares"]["margem"]["meta"] for r in dados])
-        real_margem = _media([r["pilares"]["margem"]["real"] for r in dados])
-        meta_mix = _media([r["pilares"]["mix"]["meta"] for r in dados])
-        real_mix = _media([r["pilares"]["mix"]["real"] for r in dados])
+        # r["pilares"]["margem"/"mix"] vêm da planilha já em pontos percentuais
+        # (13.5 = 13,5%), diferente de totais_gerais.json que guarda fração
+        # (0.135) — divide por 100 aqui pra fmt_pct_2casas (que multiplica por
+        # 100) não inflar o valor 100x.
+        meta_margem = _media([r["pilares"]["margem"]["meta"] for r in dados]) / 100
+        real_margem = _media([r["pilares"]["margem"]["real"] for r in dados]) / 100
+        meta_mix = _media([r["pilares"]["mix"]["meta"] for r in dados]) / 100
+        real_mix = _media([r["pilares"]["mix"]["real"] for r in dados]) / 100
 
     kpis_fonte = [
         ("Financeiro", *[soma("financeiro", c) for c in ("meta", "real")], _fmt_moeda_py),
