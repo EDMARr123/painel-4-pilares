@@ -1198,7 +1198,7 @@ def _media(valores):
     return sum(valores) / len(valores) if valores else 0
 
 
-def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor"):
+def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor", mostrar_resumo_4_pilares=False):
     """KPIs + gráficos/tabelas do dashboard tipo "painel do gerente" —
     reaproveitado tanto pelo painel do gerente (agrupando por supervisor,
     `totais` = bloco de totais_gerais.json) quanto pelo painel de cada
@@ -1285,6 +1285,34 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="v">{fmt(real)}</div>
       <div class="m">Meta {fmt(meta)}</div>
       <span class="badge {classe}">{_fmt_pct_py(pct)}</span>
+    </div>'''
+
+    # Card resumo "Vendedores 4 Pilares" — só no painel do gerente. Critério
+    # próprio (não usa o `pilares_atingidos` já pronto na planilha):
+    # Positivação, Mix e Margem contam só a partir de 100% da meta; o pilar
+    # Financeiro usa a Tendência (projetado/meta) também a partir de 100%.
+    if mostrar_resumo_4_pilares:
+        def bateu_4_pilares(r):
+            pos = r["pilares"]["positivacao"]
+            mix = r["pilares"]["mix"]
+            mar = r["pilares"]["margem"]
+            fin = r["pilares"]["financeiro"]
+            pct_pos = pos["real"] / pos["meta"] if pos["meta"] else 0
+            pct_mix = mix["real"] / mix["meta"] if mix["meta"] else 0
+            pct_margem = mar["real"] / mar["meta"] if mar["meta"] else 0
+            pct_tendencia = r["tendencia"]["projetado"] / fin["meta"] if fin["meta"] else 0
+            return pct_pos >= 1 and pct_mix >= 1 and pct_margem >= 1 and pct_tendencia >= 1
+
+        total_vendedores = len(dados)
+        qtd_4_pilares = sum(1 for r in dados if bateu_4_pilares(r))
+        pct_4_pilares = qtd_4_pilares / total_vendedores if total_vendedores else 0
+        classe_4_pilares = _classe_status(pct_4_pilares)
+        kpis_html += f'''
+    <div class="dv-kpi {classe_4_pilares}">
+      <div class="l">Vendedores 4 Pilares</div>
+      <div class="v">{qtd_4_pilares}/{total_vendedores}</div>
+      <div class="m">Positivação, Mix, Margem e Tendência ≥ 100%</div>
+      <span class="badge {classe_4_pilares}">{_fmt_pct_py(pct_4_pilares)}</span>
     </div>'''
 
     # Conta-Corrente/Peso/Preço Médio: blocos exclusivos da planilha, só
@@ -1779,6 +1807,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
     secoes = _construir_secoes_dashboard(
         dados, dados_dep=dados_dep, totais=totais,
         chave_grupo="supervisor", rotulo_grupo="supervisor",
+        mostrar_resumo_4_pilares=True,
     )
     botoes_acesso = _construir_botoes_acesso(supervisores)
 
