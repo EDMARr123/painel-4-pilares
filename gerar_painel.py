@@ -1262,6 +1262,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     # Recompra (média entre RCAs do escopo) — mesmo critério invertido
     # usado nos cards de vendedor/supervisor: quanto maior, pior.
     media_recompra_geral = _media([r["recompra_pct"] for r in dados])
+    qtd_1_pedido = sum(r.get("recompra_contagem", 0) for r in dados)
     if media_recompra_geral >= 0.40:
         classe_recompra_geral = "dv-bad"
     elif media_recompra_geral >= 0.20:
@@ -1271,6 +1272,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     kpis_html += f'''
     <div class="dv-kpi {classe_recompra_geral}">
       <div class="l">Recompra</div>
+      <div class="v">{_fmt_num_py(qtd_1_pedido, 0)}</div>
       <div class="m">Média {"do time" if agrupar_por_rca else "da equipe"}</div>
       <span class="badge {classe_recompra_geral}">{_fmt_pct_py(media_recompra_geral)}</span>
     </div>'''
