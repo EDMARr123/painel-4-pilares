@@ -1633,7 +1633,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       {tabela_mix}
     </div>
     <div class="dv-panel">
-      <h3>Recompra / Média de Pedidos por {rotulo_grupo}</h3>
+      <h3>Recompra / Média de Pedidos</h3>
       {tabela_recompra}
     </div>
   </section>
