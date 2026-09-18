@@ -1635,6 +1635,17 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 
   <section class="dv-row">
     <div class="dv-panel">
+      <h3>Margem por {rotulo_grupo}</h3>
+      {tabela_margem}
+    </div>
+    <div class="dv-panel">
+      <h3>Mix por {rotulo_grupo}</h3>
+      {tabela_mix}
+    </div>
+  </section>
+
+  <section class="dv-row">
+    <div class="dv-panel">
       <h3>Tendência de fechamento por {rotulo_grupo}</h3>
       {svg_tendencia}
     </div>
@@ -1686,19 +1697,9 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     {tabela_media_pedidos}
   </section>
 
-  <section class="dv-row-3">
-    <div class="dv-panel">
-      <h3>Margem por {rotulo_grupo}</h3>
-      {tabela_margem}
-    </div>
-    <div class="dv-panel">
-      <h3>Mix por {rotulo_grupo}</h3>
-      {tabela_mix}
-    </div>
-    <div class="dv-panel">
-      <h3>Lucro por {rotulo_grupo}</h3>
-      {tabela_lucro}
-    </div>
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Lucro por {rotulo_grupo}</h3>
+    {tabela_lucro}
   </section>
 """
 
