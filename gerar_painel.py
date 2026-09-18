@@ -1317,7 +1317,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-kpi {classe_4_pilares}">
       <div class="l">Vendedores 4 Pilares</div>
       <div class="v">{qtd_4_pilares}/{total_vendedores}</div>
-      <div class="m">Mix, Margem e Tendência ≥ 100%</div>
       <span class="badge {classe_4_pilares}">{_fmt_pct_py(pct_4_pilares)}</span>
     </div>'''
 
