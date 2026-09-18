@@ -1339,18 +1339,26 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <span class="badge {classe_margem}" style="margin-left:6px;">Margem {_fmt_pct_py(media_margem)}</span>
     </div>'''
 
-    # ---- Gráfico 1: tendência de fechamento (barras) ----
-    linhas_tendencia = []
+    # ---- Tendência de fechamento (tabela: meta, realizado, tendência %) ----
+    linhas_tendencia_dados = []
     for grp in grupos:
         do_grp = [r for r in dados if r[chave_grupo] == grp]
         meta_grp = sum(r["pilares"]["financeiro"]["meta"] for r in do_grp)
         real_grp = sum(r["pilares"]["financeiro"]["real"] for r in do_grp)
         projetado_grp = sum(r["tendencia"]["projetado"] for r in do_grp)
         pct = projetado_grp / meta_grp if meta_grp else 0
-        subtitulo = [_fmt_moeda_py(real_grp)]
-        linhas_tendencia.append((grp, subtitulo, pct, _fmt_pct_py(pct), _classe_status(pct)))
-    linhas_tendencia.sort(key=lambda x: x[2], reverse=True)
-    svg_tendencia = _svg_barras(linhas_tendencia, sublabel=True)
+        linhas_tendencia_dados.append((grp, meta_grp, real_grp, pct))
+    linhas_tendencia_dados.sort(key=lambda x: x[3], reverse=True)
+    linhas_tendencia = ""
+    for grp, meta_grp, real_grp, pct in linhas_tendencia_dados:
+        linhas_tendencia += f'''
+      <tr>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_moeda_py(meta_grp)}</td>
+        <td>{_fmt_moeda_py(real_grp)}</td>
+        <td class="{_classe_status(pct)}">{_fmt_pct_py(pct)}</td>
+      </tr>'''
+    tabela_tendencia = _tabela_mini(linhas_tendencia, ["Meta", "Realizado", "Tendência"], centralizado=True)
 
     # Positivação — card próprio (retirado do gráfico de tendência a
     # pedido do Edmar, pra não poluir aquele gráfico), tabela + barras.
@@ -1431,9 +1439,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="{classe_participacao_thermo}">{_fmt_pct_py(media_participacao_thermo)}</td>
         <td class="{classe_thermo}">{_fmt_pct_py(media_margem_thermo)}</td>
       </tr>'''
-        celulas_pedidos = (
-            f'<td>{len(do_grp)}</td>' if not agrupar_por_rca else ""
-        ) + f'<td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>'
+        celulas_pedidos = f'<td class="{classe_pedidos}">{_fmt_num_py(media_pedidos_grp, 2)}</td>'
         linhas_recompra += f'''
       <tr>
         <td class="dv-tab-sup">{grp}</td>
@@ -1569,12 +1575,8 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
-    # Recompra e Média de Pedidos dividem o mesmo card — no painel do
-    # gerente mostra o nº de vendedores de cada supervisor junto (EDMAR
-    # tem só 2 RCAs, os demais têm 7); no painel do supervisor cada linha
-    # já é 1 RCA, então essa coluna some (seria sempre "1").
-    colunas_recompra = ["Recompra"] + (["Nº Vendedores", "Média de Pedidos"] if not agrupar_por_rca else ["Média de Pedidos"])
-    tabela_recompra = _tabela_mini(linhas_recompra, colunas_recompra, centralizado=True)
+    # Recompra e Média de Pedidos dividem o mesmo card.
+    tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra", "Média de Pedidos"], centralizado=True)
     tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_margem = _tabela_mini(linhas_margem, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
@@ -1641,7 +1643,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
   <section class="dv-row">
     <div class="dv-panel">
       <h3>Tendência de fechamento por {rotulo_grupo}</h3>
-      {svg_tendencia}
+      {tabela_tendencia}
     </div>
     <div class="dv-panel">
       <h3>Participação no faturamento realizado</h3>
