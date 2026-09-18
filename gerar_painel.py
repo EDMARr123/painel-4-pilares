@@ -1514,7 +1514,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
                     pct = real / meta if meta else 0
                     pcts_grp.append(pct)
                     classe = _classe_status(pct)
-                    celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+                    celulas += f'<td class="{classe}">{_fmt_num_py(real, 0)}</td>'
                 media_desempenho = _media(pcts_grp)
                 classe_media = _classe_status(media_desempenho)
                 celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
@@ -1551,7 +1551,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
                     pct = real / meta if meta else 0
                     pcts_sup.append(pct)
                     classe = _classe_status(pct)
-                    celulas += f'<td class="{classe}">{_fmt_pct_py(pct)}</td>'
+                    celulas += f'<td class="{classe}">{_fmt_num_py(real, 0)}</td>'
                 media_desempenho = _media(pcts_sup)
                 classe_media = _classe_status(media_desempenho)
                 celulas += f'<td class="{classe_media}" style="font-weight:900;border-left:1px solid var(--border)">{_fmt_pct_py(media_desempenho)}</td>'
