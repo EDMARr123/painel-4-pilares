@@ -1134,8 +1134,8 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-donut-wrap .dv-cat-5 { stroke: var(--dv-cat-5); } .dv-donut-wrap .dv-cat-6 { stroke: var(--dv-cat-6); }
 .dv-donut-wrap .dv-cat-7 { stroke: var(--dv-cat-7); }
 
-.dv-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 22px; }
-.dv-kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; display: flex; flex-direction: column; }
+.dv-kpis { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 22px; }
+.dv-kpi { flex: 1 1 220px; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 16px 18px; border-top: 4px solid; display: flex; flex-direction: column; }
 .dv-kpi.dv-good { border-top-color: var(--dv-good); }
 .dv-kpi.dv-warn { border-top-color: var(--dv-warn); }
 .dv-kpi.dv-bad { border-top-color: var(--dv-bad); }
