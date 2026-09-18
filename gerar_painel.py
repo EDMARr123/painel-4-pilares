@@ -1378,8 +1378,8 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="l">{label}</div>
       <div class="v">{_fmt_moeda_py(real)}</div>
       <div class="m">Meta {_fmt_moeda_py(meta)}</div>
-      <span class="badge {classe_participacao}">Particip. {_fmt_pct_py(media_participacao)}</span>
-      <span class="badge {classe_margem}" style="margin-left:6px;">Margem {_fmt_pct_py(media_margem)}</span>
+      <span class="badge {classe_participacao}" style="font-size:12px;">Particip. {_fmt_pct_py(media_participacao)}</span>
+      <span class="badge {classe_margem}" style="margin-left:6px;font-size:12px;">Margem {_fmt_pct_py(media_margem)}</span>
     </div>'''
 
     # ---- Tendência de fechamento (tabela: meta, realizado, tendência %) ----
