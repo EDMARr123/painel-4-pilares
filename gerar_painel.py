@@ -1835,6 +1835,12 @@ def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
         chave_grupo="nome", rotulo_grupo="RCA",
     )
 
+    foto_sup = _FOTOS_SUPERVISORES.get(nome_supervisor)
+    avatar_sup_tag = (
+        f'<img src="{foto_sup}" alt="{nome_supervisor}" style="height:64px;width:64px;border-radius:50%;object-fit:cover;flex:none;" />'
+        if foto_sup else ""
+    )
+
     js = (_JS_CARDS_TEMPLATE
           .replace("__DADOS_JSON__", json.dumps(dados_sup, ensure_ascii=False))
           .replace("__FOTOS_SUPERVISORES_JSON__", _FOTOS_SUPERVISORES_JSON)
@@ -1855,9 +1861,12 @@ def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
 
 <div class="wrap">
   <header class="top">
-    <div class="title-block">
-      <h1>Painel do Supervisor — {nome_supervisor}</h1>
-      <p>{total_rcas} RCAs — atualizado em {data_extracao}</p>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="title-block">
+        <h1>Painel do Supervisor — {nome_supervisor}</h1>
+        <p>{total_rcas} RCAs — atualizado em {data_extracao}</p>
+      </div>
+      {avatar_sup_tag}
     </div>
     {_LOGO_TAG}
   </header>
