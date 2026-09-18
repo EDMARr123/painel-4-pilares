@@ -1633,25 +1633,25 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
   <section class="dv-kpis">{kpis_html}{kpis_html_industrializados}
   </section>
 
-  <section class="dv-row dv-row-inv">
-    <div class="dv-panel">
-      <h3>Participação no faturamento realizado</h3>
-      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
-    </div>
+  <section class="dv-row">
     <div class="dv-panel">
       <h3>Tendência de fechamento por {rotulo_grupo}</h3>
       {svg_tendencia}
+    </div>
+    <div class="dv-panel">
+      <h3>Participação no faturamento realizado</h3>
+      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
     </div>
   </section>
 
   <section class="dv-row">
     <div class="dv-panel">
-      <h3>Positivação por {rotulo_grupo}</h3>
-      {tabela_positivacao}
-    </div>
-    <div class="dv-panel">
       <h3>Positivação — realizado / meta</h3>
       {svg_positivacao}
+    </div>
+    <div class="dv-panel">
+      <h3>Positivação por {rotulo_grupo}</h3>
+      {tabela_positivacao}
     </div>
   </section>
 
