@@ -1534,6 +1534,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     # os dois projetos) e mostra uma linha por RCA do time, sem META (o
     # próprio % de cada linha já compara contra a meta individual).
     secao_departamento = ""
+    secao_resumo_departamento = ""
     if dados_dep:
         CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
         labels_dep = {}
@@ -1542,25 +1543,30 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
                 labels_dep.setdefault(chave, info["label"])
         CATEGORIAS_DEP = [c for c in CATEGORIAS_DEP if c in labels_dep]
 
-        # Card resumo "Departamento" — só no painel do supervisor. Mesma
-        # conta usada na linha de cada supervisor no painel geral/gerente:
-        # soma meta/real de cada categoria pro time inteiro, tira a média
-        # das % resultantes por categoria.
+        # Tabela resumo "Departamento Supervisor" — só no painel do
+        # supervisor. Uma linha por categoria (não por RCA): soma meta/real
+        # de cada categoria pro time inteiro e mostra Meta/Realizado/%.
         if mostrar_resumo_departamento and CATEGORIAS_DEP:
-            pcts_dep_time = []
+            linhas_resumo_dep = ""
             for chave in CATEGORIAS_DEP:
                 meta_time = sum(r["categorias"][chave]["meta"] for r in dados_dep if chave in r["categorias"])
                 real_time = sum(r["categorias"][chave]["real"] for r in dados_dep if chave in r["categorias"])
-                pcts_dep_time.append(real_time / meta_time if meta_time else 0)
-            media_dep_time = _media(pcts_dep_time)
-            classe_dep_time = _classe_status(media_dep_time)
-            kpis_html += f'''
-    <div class="dv-kpi {classe_dep_time}">
-      <div class="l">Departamento</div>
-      <div class="v">{_fmt_pct_py(media_dep_time)}</div>
-      <div class="m">Média do time</div>
-      <span class="badge {classe_dep_time}">{_fmt_pct_py(media_dep_time)}</span>
-    </div>'''
+                pct = real_time / meta_time if meta_time else 0
+                classe = _classe_status(pct)
+                linhas_resumo_dep += f'''
+      <tr>
+        <td class="dv-tab-sup">{labels_dep[chave]}</td>
+        <td>{_fmt_num_py(meta_time, 0)}</td>
+        <td>{_fmt_num_py(real_time, 0)}</td>
+        <td class="{classe}">{_fmt_pct_py(pct)}</td>
+      </tr>'''
+            tabela_resumo_dep = _tabela_mini(linhas_resumo_dep, ["Meta", "Realizado", "%"], centralizado=True)
+            secao_resumo_departamento = f'''
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Departamento Supervisor</h3>
+    {tabela_resumo_dep}
+  </section>
+'''
 
         if agrupar_por_rca:
             mapa_dep_por_codigo = {r["codigo"]: r for r in dados_dep}
@@ -1746,6 +1752,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
     </div>
   </section>
+  {secao_resumo_departamento}
   {secao_departamento}
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Lucro por {rotulo_grupo}</h3>
