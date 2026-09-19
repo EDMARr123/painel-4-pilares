@@ -1391,7 +1391,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         projetado_grp = sum(r["tendencia"]["projetado"] for r in do_grp)
         pct = projetado_grp / meta_grp if meta_grp else 0
         linhas_tendencia_dados.append((grp, meta_grp, real_grp, pct))
-    linhas_tendencia_dados.sort(key=lambda x: x[3], reverse=True)
     linhas_tendencia = ""
     for grp, meta_grp, real_grp, pct in linhas_tendencia_dados:
         linhas_tendencia += f'''
