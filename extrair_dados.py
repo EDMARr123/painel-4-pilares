@@ -122,25 +122,25 @@ def extrair_totais(ws):
     meta/realizado) — Margem e Mix aqui são o número final calculado pelo
     Edmar na planilha, não uma média/soma das linhas por RCA.
 
-    Layout confirmado em 01/09 (Edmar excluiu 6 linhas ao reorganizar a
-    planilha pro mês novo — todo o bloco de totais andou 6 linhas pra
-    cima: Margem 84->78, Mix 87->81, Clientes 92->86/94->88, Não comprou
-    96->90, Recompra 98->92, Peso 102->96, Preço Médio 104->98,
-    Conta-Corrente 119->113)."""
+    Layout confirmado em 19/09 (Edmar inseriu 1 linha de RCA nova na
+    planilha, empurrando todo o bloco de totais 1 linha pra baixo em
+    relação ao layout de 01/09: Margem 78->79, Mix 81->82, Clientes
+    86->87/88->89, Não comprou 90->91, Recompra 92->93, Peso 96->97,
+    Preço Médio 98->99, Conta-Corrente 113->114)."""
     return {
-        "margem": {"meta": _num(ws["T78"].value), "real": _num(ws["U78"].value)},
-        "mix": {"meta": _num(ws["T81"].value), "real": _num(ws["U81"].value)},
-        "meta_clientes": _num(ws["T86"].value),
-        "realizado_clientes": _num(ws["T88"].value),
-        "nao_comprou": _num(ws["T90"].value),
-        "recompra_pct": _num(ws["T92"].value),
-        "peso": {"meta": _num(ws["S96"].value), "real": _num(ws["T96"].value), "pct": _num(ws["U96"].value)},
-        "preco_medio": {"meta": _num(ws["S98"].value), "real": _num(ws["T98"].value), "pct": _num(ws["U98"].value)},
+        "margem": {"meta": _num(ws["T79"].value), "real": _num(ws["U79"].value)},
+        "mix": {"meta": _num(ws["T82"].value), "real": _num(ws["U82"].value)},
+        "meta_clientes": _num(ws["T87"].value),
+        "realizado_clientes": _num(ws["T89"].value),
+        "nao_comprou": _num(ws["T91"].value),
+        "recompra_pct": _num(ws["T93"].value),
+        "peso": {"meta": _num(ws["S97"].value), "real": _num(ws["T97"].value), "pct": _num(ws["U97"].value)},
+        "preco_medio": {"meta": _num(ws["S99"].value), "real": _num(ws["T99"].value), "pct": _num(ws["U99"].value)},
         "conta_corrente": {
-            "meta": _num(ws["R113"].value),
-            "realizado": _num(ws["S113"].value),
-            "tendencia": _num(ws["T113"].value),
-            "pct": _num(ws["V113"].value),
+            "meta": _num(ws["R114"].value),
+            "realizado": _num(ws["S114"].value),
+            "tendencia": _num(ws["T114"].value),
+            "pct": _num(ws["V114"].value),
         },
     }
 
