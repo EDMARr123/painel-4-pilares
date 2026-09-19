@@ -1719,15 +1719,15 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       {tabela_mix}
     </div>
     <div class="dv-panel">
-      <h3>Positivação por {rotulo_grupo}</h3>
-      {tabela_positivacao}
+      <h3>Tendência de fechamento por {rotulo_grupo}</h3>
+      {tabela_tendencia}
     </div>
   </section>
 
   <section class="dv-row">
     <div class="dv-panel">
-      <h3>Tendência de fechamento por {rotulo_grupo}</h3>
-      {tabela_tendencia}
+      <h3>Positivação por {rotulo_grupo}</h3>
+      {tabela_positivacao}
     </div>
     <div class="dv-panel">
       <h3>Recompra / Média de Pedidos</h3>
