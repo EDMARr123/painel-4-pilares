@@ -1,30 +1,30 @@
 {
   "margem": {
-    "meta": 0.135,
-    "real": 0.12319357109570848
+    "meta": 0,
+    "real": 0
   },
   "mix": {
-    "meta": 0.02552380952380952,
-    "real": 0.025842857142857147
+    "meta": 0,
+    "real": 0
   },
-  "meta_clientes": 3611,
-  "realizado_clientes": 3074,
-  "nao_comprou": 537,
-  "recompra_pct": 0.4261548471047495,
+  "meta_clientes": 0,
+  "realizado_clientes": 0,
+  "nao_comprou": 0,
+  "recompra_pct": 0,
   "peso": {
-    "meta": 1382995.6945615115,
-    "real": 1035588.346666667,
-    "pct": 0.74880084640828
+    "meta": 0,
+    "real": 0,
+    "pct": 0
   },
   "preco_medio": {
-    "meta": 12,
-    "real": 12.344849049157574,
-    "pct": 1.0287374207631312
+    "meta": 0,
+    "real": 0,
+    "pct": 0
   },
   "conta_corrente": {
-    "meta": 1945370.68,
-    "realizado": 804512.3302003327,
-    "tendencia": 1340853.883667221,
-    "pct": 0.6892536715250696
+    "meta": 0,
+    "realizado": 0,
+    "tendencia": 0,
+    "pct": 0
   }
 }

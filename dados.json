@@ -2176,6 +2176,70 @@
     }
   },
   {
+    "codigo": "802",
+    "nome": "SUBSTITUTO",
+    "rota": "G",
+    "supervisor": "RICHARD",
+    "pilares": {
+      "positivacao": {
+        "meta": 25,
+        "real": 23,
+        "pct": 0.92
+      },
+      "margem": {
+        "meta": 13.5,
+        "real": 13.487816057010889,
+        "pct": 0.9990974857045103
+      },
+      "mix": {
+        "meta": 2.2,
+        "real": 2.35,
+        "pct": 1.0681818181818181
+      },
+      "financeiro": {
+        "meta": 200000,
+        "real": 74682.225,
+        "pct": 0.373411125
+      }
+    },
+    "pilares_atingidos": 1,
+    "tendencia": {
+      "pct": 0.6223518750000001,
+      "projetado": 124470.37500000001,
+      "meta": 200000,
+      "meta_dia": 12531.7775
+    },
+    "industrializado": {
+      "meta": 50000,
+      "real": 3820.88,
+      "participacao_pct": 0.051161839380120235,
+      "margem_pct": 0.30347833713699457,
+      "premio": 0
+    },
+    "thermo": {
+      "meta": 6000,
+      "real": 0,
+      "participacao_pct": 0.0,
+      "margem_pct": 0,
+      "premio": 0
+    },
+    "recompra_pct": 0.34782608695652173,
+    "recompra_contagem": 8,
+    "media_pedidos": 3.466666666666667,
+    "sku": {
+      "meta": 121,
+      "real": 38
+    },
+    "positivacao_dia15": {
+      "resultado": 20,
+      "premio": 0
+    },
+    "positivacao_dia30": {
+      "resultado": 11,
+      "premio": 0
+    }
+  },
+  {
     "codigo": "687",
     "nome": "EDREY MARTINS",
     "rota": "",
@@ -2223,7 +2287,7 @@
       "margem_pct": 0.21832513037258436,
       "premio": 104.224
     },
-    "recompra_pct": 0.057203389830508475,
+    "recompra_pct": 0.05454545454545454,
     "recompra_contagem": 27,
     "media_pedidos": 14.533333333333333,
     "sku": {
