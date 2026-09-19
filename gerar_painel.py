@@ -1711,16 +1711,16 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
 
   <section class="dv-row-3">
     <div class="dv-panel">
+      <h3>Tendência de fechamento por {rotulo_grupo}</h3>
+      {tabela_tendencia}
+    </div>
+    <div class="dv-panel">
       <h3>Margem por {rotulo_grupo}</h3>
       {tabela_margem}
     </div>
     <div class="dv-panel">
       <h3>Mix por {rotulo_grupo}</h3>
       {tabela_mix}
-    </div>
-    <div class="dv-panel">
-      <h3>Tendência de fechamento por {rotulo_grupo}</h3>
-      {tabela_tendencia}
     </div>
   </section>
 
