@@ -1534,7 +1534,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     # os dois projetos) e mostra uma linha por RCA do time, sem META (o
     # próprio % de cada linha já compara contra a meta individual).
     secao_departamento = ""
-    secao_resumo_departamento = ""
+    tabela_resumo_dep = None
     if dados_dep:
         CATEGORIAS_DEP = ["bacon", "bovino", "batata", "suino", "calabresa", "paes", "frescais", "saborizadas", "lacteos", "thermo"]
         labels_dep = {}
@@ -1561,12 +1561,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="{classe}">{_fmt_pct_py(pct)}</td>
       </tr>'''
             tabela_resumo_dep = _tabela_mini(linhas_resumo_dep, ["Meta", "Realizado", "%"], centralizado=True)
-            secao_resumo_departamento = f'''
-  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
-    <h3>Departamento Supervisor</h3>
-    {tabela_resumo_dep}
-  </section>
-'''
 
         if agrupar_por_rca:
             mapa_dep_por_codigo = {r["codigo"]: r for r in dados_dep}
@@ -1641,6 +1635,27 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     {tabela_departamento}
   </section>
 '''
+
+    # No painel do supervisor, "Departamento Supervisor" (resumo por
+    # categoria) troca de lugar com "Participação no faturamento
+    # realizado": o resumo de departamento sobe pra a linha ao lado de
+    # "Positivação — realizado/meta", e a Participação desce pro lugar
+    # onde o resumo estava (painel cheio, perto do Lucro). No painel
+    # geral/gerente (sem o resumo) o layout original se mantém.
+    if tabela_resumo_dep is not None:
+        painel_participacao_row = f'<div class="dv-panel"><h3>Departamento Supervisor</h3>{tabela_resumo_dep}</div>'
+        secao_participacao_extra = f'''
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3>Participação no faturamento realizado</h3>
+    <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+  </section>
+'''
+    else:
+        painel_participacao_row = f'''<div class="dv-panel">
+      <h3>Participação no faturamento realizado</h3>
+      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
+    </div>'''
+        secao_participacao_extra = ""
 
     tabela_industrializado = _tabela_mini(linhas_ind, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
@@ -1725,10 +1740,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <h3>Positivação — realizado / meta</h3>
       {svg_positivacao}
     </div>
-    <div class="dv-panel">
-      <h3>Participação no faturamento realizado</h3>
-      <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
-    </div>
+    {painel_participacao_row}
   </section>
   {secao_departamento}
   <section class="dv-row">
@@ -1752,7 +1764,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="dv-donut-wrap">{svg_faixa}{legenda_faixa}</div>
     </div>
   </section>
-  {secao_resumo_departamento}
+  {secao_participacao_extra}
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Lucro por {rotulo_grupo}</h3>
     {tabela_lucro}
