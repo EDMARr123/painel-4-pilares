@@ -1730,7 +1730,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="dv-donut-wrap">{svg_faturamento}{legenda_faturamento}</div>
     </div>
   </section>
-
+  {secao_departamento}
   <section class="dv-row">
     <div class="dv-panel">
       <h3>Industrializado por {rotulo_grupo}</h3>
@@ -1753,7 +1753,6 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     </div>
   </section>
   {secao_resumo_departamento}
-  {secao_departamento}
   <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
     <h3>Lucro por {rotulo_grupo}</h3>
     {tabela_lucro}
