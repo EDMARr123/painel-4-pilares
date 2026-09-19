@@ -1198,7 +1198,7 @@ def _media(valores):
     return sum(valores) / len(valores) if valores else 0
 
 
-def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor", mostrar_resumo_4_pilares=False):
+def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor", mostrar_resumo_4_pilares=False, mostrar_resumo_departamento=False):
     """KPIs + gráficos/tabelas do dashboard tipo "painel do gerente" —
     reaproveitado tanto pelo painel do gerente (agrupando por supervisor,
     `totais` = bloco de totais_gerais.json) quanto pelo painel de cada
@@ -1542,6 +1542,26 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
                 labels_dep.setdefault(chave, info["label"])
         CATEGORIAS_DEP = [c for c in CATEGORIAS_DEP if c in labels_dep]
 
+        # Card resumo "Departamento" — só no painel do supervisor. Mesma
+        # conta usada na linha de cada supervisor no painel geral/gerente:
+        # soma meta/real de cada categoria pro time inteiro, tira a média
+        # das % resultantes por categoria.
+        if mostrar_resumo_departamento and CATEGORIAS_DEP:
+            pcts_dep_time = []
+            for chave in CATEGORIAS_DEP:
+                meta_time = sum(r["categorias"][chave]["meta"] for r in dados_dep if chave in r["categorias"])
+                real_time = sum(r["categorias"][chave]["real"] for r in dados_dep if chave in r["categorias"])
+                pcts_dep_time.append(real_time / meta_time if meta_time else 0)
+            media_dep_time = _media(pcts_dep_time)
+            classe_dep_time = _classe_status(media_dep_time)
+            kpis_html += f'''
+    <div class="dv-kpi {classe_dep_time}">
+      <div class="l">Departamento</div>
+      <div class="v">{_fmt_pct_py(media_dep_time)}</div>
+      <div class="m">Média do time</div>
+      <span class="badge {classe_dep_time}">{_fmt_pct_py(media_dep_time)}</span>
+    </div>'''
+
         if agrupar_por_rca:
             mapa_dep_por_codigo = {r["codigo"]: r for r in dados_dep}
             linhas_dep = ""
@@ -1862,7 +1882,7 @@ def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
     secoes = _construir_secoes_dashboard(
         dados_sup, dados_dep=dados_dep_sup, totais=None,
         chave_grupo="nome", rotulo_grupo="RCA",
-        mostrar_resumo_4_pilares=True,
+        mostrar_resumo_4_pilares=True, mostrar_resumo_departamento=True,
     )
 
     foto_sup = _FOTOS_SUPERVISORES.get(nome_supervisor)
