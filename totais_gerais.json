@@ -1,7 +1,7 @@
 {
   "margem": {
     "meta": 0.135,
-    "real": 0
+    "real": 0.1352
   },
   "mix": {
     "meta": 0.02552380952380952,
@@ -23,8 +23,8 @@
   },
   "conta_corrente": {
     "meta": 1620000,
-    "realizado": 0,
-    "tendencia": 0,
-    "pct": 0
+    "realizado": 928546.3923680368,
+    "tendencia": 1450853.7380750575,
+    "pct": 0.8955887272068256
   }
 }
