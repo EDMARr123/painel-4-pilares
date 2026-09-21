@@ -1382,25 +1382,27 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <span class="badge {classe_margem}" style="margin-left:6px;font-size:12px;">Margem {_fmt_pct_py(media_margem)}</span>
     </div>'''
 
-    # ---- Tendência de fechamento (tabela: meta, realizado, tendência %) ----
+    # ---- Tendência de fechamento (tabela: meta, realizado, meta dia, tendência %) ----
     linhas_tendencia_dados = []
     for grp in grupos:
         do_grp = [r for r in dados if r[chave_grupo] == grp]
         meta_grp = sum(r["pilares"]["financeiro"]["meta"] for r in do_grp)
         real_grp = sum(r["pilares"]["financeiro"]["real"] for r in do_grp)
+        meta_dia_grp = sum(r["tendencia"]["meta_dia"] for r in do_grp)
         projetado_grp = sum(r["tendencia"]["projetado"] for r in do_grp)
         pct = projetado_grp / meta_grp if meta_grp else 0
-        linhas_tendencia_dados.append((grp, meta_grp, real_grp, pct))
+        linhas_tendencia_dados.append((grp, meta_grp, real_grp, meta_dia_grp, pct))
     linhas_tendencia = ""
-    for grp, meta_grp, real_grp, pct in linhas_tendencia_dados:
+    for grp, meta_grp, real_grp, meta_dia_grp, pct in linhas_tendencia_dados:
         linhas_tendencia += f'''
       <tr>
         <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_moeda_py(meta_grp)}</td>
         <td>{_fmt_moeda_py(real_grp)}</td>
+        <td>{_fmt_moeda_py(meta_dia_grp)}</td>
         <td class="{_classe_status(pct)}">{_fmt_pct_py(pct)}</td>
       </tr>'''
-    tabela_tendencia = _tabela_mini(linhas_tendencia, ["Meta", "Realizado", "Tendência"], centralizado=True)
+    tabela_tendencia = _tabela_mini(linhas_tendencia, ["Meta", "Realizado", "Meta Dia", "Tendência"], centralizado=True)
 
     # Positivação — card próprio (retirado do gráfico de tendência a
     # pedido do Edmar, pra não poluir aquele gráfico), tabela + barras.
