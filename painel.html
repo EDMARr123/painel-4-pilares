@@ -538,6 +538,10 @@ footer.foot {
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
+.dv-tabela-compacta { font-size: 10px; table-layout: fixed; }
+.dv-tabela-compacta th, .dv-tabela-compacta td { padding: 5px 2px; }
+.dv-tabela-compacta thead th { font-size: 8.5px; white-space: nowrap; }
+.dv-tabela-compacta .dv-tab-sup { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 </style>
 </head>
@@ -547,7 +551,7 @@ footer.foot {
   <header class="top">
     <div class="title-block">
       <h1>Painel 4 Pilares</h1>
-      <p>Positivação · Margem · Mix · Financeiro — atualizado em 21/09/2026 08:20</p>
+      <p>Positivação · Margem · Mix · Financeiro — atualizado em 21/09/2026 08:27</p>
     </div>
     <div style="display:flex;align-items:center;gap:16px;">
       <div class="summary-strip" id="summary"></div>
@@ -627,7 +631,7 @@ footer.foot {
     <div class="dv-panel">
       <h3>Tendência de fechamento por supervisor</h3>
       
-    <table class="dv-tabela dv-tabela-center">
+    <table class="dv-tabela dv-tabela-center dv-tabela-compacta">
       <thead><tr><th></th><th>Meta</th><th>Realizado</th><th>Meta Dia</th><th>Tendência</th></tr></thead>
       <tbody>
       <tr>

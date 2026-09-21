@@ -1178,14 +1178,19 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-tabela td.dv-bad { color: var(--bad); font-weight: 800; }
 .dv-tabela td.dv-warn { color: var(--warn); font-weight: 800; }
 .dv-tabela-center td { text-align: center; }
+.dv-tabela-compacta { font-size: 10px; table-layout: fixed; }
+.dv-tabela-compacta th, .dv-tabela-compacta td { padding: 5px 2px; }
+.dv-tabela-compacta thead th { font-size: 8.5px; white-space: nowrap; }
+.dv-tabela-compacta .dv-tab-sup { font-size: 10px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 """
 
 TEMPLATE_GERENTE = None  # gerado dinamicamente em gerar_html_gerente()
 
 
-def _tabela_mini(linhas, colunas, centralizado=False):
+def _tabela_mini(linhas, colunas, centralizado=False, compacta=False):
     cabecalho = "".join(f"<th>{c}</th>" for c in colunas)
     classe_extra = " dv-tabela-center" if centralizado else ""
+    classe_extra += " dv-tabela-compacta" if compacta else ""
     return f'''
     <table class="dv-tabela{classe_extra}">
       <thead><tr><th></th>{cabecalho}</tr></thead>
@@ -1402,7 +1407,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td>{_fmt_moeda_py(meta_dia_grp)}</td>
         <td class="{_classe_status(pct)}">{_fmt_pct_py(pct)}</td>
       </tr>'''
-    tabela_tendencia = _tabela_mini(linhas_tendencia, ["Meta", "Realizado", "Meta Dia", "Tendência"], centralizado=True)
+    tabela_tendencia = _tabela_mini(linhas_tendencia, ["Meta", "Realizado", "Meta Dia", "Tendência"], centralizado=True, compacta=True)
 
     # Positivação — card próprio (retirado do gráfico de tendência a
     # pedido do Edmar, pra não poluir aquele gráfico), tabela + barras.
