@@ -49,10 +49,10 @@
     },
     "recompra_pct": 0.29,
     "recompra_contagem": 29,
-    "media_pedidos": 174.8736842105263,
+    "media_pedidos": 15.68421052631579,
     "sku": {
       "meta": 120,
-      "real": 92
+      "real": 83
     },
     "positivacao_dia15": {
       "resultado": 82,
@@ -113,10 +113,10 @@
     },
     "recompra_pct": 0.32978723404255317,
     "recompra_contagem": 31,
-    "media_pedidos": 0,
+    "media_pedidos": 15.157894736842104,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 107
     },
     "positivacao_dia15": {
       "resultado": 81,
@@ -177,10 +177,10 @@
     },
     "recompra_pct": 0.4175824175824176,
     "recompra_contagem": 38,
-    "media_pedidos": 0,
+    "media_pedidos": 13.210526315789474,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 86
     },
     "positivacao_dia15": {
       "resultado": 71,
@@ -241,10 +241,10 @@
     },
     "recompra_pct": 0.4,
     "recompra_contagem": 36,
-    "media_pedidos": 0,
+    "media_pedidos": 11.947368421052632,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 94
     },
     "positivacao_dia15": {
       "resultado": 73,
@@ -305,10 +305,10 @@
     },
     "recompra_pct": 0.3333333333333333,
     "recompra_contagem": 25,
-    "media_pedidos": 0,
+    "media_pedidos": 12.578947368421053,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 79
     },
     "positivacao_dia15": {
       "resultado": 68,
@@ -369,10 +369,10 @@
     },
     "recompra_pct": 0.3125,
     "recompra_contagem": 25,
-    "media_pedidos": 0,
+    "media_pedidos": 10.736842105263158,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 86
     },
     "positivacao_dia15": {
       "resultado": 69,
@@ -433,10 +433,10 @@
     },
     "recompra_pct": 0.4772727272727273,
     "recompra_contagem": 42,
-    "media_pedidos": 0,
+    "media_pedidos": 9.578947368421053,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 112
     },
     "positivacao_dia15": {
       "resultado": 59,
@@ -497,10 +497,10 @@
     },
     "recompra_pct": 0.4235294117647059,
     "recompra_contagem": 36,
-    "media_pedidos": 282.78315789473686,
+    "media_pedidos": 9.526315789473685,
     "sku": {
       "meta": 120,
-      "real": 75
+      "real": 86
     },
     "positivacao_dia15": {
       "resultado": 66,
@@ -561,10 +561,10 @@
     },
     "recompra_pct": 0.3157894736842105,
     "recompra_contagem": 30,
-    "media_pedidos": 0,
+    "media_pedidos": 13.105263157894736,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 104
     },
     "positivacao_dia15": {
       "resultado": 81,
@@ -625,10 +625,10 @@
     },
     "recompra_pct": 0.3673469387755102,
     "recompra_contagem": 36,
-    "media_pedidos": 0,
+    "media_pedidos": 14.842105263157896,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 102
     },
     "positivacao_dia15": {
       "resultado": 83,
@@ -689,10 +689,10 @@
     },
     "recompra_pct": 0.3619047619047619,
     "recompra_contagem": 38,
-    "media_pedidos": 0,
+    "media_pedidos": 14,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 93
     },
     "positivacao_dia15": {
       "resultado": 90,
@@ -753,10 +753,10 @@
     },
     "recompra_pct": 0.32075471698113206,
     "recompra_contagem": 17,
-    "media_pedidos": 0,
+    "media_pedidos": 8.105263157894736,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 95
     },
     "positivacao_dia15": {
       "resultado": 46,
@@ -817,10 +817,10 @@
     },
     "recompra_pct": 0.391304347826087,
     "recompra_contagem": 18,
-    "media_pedidos": 0,
+    "media_pedidos": 6.368421052631579,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 70
     },
     "positivacao_dia15": {
       "resultado": 39,
@@ -881,10 +881,10 @@
     },
     "recompra_pct": 0.36363636363636365,
     "recompra_contagem": 20,
-    "media_pedidos": 0,
+    "media_pedidos": 8.263157894736842,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 77
     },
     "positivacao_dia15": {
       "resultado": 45,
@@ -945,10 +945,10 @@
     },
     "recompra_pct": 0.37362637362637363,
     "recompra_contagem": 34,
-    "media_pedidos": 0,
+    "media_pedidos": 14.578947368421053,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 96
     },
     "positivacao_dia15": {
       "resultado": 90,
@@ -1009,10 +1009,10 @@
     },
     "recompra_pct": 0.27884615384615385,
     "recompra_contagem": 29,
-    "media_pedidos": 0,
+    "media_pedidos": 19.31578947368421,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 125
     },
     "positivacao_dia15": {
       "resultado": 100,
@@ -1073,10 +1073,10 @@
     },
     "recompra_pct": 0.43333333333333335,
     "recompra_contagem": 39,
-    "media_pedidos": 21.26736842105263,
+    "media_pedidos": 10.631578947368421,
     "sku": {
       "meta": 120,
-      "real": 32
+      "real": 97
     },
     "positivacao_dia15": {
       "resultado": 75,
@@ -1137,10 +1137,10 @@
     },
     "recompra_pct": 0.4,
     "recompra_contagem": 38,
-    "media_pedidos": 0,
+    "media_pedidos": 10.789473684210526,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 101
     },
     "positivacao_dia15": {
       "resultado": 90,
@@ -1201,10 +1201,10 @@
     },
     "recompra_pct": 0.3333333333333333,
     "recompra_contagem": 32,
-    "media_pedidos": 0,
+    "media_pedidos": 16.36842105263158,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 82
     },
     "positivacao_dia15": {
       "resultado": 96,
@@ -1265,10 +1265,10 @@
     },
     "recompra_pct": 0.2361111111111111,
     "recompra_contagem": 17,
-    "media_pedidos": 0,
+    "media_pedidos": 12.31578947368421,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 103
     },
     "positivacao_dia15": {
       "resultado": 65,
@@ -1329,10 +1329,10 @@
     },
     "recompra_pct": 0.410958904109589,
     "recompra_contagem": 30,
-    "media_pedidos": 0,
+    "media_pedidos": 9.894736842105264,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 93
     },
     "positivacao_dia15": {
       "resultado": 67,
@@ -1393,10 +1393,10 @@
     },
     "recompra_pct": 0.27941176470588236,
     "recompra_contagem": 19,
-    "media_pedidos": 202.79999999999998,
+    "media_pedidos": 11.578947368421053,
     "sku": {
       "meta": 120,
-      "real": 138
+      "real": 79
     },
     "positivacao_dia15": {
       "resultado": 61,
@@ -1457,10 +1457,10 @@
     },
     "recompra_pct": 0.3695652173913043,
     "recompra_contagem": 17,
-    "media_pedidos": 0,
+    "media_pedidos": 10.157894736842104,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 67
     },
     "positivacao_dia15": {
       "resultado": 37,
@@ -1521,10 +1521,10 @@
     },
     "recompra_pct": 0.37777777777777777,
     "recompra_contagem": 17,
-    "media_pedidos": 0,
+    "media_pedidos": 6.631578947368421,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 73
     },
     "positivacao_dia15": {
       "resultado": 33,
@@ -1585,10 +1585,10 @@
     },
     "recompra_pct": 0.3275862068965517,
     "recompra_contagem": 19,
-    "media_pedidos": 0,
+    "media_pedidos": 10.421052631578947,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 78
     },
     "positivacao_dia15": {
       "resultado": 46,
@@ -1649,10 +1649,10 @@
     },
     "recompra_pct": 0.24193548387096775,
     "recompra_contagem": 15,
-    "media_pedidos": 0,
+    "media_pedidos": 8.368421052631579,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 80
     },
     "positivacao_dia15": {
       "resultado": 56,
@@ -1713,10 +1713,10 @@
     },
     "recompra_pct": 0.38271604938271603,
     "recompra_contagem": 31,
-    "media_pedidos": 0,
+    "media_pedidos": 13.631578947368421,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 82
     },
     "positivacao_dia15": {
       "resultado": 72,
@@ -1777,10 +1777,10 @@
     },
     "recompra_pct": 0.3611111111111111,
     "recompra_contagem": 26,
-    "media_pedidos": 0,
+    "media_pedidos": 11,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 78
     },
     "positivacao_dia15": {
       "resultado": 56,
@@ -1841,10 +1841,10 @@
     },
     "recompra_pct": 0.14473684210526316,
     "recompra_contagem": 11,
-    "media_pedidos": 43.305263157894736,
+    "media_pedidos": 16.63157894736842,
     "sku": {
       "meta": 120,
-      "real": 50
+      "real": 59
     },
     "positivacao_dia15": {
       "resultado": 76,
@@ -1905,10 +1905,10 @@
     },
     "recompra_pct": 0.47619047619047616,
     "recompra_contagem": 30,
-    "media_pedidos": 0,
+    "media_pedidos": 9.368421052631579,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 57
     },
     "positivacao_dia15": {
       "resultado": 54,
@@ -1969,10 +1969,10 @@
     },
     "recompra_pct": 0.3064516129032258,
     "recompra_contagem": 19,
-    "media_pedidos": 0,
+    "media_pedidos": 8.947368421052632,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 67
     },
     "positivacao_dia15": {
       "resultado": 61,
@@ -2033,10 +2033,10 @@
     },
     "recompra_pct": 0.3409090909090909,
     "recompra_contagem": 30,
-    "media_pedidos": 0,
+    "media_pedidos": 14.31578947368421,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 69
     },
     "positivacao_dia15": {
       "resultado": 79,
@@ -2097,10 +2097,10 @@
     },
     "recompra_pct": 0.19642857142857142,
     "recompra_contagem": 11,
-    "media_pedidos": 0,
+    "media_pedidos": 12.894736842105264,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 60
     },
     "positivacao_dia15": {
       "resultado": 55,
@@ -2161,10 +2161,10 @@
     },
     "recompra_pct": 0.25,
     "recompra_contagem": 16,
-    "media_pedidos": 0,
+    "media_pedidos": 12.473684210526315,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 81
     },
     "positivacao_dia15": {
       "resultado": 63,
@@ -2225,10 +2225,10 @@
     },
     "recompra_pct": 0.17391304347826086,
     "recompra_contagem": 4,
-    "media_pedidos": 0,
+    "media_pedidos": 3.4210526315789473,
     "sku": {
       "meta": 121,
-      "real": 0
+      "real": 43
     },
     "positivacao_dia15": {
       "resultado": 20,
@@ -2289,10 +2289,10 @@
     },
     "recompra_pct": 0.041015625,
     "recompra_contagem": 21,
-    "media_pedidos": 0,
+    "media_pedidos": 14,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 88
     },
     "positivacao_dia15": {
       "resultado": 74,
@@ -2353,10 +2353,10 @@
     },
     "recompra_pct": 0.2912621359223301,
     "recompra_contagem": 30,
-    "media_pedidos": 8.08421052631579,
+    "media_pedidos": 15.421052631578947,
     "sku": {
       "meta": 120,
-      "real": 3
+      "real": 112
     },
     "positivacao_dia15": {
       "resultado": 58,
@@ -2417,10 +2417,10 @@
     },
     "recompra_pct": 0.32894736842105265,
     "recompra_contagem": 25,
-    "media_pedidos": 0,
+    "media_pedidos": 12.578947368421053,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 84
     },
     "positivacao_dia15": {
       "resultado": 73,
@@ -2481,10 +2481,10 @@
     },
     "recompra_pct": 0.32142857142857145,
     "recompra_contagem": 27,
-    "media_pedidos": 0,
+    "media_pedidos": 12.105263157894736,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 92
     },
     "positivacao_dia15": {
       "resultado": 78,
@@ -2545,10 +2545,10 @@
     },
     "recompra_pct": 0.3548387096774194,
     "recompra_contagem": 33,
-    "media_pedidos": 0,
+    "media_pedidos": 14.105263157894736,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 90
     },
     "positivacao_dia15": {
       "resultado": 54,
@@ -2609,10 +2609,10 @@
     },
     "recompra_pct": 0.2833333333333333,
     "recompra_contagem": 17,
-    "media_pedidos": 0,
+    "media_pedidos": 10.368421052631579,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 90
     },
     "positivacao_dia15": {
       "resultado": 62,
@@ -2673,10 +2673,10 @@
     },
     "recompra_pct": 0.3333333333333333,
     "recompra_contagem": 23,
-    "media_pedidos": 0,
+    "media_pedidos": 9.052631578947368,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 85
     },
     "positivacao_dia15": {
       "resultado": 87,
@@ -2737,10 +2737,10 @@
     },
     "recompra_pct": 0.26666666666666666,
     "recompra_contagem": 24,
-    "media_pedidos": 0,
+    "media_pedidos": 16.157894736842106,
     "sku": {
       "meta": 120,
-      "real": 0
+      "real": 100
     },
     "positivacao_dia15": {
       "resultado": 87,
