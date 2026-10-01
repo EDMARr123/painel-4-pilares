@@ -134,7 +134,14 @@ def extrair_totais(ws):
         "realizado_clientes": _num(ws["T89"].value),
         "nao_comprou": _num(ws["T91"].value),
         "recompra_pct": _num(ws["T93"].value),
-        "peso": {"meta": _num(ws["S97"].value), "real": _num(ws["T97"].value), "pct": _num(ws["U97"].value)},
+        # U97 deixou de ser % e passou a ser a diferença em kg (real - meta);
+        # o % é calculado aqui.
+        "peso": {
+            "meta": _num(ws["S97"].value),
+            "real": _num(ws["T97"].value),
+            "tendencia": _num(ws["U97"].value),
+            "pct": (_num(ws["T97"].value) / _num(ws["S97"].value)) if _num(ws["S97"].value) else 0,
+        },
         "preco_medio": {"meta": _num(ws["S99"].value), "real": _num(ws["T99"].value), "pct": _num(ws["U99"].value)},
         "conta_corrente": {
             "meta": _num(ws["R114"].value),

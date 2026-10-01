@@ -1383,8 +1383,9 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
             kpis_html += f'''
     <div class="dv-kpi {classe_peso}">
       <div class="l">Peso</div>
-      <div class="v">{_fmt_num_py(peso["real"], 0)}</div>
-      <div class="m">Meta {_fmt_num_py(peso["meta"], 0)}</div>
+      <div class="v">{_fmt_num_py(peso["real"], 0)} kg</div>
+      <div class="m">Meta {_fmt_num_py(peso["meta"], 0)} kg</div>
+      <div class="m">Tendência {_fmt_num_py(peso.get("tendencia", 0), 0)} kg</div>
       <span class="badge {classe_peso}">{_fmt_pct_py(peso["pct"])}</span>
     </div>'''
 
