@@ -1731,7 +1731,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     # entre as duas linhas de tabelas por RCA.
     secao_peso = ""
     if agrupar_por_rca and dados and all("peso" in r for r in dados):
-        linhas_peso, linhas_tend_peso, linhas_preco = "", "", ""
+        linhas_peso, linhas_preco = "", ""
         for grp in grupos:
             p = next(r for r in dados if r[chave_grupo] == grp)["peso"]
             classe_tend = "dv-bad" if p["tendencia"] < 0 else "dv-good"
@@ -1742,28 +1742,19 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td>{_fmt_num_py(p["real"], 0)}</td>
         <td class="{classe_tend}">{_fmt_num_py(p["tendencia"], 0)}</td>
       </tr>'''
-            linhas_tend_peso += f'''
-      <tr>
-        <td class="dv-tab-sup">{grp}</td>
-        <td class="{_classe_status(p["pct"])}">{_fmt_pct_py(p["pct"])}</td>
-      </tr>'''
             linhas_preco += f'''
       <tr>
         <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_moeda_py(p["preco_medio"])}</td>
       </tr>'''
         secao_peso = f'''
-  <section class="dv-row-3">
+  <section class="dv-row">
     <div class="dv-panel">
-      <h3>Peso por {rotulo_grupo} (kg)</h3>
+      <h3 style="text-align:center">Peso por {rotulo_grupo} (kg)</h3>
       {_tabela_mini(linhas_peso, ["Meta", "Realizado", "Tendência"], centralizado=True)}
     </div>
     <div class="dv-panel">
-      <h3>% Peso por {rotulo_grupo}</h3>
-      {_tabela_mini(linhas_tend_peso, ["%"], centralizado=True)}
-    </div>
-    <div class="dv-panel">
-      <h3>Preço Médio por {rotulo_grupo}</h3>
+      <h3 style="text-align:center">Preço Médio por {rotulo_grupo}</h3>
       {_tabela_mini(linhas_preco, ["Preço Médio"], centralizado=True)}
     </div>
   </section>
