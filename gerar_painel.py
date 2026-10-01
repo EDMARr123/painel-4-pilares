@@ -1434,19 +1434,17 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     if not totais and dados and all("peso" in r for r in dados):
         meta_peso = sum(r["peso"]["meta"] for r in dados)
         real_peso = sum(r["peso"]["real"] for r in dados)
-        tendencia_peso = sum(r["peso"]["tendencia"] for r in dados)
         meta_dia_peso = sum(r["peso"].get("meta_dia", 0) for r in dados)
         preco_medio_equipe = _media([r["peso"]["preco_medio"] for r in dados])
         pct_peso = real_peso / meta_peso if meta_peso else 0
         classe_peso = _classe_status(pct_peso)
-        classe_tend_peso = "dv-bad" if tendencia_peso < 0 else "dv-good"
         kpis_html_industrializados += f'''
     <div class="dv-kpi {classe_peso}">
       <div class="l">Peso</div>
       <div class="v">{_fmt_num_py(real_peso, 0)} kg</div>
-      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg · Meta do dia {_fmt_num_py(meta_dia_peso, 0)} kg</div>
+      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg</div>
+      <div class="m">Meta do dia {_fmt_num_py(meta_dia_peso, 0)} kg</div>
       <span class="badge {classe_peso}" style="font-size:12px;">{_fmt_pct_py(pct_peso)}</span>
-      <span class="badge {classe_tend_peso}" style="margin-left:6px;font-size:12px;">Tend. {_fmt_num_py(tendencia_peso, 0)} kg</span>
     </div>'''
 
         # Preço médio da equipe = média dos RCAs (igual à linha de total da
