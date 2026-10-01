@@ -1727,6 +1727,31 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_lucro = _tabela_mini(linhas_lucro, ["Lucro"], centralizado=True)
 
+    # Peso por RCA (colunas AC..AF da planilha) — só no painel do supervisor,
+    # entre as duas linhas de tabelas por RCA.
+    secao_peso = ""
+    if agrupar_por_rca and dados and all("peso" in r for r in dados):
+        linhas_peso = ""
+        for grp in grupos:
+            p = next(r for r in dados if r[chave_grupo] == grp)["peso"]
+            classe_tend = "dv-bad" if p["tendencia"] < 0 else "dv-good"
+            linhas_peso += f'''
+      <tr>
+        <td class="dv-tab-sup">{grp}</td>
+        <td>{_fmt_num_py(p["meta"], 0)} kg</td>
+        <td>{_fmt_num_py(p["real"], 0)} kg</td>
+        <td class="{classe_tend}">{_fmt_num_py(p["tendencia"], 0)} kg</td>
+        <td>{_fmt_moeda_py(p["preco_medio"])}</td>
+        <td class="{_classe_status(p["pct"])}">{_fmt_pct_py(p["pct"])}</td>
+      </tr>'''
+        tabela_peso = _tabela_mini(linhas_peso, ["Meta", "Realizado", "Tendência", "Preço Médio", "%"], centralizado=True)
+        secao_peso = f'''
+  <section class="dv-panel" style="margin-bottom:18px;overflow-x:auto">
+    <h3 style="text-align:center">Peso por {rotulo_grupo}</h3>
+    {tabela_peso}
+  </section>
+'''
+
     # ---- Gráfico 3: pilares atingidos ----
     # Por supervisor: quantos RCAs do time bateram 3-4 pilares (fração do
     # maior time). Por RCA: cada vendedor já é o próprio "grupo" de 1, não
@@ -1784,7 +1809,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       {tabela_mix}
     </div>
   </section>
-
+{secao_peso}
   <section class="dv-row-3">
     <div class="dv-panel">
       <h3>Positivação por {rotulo_grupo}</h3>
