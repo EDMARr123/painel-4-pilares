@@ -1238,7 +1238,7 @@ def _media(valores):
     return sum(valores) / len(valores) if valores else 0
 
 
-def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor", mostrar_resumo_4_pilares=False, mostrar_resumo_departamento=False):
+def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo="supervisor", rotulo_grupo="supervisor", mostrar_resumo_4_pilares=False, mostrar_resumo_departamento=False, meta_preco_medio=None):
     """KPIs + gráficos/tabelas do dashboard tipo "painel do gerente" —
     reaproveitado tanto pelo painel do gerente (agrupando por supervisor,
     `totais` = bloco de totais_gerais.json) quanto pelo painel de cada
@@ -1438,9 +1438,26 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-kpi {classe_peso}">
       <div class="l">Peso</div>
       <div class="v">{_fmt_num_py(real_peso, 0)} kg</div>
-      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg · Preço médio {_fmt_moeda_py(preco_medio_equipe)}</div>
+      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg</div>
       <span class="badge {classe_peso}" style="font-size:12px;">{_fmt_pct_py(pct_peso)}</span>
       <span class="badge {classe_tend_peso}" style="margin-left:6px;font-size:12px;">Tend. {_fmt_num_py(tendencia_peso, 0)} kg</span>
+    </div>'''
+
+        # Preço médio da equipe = média dos RCAs (igual à linha de total da
+        # planilha); meta vem do bloco de totais (a mesma do painel do gerente).
+        if meta_preco_medio:
+            pct_preco = preco_medio_equipe / meta_preco_medio
+            classe_preco = _classe_status(pct_preco)
+            linha_meta_preco = f'<div class="m">Meta {_fmt_moeda_py(meta_preco_medio)}</div>'
+            badge_preco = f'<span class="badge {classe_preco}" style="font-size:12px;">{_fmt_pct_py(pct_preco)}</span>'
+        else:
+            classe_preco, linha_meta_preco, badge_preco = "", "", ""
+        kpis_html_industrializados += f'''
+    <div class="dv-kpi {classe_preco}">
+      <div class="l">Preço Médio</div>
+      <div class="v">{_fmt_moeda_py(preco_medio_equipe)}</div>
+      {linha_meta_preco}
+      {badge_preco}
     </div>'''
 
     # ---- Tendência de fechamento (tabela: meta, realizado, meta dia, tendência %) ----
@@ -1998,7 +2015,7 @@ def gerar_html_gerente(dados, totais, dados_dep=None):
 """
 
 
-def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
+def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None, meta_preco_medio=None):
     """Painel de um supervisor: o mesmo dashboard do painel do gerente
     (KPIs + gráficos/tabelas), recalculado só com o time dele e quebrado
     por RCA em vez de por supervisor — seguido da grade de cards
@@ -2013,6 +2030,7 @@ def gerar_html_supervisor(dados_sup, nome_supervisor, dados_dep=None):
         dados_sup, dados_dep=dados_dep_sup, totais=None,
         chave_grupo="nome", rotulo_grupo="RCA",
         mostrar_resumo_4_pilares=True, mostrar_resumo_departamento=True,
+        meta_preco_medio=meta_preco_medio,
     )
 
     foto_sup = _FOTOS_SUPERVISORES.get(nome_supervisor)
@@ -2099,7 +2117,8 @@ def main():
     os.makedirs(pasta_supervisores, exist_ok=True)
     for sup in supervisores:
         dados_sup = [r for r in dados if r["supervisor"] == sup]
-        html_sup = gerar_html_supervisor(dados_sup, sup, dados_dep)
+        html_sup = gerar_html_supervisor(dados_sup, sup, dados_dep,
+                                         meta_preco_medio=(totais.get("preco_medio") or {}).get("meta"))
         caminho_sup = os.path.join(pasta_supervisores, f"painel_{sup}.html")
         with open(caminho_sup, "w", encoding="utf-8") as f:
             f.write(html_sup)
