@@ -751,6 +751,10 @@ function card(rca) {
         <span class="pct" style="font-size:13px;color:var(--${corPct(rca.peso.pct)})">${fmtPct(rca.peso.pct)}</span>
       </div>
       <div class="pct-row">
+        <span class="sub-label">Meta do dia</span>
+        <span class="pct" style="font-size:13px;color:var(--ink)">${fmtNum0(rca.peso.meta_dia || 0)} kg</span>
+      </div>
+      <div class="pct-row">
         <span class="sub-label">Tendência</span>
         <span class="pct" style="font-size:13px;color:var(--${rca.peso.tendencia < 0 ? "bad" : "good"})">${fmtNum0(rca.peso.tendencia)} kg</span>
       </div>
@@ -883,6 +887,7 @@ function agregarTime(dados, nomeSupervisor) {
       return {
         meta, real, pct: meta ? real / meta : 0,
         tendencia: dados.reduce((s, r) => s + r.peso.tendencia, 0),
+        meta_dia: dados.reduce((s, r) => s + (r.peso.meta_dia || 0), 0),
         preco_medio: media(dados.map(r => r.peso.preco_medio)),
       };
     })() : null,
@@ -1430,6 +1435,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         meta_peso = sum(r["peso"]["meta"] for r in dados)
         real_peso = sum(r["peso"]["real"] for r in dados)
         tendencia_peso = sum(r["peso"]["tendencia"] for r in dados)
+        meta_dia_peso = sum(r["peso"].get("meta_dia", 0) for r in dados)
         preco_medio_equipe = _media([r["peso"]["preco_medio"] for r in dados])
         pct_peso = real_peso / meta_peso if meta_peso else 0
         classe_peso = _classe_status(pct_peso)
@@ -1438,7 +1444,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     <div class="dv-kpi {classe_peso}">
       <div class="l">Peso</div>
       <div class="v">{_fmt_num_py(real_peso, 0)} kg</div>
-      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg</div>
+      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg · Meta do dia {_fmt_num_py(meta_dia_peso, 0)} kg</div>
       <span class="badge {classe_peso}" style="font-size:12px;">{_fmt_pct_py(pct_peso)}</span>
       <span class="badge {classe_tend_peso}" style="margin-left:6px;font-size:12px;">Tend. {_fmt_num_py(tendencia_peso, 0)} kg</span>
     </div>'''
@@ -1761,6 +1767,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_num_py(p["meta"], 0)}</td>
         <td>{_fmt_num_py(p["real"], 0)}</td>
+        <td>{_fmt_num_py(p.get("meta_dia", 0), 0)}</td>
         <td class="{classe_tend}">{_fmt_num_py(p["tendencia"], 0)}</td>
       </tr>'''
             linhas_preco += f'''
@@ -1771,7 +1778,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         secao_peso = f'''
     <div class="dv-panel">
       <h3>Peso por {rotulo_grupo} (kg)</h3>
-      {_tabela_mini(linhas_peso, ["Meta", "Realizado", "Tendência"], centralizado=True)}
+      {_tabela_mini(linhas_peso, ["Meta", "Realizado", "Meta Dia", "Tendência"], centralizado=True)}
     </div>
     <div class="dv-panel">
       <h3>Preço Médio por {rotulo_grupo}</h3>

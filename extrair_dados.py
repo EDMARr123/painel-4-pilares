@@ -152,6 +152,49 @@ def extrair_totais(ws):
     }
 
 
+def _mapear_colunas(ws, linha_cabecalho):
+    """Localiza, pelo texto do cabeçalho do bloco do supervisor, as colunas
+    que vêm depois de "% 4 PILAR SUP". Falha com mensagem clara se algum
+    cabeçalho obrigatório sumir/mudar de nome na planilha."""
+    def norm(v):
+        # "PRÊMIO INDUS" (bloco do RICARDO) e "PREMIO " (demais) = mesma coluna.
+        return re.sub(r"\s+", " ", str(v)).strip().upper().replace("PRÊMIO", "PREMIO") if v is not None else ""
+
+    cabecalhos = [(c, norm(ws.cell(row=linha_cabecalho, column=c).value))
+                  for c in range(1, ws.max_column + 1)]
+
+    def achar(texto, depois_de=0, obrigatorio=True, prefixo=False):
+        for c, h in cabecalhos:
+            if c > depois_de and (h.startswith(texto) if prefixo else h == texto):
+                return c
+        if obrigatorio:
+            raise ValueError(f'Cabeçalho "{texto}" não encontrado na linha {linha_cabecalho} da planilha')
+        return None
+
+    peso_meta = achar("META PESO")
+    peso_real = achar("REALIZADO PESO", peso_meta)
+    preco_medio = achar("PREÇO MEDIO", peso_meta)
+    peso_meta_dia = achar("META DO DIA", peso_meta, obrigatorio=False)
+    peso_tendencia = achar("TENTÊNCIA", peso_real)
+    premio_ind = achar("PREMIO", prefixo=True)
+    return {
+        "peso_meta": peso_meta,
+        "peso_real": peso_real,
+        "peso_meta_dia": peso_meta_dia,
+        "peso_tendencia": peso_tendencia,
+        "preco_medio": preco_medio,
+        "ind": achar("META INDUSTRIALIZADO"),
+        "thermo": achar("META THEMO"),
+        "dia15": achar("DIA 15"),
+        "dia30": achar("DIA 30"),
+        "recompra": achar("RECOMPRA"),
+        "media_pedidos": achar("MÉDIA PEDIDOS"),
+        "sku": achar("SKU"),
+        "premio_ind": premio_ind,
+        "premio_thermo": achar("PREMIO", premio_ind, prefixo=True),
+    }
+
+
 def extrair():
     wb = openpyxl.load_workbook(CAMINHO_SOMA, data_only=True)
     ws = wb["SOMAR 4 PILARES"]
@@ -169,9 +212,13 @@ def extrair():
         col_d = ws.cell(row=r, column=4).value
         col_e = ws.cell(row=r, column=5).value
 
-        # Linha de cabeçalho de um novo bloco de supervisor.
+        # Linha de cabeçalho de um novo bloco de supervisor. As colunas a
+        # partir do bloco de PESO são localizadas pelo texto do cabeçalho
+        # (não por posição fixa) — o Edmar insere colunas novas com
+        # frequência e cada inserção deslocava tudo que vinha depois.
         if col_d and col_e == "POSITIVAÇÃO":
             supervisor_atual = str(col_d).strip()
+            col = _mapear_colunas(ws, r)
             continue
 
         codigo = ws.cell(row=r, column=3).value
@@ -221,23 +268,22 @@ def extrair():
         # recompra (contagem/%); AV = média pedidos; AX/AY = SKU meta/real;
         # BA = prêmio industrializado; BC = prêmio thermo.
         #
-        # Layout confirmado em 01/10 (Edmar inseriu o bloco de PESO em
-        # AC..AF — tudo dali pra frente andou 5 colunas pra direita):
-        # AC/AD/AE/AF = peso meta/realizado/tendência (real - meta)/preço
-        # médio; AH..AK = industrializado; AM..AP = thermo; AR/AS = Dia 15;
-        # AU/AV = Dia 30; AX/AY = recompra; BA = média pedidos; BC/BD = SKU;
-        # BF = prêmio industrializado; BH = prêmio thermo.
-        industrializado_real = val(35)
+        # Desde 01/10 as colunas a partir do bloco de PESO vêm de
+        # _mapear_colunas (cabeçalho do bloco) — layout de 01/10: AC META
+        # PESO, AD REALIZADO PESO, AE META DO DIA, AF TENTÊNCIA, AG PREÇO
+        # MEDIO, AI.. industrializado, AN.. thermo, AS/AV dias 15/30, AY
+        # recompra, BB média pedidos, BD SKU, BG/BI prêmios.
+        industrializado_real = val(col["ind"] + 1)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
-        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(40)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(col["thermo"] + 1)
         thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
         # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
         # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
         # mesmo significado de margem que tem no arquivo de Industrializado —
         # em vez de arriscar mostrar um número inventado, mantém 0 até o
         # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
-        thermo_margem_pct = val(42) if thermo_real else 0
+        thermo_margem_pct = val(col["thermo"] + 3) if thermo_real else 0
         if thermo_margem_pct < 0:
             thermo_margem_pct = 0
 
@@ -254,16 +300,18 @@ def extrair():
             },
             "pilares_atingidos": int(val(26)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "peso": {"meta": val(29), "real": val(30), "tendencia": val(31), "preco_medio": val(32),
-                     "pct": (val(30) / val(29)) if val(29) else 0},  # AC/AD/AE/AF
-            "industrializado": {"meta": val(34), "real": industrializado_real, "participacao_pct": val(36), "margem_pct": val(37), "premio": val(58)},
-            "thermo": {"meta": val(39), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(60)},
-            "recompra_pct": val(51),  # AY = "RECOMPRA" %
-            "recompra_contagem": val(50),  # AX = "RECOMPRA" contagem (clientes com 1 pedido)
-            "media_pedidos": val(53),  # BA = "MÉDIA PEDIDOS"
-            "sku": {"meta": val(55), "real": val(56)},  # BC/BD = "SKU" meta/realizado
-            "positivacao_dia15": {"resultado": val(44), "premio": val(45)},  # AR/AS
-            "positivacao_dia30": {"resultado": val(47), "premio": val(48)},  # AU/AV
+            "peso": {"meta": val(col["peso_meta"]), "real": val(col["peso_real"]),
+                     "meta_dia": val(col["peso_meta_dia"]) if col["peso_meta_dia"] else 0,
+                     "tendencia": val(col["peso_tendencia"]), "preco_medio": val(col["preco_medio"]),
+                     "pct": (val(col["peso_real"]) / val(col["peso_meta"])) if val(col["peso_meta"]) else 0},
+            "industrializado": {"meta": val(col["ind"]), "real": industrializado_real, "participacao_pct": val(col["ind"] + 2), "margem_pct": val(col["ind"] + 3), "premio": val(col["premio_ind"])},
+            "thermo": {"meta": val(col["thermo"]), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(col["premio_thermo"])},
+            "recompra_pct": val(col["recompra"] + 1),  # % ao lado da contagem
+            "recompra_contagem": val(col["recompra"]),  # clientes com 1 pedido
+            "media_pedidos": val(col["media_pedidos"]),
+            "sku": {"meta": val(col["sku"]), "real": val(col["sku"] + 1)},
+            "positivacao_dia15": {"resultado": val(col["dia15"]), "premio": val(col["dia15"] + 1)},
+            "positivacao_dia30": {"resultado": val(col["dia30"]), "premio": val(col["dia30"] + 1)},
         })
 
     return rcas
