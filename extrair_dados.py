@@ -213,17 +213,24 @@ def extrair():
         # resultado/prêmio; AP/AQ = Dia 30 resultado/prêmio; AS/AT =
         # recompra (contagem/%); AV = média pedidos; AX/AY = SKU meta/real;
         # BA = prêmio industrializado; BC = prêmio thermo.
-        industrializado_real = val(30)
+        #
+        # Layout confirmado em 01/10 (Edmar inseriu o bloco de PESO em
+        # AC..AF — tudo dali pra frente andou 5 colunas pra direita):
+        # AC/AD/AE/AF = peso meta/realizado/tendência (real - meta)/preço
+        # médio; AH..AK = industrializado; AM..AP = thermo; AR/AS = Dia 15;
+        # AU/AV = Dia 30; AX/AY = recompra; BA = média pedidos; BC/BD = SKU;
+        # BF = prêmio industrializado; BH = prêmio thermo.
+        industrializado_real = val(35)
 
         info_thermo = _achar_no_cache(cache_thermo, nome_rca)
-        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(35)
+        thermo_real = info_thermo.get("K") or 0 if info_thermo is not None else val(40)
         thermo_participacao_pct = (thermo_real / real_financeiro) if real_financeiro else 0
         # Margem % de Thermo depende do mesmo VLOOKUP por código quebrado (AI14);
         # a coluna O do cache de nome (usada pra bypassar o "real") não tem o
         # mesmo significado de margem que tem no arquivo de Industrializado —
         # em vez de arriscar mostrar um número inventado, mantém 0 até o
         # export do THERMOPROCESSADO.xls trazer o código certo na coluna B.
-        thermo_margem_pct = val(37) if thermo_real else 0
+        thermo_margem_pct = val(42) if thermo_real else 0
         if thermo_margem_pct < 0:
             thermo_margem_pct = 0
 
@@ -240,14 +247,16 @@ def extrair():
             },
             "pilares_atingidos": int(val(26)),
             "tendencia": {"pct": tendencia_pct, "projetado": projetado, "meta": meta_financeiro, "meta_dia": meta_dia},
-            "industrializado": {"meta": val(29), "real": industrializado_real, "participacao_pct": val(31), "margem_pct": val(32), "premio": val(53)},
-            "thermo": {"meta": val(34), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(55)},
-            "recompra_pct": val(46),  # AT = "RECOMPRA" %
-            "recompra_contagem": val(45),  # AS = "RECOMPRA" contagem (clientes com 1 pedido)
-            "media_pedidos": val(48),  # AV = "MÉDIA PEDIDOS"
-            "sku": {"meta": val(50), "real": val(51)},  # AX/AY = "SKU" meta/realizado
-            "positivacao_dia15": {"resultado": val(39), "premio": val(40)},  # AM/AN
-            "positivacao_dia30": {"resultado": val(42), "premio": val(43)},  # AP/AQ
+            "peso": {"meta": val(29), "real": val(30), "tendencia": val(31), "preco_medio": val(32),
+                     "pct": (val(30) / val(29)) if val(29) else 0},  # AC/AD/AE/AF
+            "industrializado": {"meta": val(34), "real": industrializado_real, "participacao_pct": val(36), "margem_pct": val(37), "premio": val(58)},
+            "thermo": {"meta": val(39), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(60)},
+            "recompra_pct": val(51),  # AY = "RECOMPRA" %
+            "recompra_contagem": val(50),  # AX = "RECOMPRA" contagem (clientes com 1 pedido)
+            "media_pedidos": val(53),  # BA = "MÉDIA PEDIDOS"
+            "sku": {"meta": val(55), "real": val(56)},  # BC/BD = "SKU" meta/realizado
+            "positivacao_dia15": {"resultado": val(44), "premio": val(45)},  # AR/AS
+            "positivacao_dia30": {"resultado": val(47), "premio": val(48)},  # AU/AV
         })
 
     return rcas

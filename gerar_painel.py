@@ -743,6 +743,24 @@ function card(rca) {
       </div>
     </div>
 
+    ${rca.peso ? `
+    <div class="mini-card" style="--cor-categoria:#1F8A70">
+      <div class="label">Peso</div>
+      <div class="pct-row">
+        <span class="sub-label">Realizado / Meta</span>
+        <span class="pct" style="font-size:13px;color:var(--${corPct(rca.peso.pct)})">${fmtPct(rca.peso.pct)}</span>
+      </div>
+      <div class="pct-row">
+        <span class="sub-label">Tendência</span>
+        <span class="pct" style="font-size:13px;color:var(--${rca.peso.tendencia < 0 ? "bad" : "good"})">${fmtNum0(rca.peso.tendencia)} kg</span>
+      </div>
+      <div class="pct-row">
+        <span class="sub-label">Preço médio</span>
+        <span class="pct" style="font-size:13px;color:var(--ink)">${fmtMoeda(rca.peso.preco_medio)}</span>
+      </div>
+      <div class="sub">Meta ${fmtNum0(rca.peso.meta)} kg · Realizado ${fmtNum0(rca.peso.real)} kg</div>
+    </div>` : ""}
+
     <div class="mini-cards">
       <div class="mini-card" style="--cor-categoria:#7A5CC7">
         <div class="label">Industrializados</div>
@@ -785,7 +803,11 @@ function montarResumo(dados) {
   const media = dados.reduce((s, r) => s + r.pilares_atingidos, 0) / (total || 1);
   const acima3 = dados.filter(r => r.pilares_atingidos >= 3).length;
   const supervisores = new Set(dados.map(r => r.supervisor)).size;
-  document.getElementById("summary").innerHTML = `
+  // O painel do supervisor não tem o bloco #summary — sem esse guard o
+  // erro aqui interrompia montar() e a grade de cards ficava vazia.
+  const el = document.getElementById("summary");
+  if (!el) return;
+  el.innerHTML = `
     <div class="stat-pill"><div class="n">${total}</div><div class="l">RCAs</div></div>
     <div class="stat-pill"><div class="n">${supervisores}</div><div class="l">Supervisores</div></div>
     <div class="stat-pill"><div class="n">${media.toFixed(1)}</div><div class="l">Média pilares</div></div>
@@ -854,6 +876,16 @@ function agregarTime(dados, nomeSupervisor) {
       margem_pct: media(dados.map(r => r.thermo.margem_pct)),
       premio: dados.reduce((s, r) => s + r.thermo.premio, 0),
     },
+    // Preço médio do time = média dos RCAs (igual à linha de total da planilha).
+    peso: dados.every(r => r.peso) ? (() => {
+      const meta = dados.reduce((s, r) => s + r.peso.meta, 0);
+      const real = dados.reduce((s, r) => s + r.peso.real, 0);
+      return {
+        meta, real, pct: meta ? real / meta : 0,
+        tendencia: dados.reduce((s, r) => s + r.peso.tendencia, 0),
+        preco_medio: media(dados.map(r => r.peso.preco_medio)),
+      };
+    })() : null,
     recompra_pct: media(dados.map(r => r.recompra_pct)),
     media_pedidos: media(dados.map(r => r.media_pedidos)),
     sku: {
@@ -1385,6 +1417,26 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       <div class="m">Meta {_fmt_moeda_py(meta)}</div>
       <span class="badge {classe_participacao}" style="font-size:12px;">Particip. {_fmt_pct_py(media_participacao)}</span>
       <span class="badge {classe_margem}" style="margin-left:6px;font-size:12px;">Margem {_fmt_pct_py(media_margem)}</span>
+    </div>'''
+
+    # Peso por equipe (somatória dos RCAs — colunas AC..AF da planilha). No
+    # painel do gerente o Peso já vem pronto de `totais`, então só entra aqui
+    # quando não há totais (painel do supervisor).
+    if not totais and dados and all("peso" in r for r in dados):
+        meta_peso = sum(r["peso"]["meta"] for r in dados)
+        real_peso = sum(r["peso"]["real"] for r in dados)
+        tendencia_peso = sum(r["peso"]["tendencia"] for r in dados)
+        preco_medio_equipe = _media([r["peso"]["preco_medio"] for r in dados])
+        pct_peso = real_peso / meta_peso if meta_peso else 0
+        classe_peso = _classe_status(pct_peso)
+        classe_tend_peso = "dv-bad" if tendencia_peso < 0 else "dv-good"
+        kpis_html_industrializados += f'''
+    <div class="dv-kpi {classe_peso}">
+      <div class="l">Peso</div>
+      <div class="v">{_fmt_num_py(real_peso, 0)} kg</div>
+      <div class="m">Meta {_fmt_num_py(meta_peso, 0)} kg · Preço médio {_fmt_moeda_py(preco_medio_equipe)}</div>
+      <span class="badge {classe_peso}" style="font-size:12px;">{_fmt_pct_py(pct_peso)}</span>
+      <span class="badge {classe_tend_peso}" style="margin-left:6px;font-size:12px;">Tend. {_fmt_num_py(tendencia_peso, 0)} kg</span>
     </div>'''
 
     # ---- Tendência de fechamento (tabela: meta, realizado, meta dia, tendência %) ----
