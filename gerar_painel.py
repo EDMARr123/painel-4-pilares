@@ -1740,12 +1740,12 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_num_py(p["meta"], 0)}</td>
         <td>{_fmt_num_py(p["real"], 0)}</td>
-        <td class="{_classe_status(p["pct"])}">{_fmt_pct_py(p["pct"])}</td>
+        <td class="{classe_tend}">{_fmt_num_py(p["tendencia"], 0)}</td>
       </tr>'''
             linhas_tend_peso += f'''
       <tr>
         <td class="dv-tab-sup">{grp}</td>
-        <td class="{classe_tend}">{_fmt_num_py(p["tendencia"], 0)} kg</td>
+        <td class="{_classe_status(p["pct"])}">{_fmt_pct_py(p["pct"])}</td>
       </tr>'''
             linhas_preco += f'''
       <tr>
@@ -1756,11 +1756,11 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
   <section class="dv-row-3">
     <div class="dv-panel">
       <h3>Peso por {rotulo_grupo} (kg)</h3>
-      {_tabela_mini(linhas_peso, ["Meta", "Realizado", "%"], centralizado=True)}
+      {_tabela_mini(linhas_peso, ["Meta", "Realizado", "Tendência"], centralizado=True)}
     </div>
     <div class="dv-panel">
-      <h3>Tendência de Peso por {rotulo_grupo}</h3>
-      {_tabela_mini(linhas_tend_peso, ["Tendência"], centralizado=True)}
+      <h3>% Peso por {rotulo_grupo}</h3>
+      {_tabela_mini(linhas_tend_peso, ["%"], centralizado=True)}
     </div>
     <div class="dv-panel">
       <h3>Preço Médio por {rotulo_grupo}</h3>
