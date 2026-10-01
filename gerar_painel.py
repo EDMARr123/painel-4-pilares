@@ -1184,6 +1184,9 @@ _CSS_DASHBOARD_GERENTE = """
 .dv-row-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-bottom: 18px; }
 @media (max-width: 760px) { .dv-row, .dv-row.dv-row-inv { grid-template-columns: 1fr; } }
 @media (max-width: 900px) { .dv-row-3 { grid-template-columns: 1fr; } }
+.dv-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+@media (max-width: 760px) { .dv-row-2 { grid-template-columns: 1fr; } }
+.dv-row-2 .dv-panel h3 { text-align: center; }
 .dv-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); padding: 18px 20px; }
 .dv-panel h3 { margin: 0 0 16px; font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; color: var(--ink-soft); }
 .dv-row-3 .dv-panel h3 { text-align: center; }
@@ -1748,17 +1751,41 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td>{_fmt_moeda_py(p["preco_medio"])}</td>
       </tr>'''
         secao_peso = f'''
-  <section class="dv-row">
     <div class="dv-panel">
-      <h3 style="text-align:center">Peso por {rotulo_grupo} (kg)</h3>
+      <h3>Peso por {rotulo_grupo} (kg)</h3>
       {_tabela_mini(linhas_peso, ["Meta", "Realizado", "Tendência"], centralizado=True)}
     </div>
     <div class="dv-panel">
-      <h3 style="text-align:center">Preço Médio por {rotulo_grupo}</h3>
+      <h3>Preço Médio por {rotulo_grupo}</h3>
       {_tabela_mini(linhas_preco, ["Preço Médio"], centralizado=True)}
+    </div>'''
+
+    painel_positivacao = f'''
+    <div class="dv-panel">
+      <h3>Positivação por {rotulo_grupo}</h3>
+      {tabela_positivacao}
+    </div>'''
+    paineis_recompra_media = f'''
+    <div class="dv-panel">
+      <h3>Recompra por {rotulo_grupo}</h3>
+      {tabela_recompra}
     </div>
+    <div class="dv-panel">
+      <h3>Média de Pedidos por {rotulo_grupo}</h3>
+      {tabela_media_pedidos}
+    </div>'''
+    # Com Peso (painel do supervisor): Positivação / Peso / Preço Médio numa
+    # linha e Recompra / Média de Pedidos na seguinte. Sem Peso: layout antigo.
+    if secao_peso:
+        secao_meio = f'''
+  <section class="dv-row-3">{painel_positivacao}{secao_peso}
   </section>
-'''
+  <section class="dv-row-2">{paineis_recompra_media}
+  </section>'''
+    else:
+        secao_meio = f'''
+  <section class="dv-row-3">{painel_positivacao}{paineis_recompra_media}
+  </section>'''
 
     # ---- Gráfico 3: pilares atingidos ----
     # Por supervisor: quantos RCAs do time bateram 3-4 pilares (fração do
@@ -1817,21 +1844,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       {tabela_mix}
     </div>
   </section>
-{secao_peso}
-  <section class="dv-row-3">
-    <div class="dv-panel">
-      <h3>Positivação por {rotulo_grupo}</h3>
-      {tabela_positivacao}
-    </div>
-    <div class="dv-panel">
-      <h3>Recompra por {rotulo_grupo}</h3>
-      {tabela_recompra}
-    </div>
-    <div class="dv-panel">
-      <h3>Média de Pedidos por {rotulo_grupo}</h3>
-      {tabela_media_pedidos}
-    </div>
-  </section>
+{secao_meio}
 
   <section class="dv-row">
     <div class="dv-panel">
