@@ -176,7 +176,15 @@ def _mapear_colunas(ws, linha_cabecalho):
     preco_medio = achar("PREÇO MEDIO", peso_meta)
     peso_meta_dia = achar("META DO DIA", peso_meta, obrigatorio=False)
     peso_tendencia = achar("TENTÊNCIA", peso_real)
-    premio_ind = achar("PREMIO", prefixo=True)
+    recompra = achar("RECOMPRA")
+    media_pedidos = achar("MÉDIA PEDIDOS")
+    # Prêmio de recompra (coluna inserida em 02/10) fica entre RECOMPRA e
+    # MÉDIA PEDIDOS; os prêmios de industrializado/thermo vêm depois do SKU.
+    premio_recompra = achar("PREMIO", recompra, obrigatorio=False, prefixo=True)
+    if premio_recompra is not None and premio_recompra > media_pedidos:
+        premio_recompra = None
+    sku = achar("SKU")
+    premio_ind = achar("PREMIO", sku, prefixo=True)
     return {
         "peso_meta": peso_meta,
         "peso_real": peso_real,
@@ -187,9 +195,10 @@ def _mapear_colunas(ws, linha_cabecalho):
         "thermo": achar("META THEMO"),
         "dia15": achar("DIA 15"),
         "dia30": achar("DIA 30"),
-        "recompra": achar("RECOMPRA"),
-        "media_pedidos": achar("MÉDIA PEDIDOS"),
-        "sku": achar("SKU"),
+        "recompra": recompra,
+        "premio_recompra": premio_recompra,
+        "media_pedidos": media_pedidos,
+        "sku": sku,
         "premio_ind": premio_ind,
         "premio_thermo": achar("PREMIO", premio_ind, prefixo=True),
     }
@@ -308,6 +317,7 @@ def extrair():
             "thermo": {"meta": val(col["thermo"]), "real": thermo_real, "participacao_pct": thermo_participacao_pct, "margem_pct": thermo_margem_pct, "premio": val(col["premio_thermo"])},
             "recompra_pct": val(col["recompra"] + 1),  # % ao lado da contagem
             "recompra_contagem": val(col["recompra"]),  # clientes com 1 pedido
+            "recompra_premio": val(col["premio_recompra"]) if col["premio_recompra"] else 0,
             "media_pedidos": val(col["media_pedidos"]),
             "sku": {"meta": val(col["sku"]), "real": val(col["sku"] + 1)},
             "positivacao_dia15": {"resultado": val(col["dia15"]), "premio": val(col["dia15"] + 1)},

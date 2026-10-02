@@ -737,9 +737,13 @@ function card(rca) {
         <span class="sub-label">Dia 15 — Resultado ${fmtNum0(rca.positivacao_dia15.resultado)}</span>
         <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.positivacao_dia15.premio)}</span>
       </div>
-      <div class="pct-row" style="margin-bottom:0">
+      <div class="pct-row">
         <span class="sub-label">Dia 30 — Resultado ${fmtNum0(rca.positivacao_dia30.resultado)}</span>
         <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.positivacao_dia30.premio)}</span>
+      </div>
+      <div class="pct-row" style="margin-bottom:0">
+        <span class="sub-label">Recompra — ${fmtPct(rca.recompra_pct)}</span>
+        <span class="pct" style="font-size:13px;color:var(--good)">${fmtMoeda(rca.recompra_premio || 0)}</span>
       </div>
     </div>
 
@@ -892,6 +896,7 @@ function agregarTime(dados, nomeSupervisor) {
       };
     })() : null,
     recompra_pct: media(dados.map(r => r.recompra_pct)),
+    recompra_premio: dados.reduce((s, r) => s + (r.recompra_premio || 0), 0),
     media_pedidos: media(dados.map(r => r.media_pedidos)),
     sku: {
       meta: dados.reduce((s, r) => s + r.sku.meta, 0),
