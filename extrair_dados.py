@@ -215,7 +215,9 @@ def extrair():
     # realizado/margem direto do snapshot cacheado do vínculo externo.
     cache_thermo = _cache_por_nome(_achar_external_link_xml(CAMINHO_SOMA, "THERMOPROCESSADO"))
 
+    ws_formulas = openpyxl.load_workbook(CAMINHO_SOMA)["SOMAR 4 PILARES"]
     rcas = []
+    margem_supervisor = {}
     supervisor_atual = None
     for r in range(1, ws.max_row + 1):
         col_d = ws.cell(row=r, column=4).value
@@ -232,6 +234,16 @@ def extrair():
 
         codigo = ws.cell(row=r, column=3).value
         nome_bruto = col_d
+        # AJUSTE (08/10): linha de TOTAL do bloco (sem código nem nome) — a col K
+        # tem a margem real do supervisor puxada do 3309-MARGEM pelo nome dele.
+        # O painel usa esse valor no lugar da média dos vendedores.
+        # A linha de total se reconhece pela fórmula =AVERAGE(...) na col J (as
+        # cols C/D dela às vezes têm sobra de texto, então não dá pra usar só elas).
+        if supervisor_atual and str(ws_formulas.cell(row=r, column=10).value or "").upper().startswith("=AVERAGE"):
+            k = ws.cell(row=r, column=11).value
+            if isinstance(k, (int, float)) and supervisor_atual not in margem_supervisor:
+                margem_supervisor[supervisor_atual] = k
+            continue
         if supervisor_atual is None or codigo is None or nome_bruto is None:
             continue
         # Linha de subtotal do bloco (código vazio, mas nome preenchido) — pula.
@@ -324,6 +336,9 @@ def extrair():
             "positivacao_dia30": {"resultado": val(col["dia30"]), "premio": val(col["dia30"] + 1)},
         })
 
+    for rca in rcas:
+        if rca["supervisor"] in margem_supervisor:
+            rca["margem_supervisor"] = margem_supervisor[rca["supervisor"]]
     return rcas
 
 

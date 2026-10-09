@@ -1283,6 +1283,11 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         # 100) não inflar o valor 100x.
         meta_margem = _media([r["pilares"]["margem"]["meta"] for r in dados]) / 100
         real_margem = _media([r["pilares"]["margem"]["real"] for r in dados]) / 100
+        # AJUSTE (08/10): margem real do supervisor = a do 3309-MARGEM (linha de
+        # total da planilha), não a média dos vendedores.
+        margens_sup = {r.get("margem_supervisor") for r in dados} - {None}
+        if len(margens_sup) == 1:
+            real_margem = margens_sup.pop() / 100
         meta_mix = _media([r["pilares"]["mix"]["meta"] for r in dados]) / 100
         real_mix = _media([r["pilares"]["mix"]["real"] for r in dados]) / 100
 
@@ -1582,6 +1587,8 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
       </tr>'''
         meta_margem_grp = _media([r["pilares"]["margem"]["meta"] for r in do_grp])
         real_margem_grp = _media([r["pilares"]["margem"]["real"] for r in do_grp])
+        if not agrupar_por_rca and do_grp and do_grp[0].get("margem_supervisor") is not None:
+            real_margem_grp = do_grp[0]["margem_supervisor"]  # margem do 3309 (ver extrair_dados)
         pct_margem_grp = real_margem_grp / meta_margem_grp if meta_margem_grp else 0
         classe_margem_grp = _classe_status(pct_margem_grp)
         linhas_margem += f'''

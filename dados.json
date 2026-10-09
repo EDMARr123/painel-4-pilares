@@ -70,7 +70,8 @@
     "positivacao_dia30": {
       "resultado": 90,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "85",
@@ -143,7 +144,8 @@
     "positivacao_dia30": {
       "resultado": 85,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "81",
@@ -216,7 +218,8 @@
     "positivacao_dia30": {
       "resultado": 89,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "83",
@@ -289,7 +292,8 @@
     "positivacao_dia30": {
       "resultado": 79,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "192",
@@ -362,7 +366,8 @@
     "positivacao_dia30": {
       "resultado": 60,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "649",
@@ -435,7 +440,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "650",
@@ -508,7 +514,8 @@
     "positivacao_dia30": {
       "resultado": 90,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.166630794894118
   },
   {
     "codigo": "12",
@@ -581,7 +588,8 @@
     "positivacao_dia30": {
       "resultado": 85,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "471",
@@ -654,7 +662,8 @@
     "positivacao_dia30": {
       "resultado": 85,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "383",
@@ -727,7 +736,8 @@
     "positivacao_dia30": {
       "resultado": 77,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "377",
@@ -800,7 +810,8 @@
     "positivacao_dia30": {
       "resultado": 89,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "657",
@@ -873,7 +884,8 @@
     "positivacao_dia30": {
       "resultado": 48,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "796",
@@ -946,7 +958,8 @@
     "positivacao_dia30": {
       "resultado": 38,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "797",
@@ -1019,7 +1032,8 @@
     "positivacao_dia30": {
       "resultado": 52,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.621439547021536
   },
   {
     "codigo": "738",
@@ -1092,7 +1106,8 @@
     "positivacao_dia30": {
       "resultado": 80,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "164",
@@ -1165,7 +1180,8 @@
     "positivacao_dia30": {
       "resultado": 83,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "45",
@@ -1238,7 +1254,8 @@
     "positivacao_dia30": {
       "resultado": 79,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "428",
@@ -1311,7 +1328,8 @@
     "positivacao_dia30": {
       "resultado": 73,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "439",
@@ -1384,7 +1402,8 @@
     "positivacao_dia30": {
       "resultado": 70,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "622",
@@ -1457,7 +1476,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "722",
@@ -1530,7 +1550,8 @@
     "positivacao_dia30": {
       "resultado": 71,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 12.815203930725628
   },
   {
     "codigo": "16",
@@ -1603,7 +1624,8 @@
     "positivacao_dia30": {
       "resultado": 65,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "398",
@@ -1676,7 +1698,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "723",
@@ -1749,7 +1772,8 @@
     "positivacao_dia30": {
       "resultado": 67,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "729",
@@ -1822,7 +1846,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "467",
@@ -1895,7 +1920,8 @@
     "positivacao_dia30": {
       "resultado": 63,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "644",
@@ -1968,7 +1994,8 @@
     "positivacao_dia30": {
       "resultado": 64,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "698",
@@ -2041,7 +2068,8 @@
     "positivacao_dia30": {
       "resultado": 69,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.560821118342059
   },
   {
     "codigo": "42",
@@ -2114,7 +2142,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "334",
@@ -2187,7 +2216,8 @@
     "positivacao_dia30": {
       "resultado": 51,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "806",
@@ -2260,7 +2290,8 @@
     "positivacao_dia30": {
       "resultado": 29,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "473",
@@ -2333,7 +2364,8 @@
     "positivacao_dia30": {
       "resultado": 66,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "751",
@@ -2406,7 +2438,8 @@
     "positivacao_dia30": {
       "resultado": 55,
       "premio": 150
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "679",
@@ -2479,7 +2512,8 @@
     "positivacao_dia30": {
       "resultado": 61,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "802",
@@ -2552,7 +2586,8 @@
     "positivacao_dia30": {
       "resultado": 21,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "687",
@@ -2625,7 +2660,8 @@
     "positivacao_dia30": {
       "resultado": 64,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 13.53888670461262
   },
   {
     "codigo": "47",
@@ -2698,7 +2734,8 @@
     "positivacao_dia30": {
       "resultado": 95,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "347",
@@ -2771,7 +2808,8 @@
     "positivacao_dia30": {
       "resultado": 64,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "357",
@@ -2844,7 +2882,8 @@
     "positivacao_dia30": {
       "resultado": 73,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "405",
@@ -2917,7 +2956,8 @@
     "positivacao_dia30": {
       "resultado": 83,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "561",
@@ -2990,7 +3030,8 @@
     "positivacao_dia30": {
       "resultado": 58,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "660",
@@ -3063,7 +3104,8 @@
     "positivacao_dia30": {
       "resultado": 54,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   },
   {
     "codigo": "807",
@@ -3136,6 +3178,7 @@
     "positivacao_dia30": {
       "resultado": 0,
       "premio": 0
-    }
+    },
+    "margem_supervisor": 14.062617896558168
   }
 ]
