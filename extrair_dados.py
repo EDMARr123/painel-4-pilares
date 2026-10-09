@@ -327,7 +327,20 @@ def extrair():
     return rcas
 
 
+def _atualizar_mestres():
+    """Antes de ler: puxa os .xls para as planilhas mestre e acerta os dias
+    úteis/trabalhados (ver ..\\atualizar_mestres.py). Falha aqui não impede o painel."""
+    import sys
+    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), ".."))
+    try:
+        from atualizar_mestres import atualizar_mestres
+        atualizar_mestres()
+    except Exception as e:
+        print(f"  Aviso: não consegui atualizar as planilhas mestre ({e}); usando os dados já salvos.")
+
+
 def main():
+    _atualizar_mestres()
     rcas = extrair()
     with open(CAMINHO_SAIDA, "w", encoding="utf-8") as f:
         json.dump(rcas, f, ensure_ascii=False, indent=2)
