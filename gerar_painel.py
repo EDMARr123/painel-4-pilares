@@ -1511,6 +1511,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
         <td class="dv-tab-sup">{grp}</td>
         <td>{_fmt_num_py(meta_posit, 0)}</td>
         <td>{_fmt_num_py(real_posit, 0)}</td>
+        <td>{_fmt_num_py(max(meta_posit - real_posit, 0), 0)}</td>
         <td class="{classe_posit}">{_fmt_pct_py(pct_posit)}</td>
       </tr>'''
         linhas_positivacao_grafico.append((grp, pct_posit, _fmt_pct_py(pct_posit), classe_posit))
@@ -1759,7 +1760,7 @@ def _construir_secoes_dashboard(dados, dados_dep=None, totais=None, chave_grupo=
     tabela_thermo = _tabela_mini(linhas_thermo, ["Meta", "Realizado", "Participação", "Margem"], centralizado=True)
     tabela_recompra = _tabela_mini(linhas_recompra, ["Recompra"], centralizado=True)
     tabela_media_pedidos = _tabela_mini(linhas_media_pedidos, ["Média de Pedidos"], centralizado=True)
-    tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "%"], centralizado=True)
+    tabela_positivacao = _tabela_mini(linhas_positivacao, ["Meta", "Realizado", "Falta", "%"], centralizado=True)
     tabela_margem = _tabela_mini(linhas_margem, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_mix = _tabela_mini(linhas_mix, ["Meta", "Realizado", "%"], centralizado=True)
     tabela_lucro = _tabela_mini(linhas_lucro, ["Lucro"], centralizado=True)
